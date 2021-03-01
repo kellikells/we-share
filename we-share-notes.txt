@@ -1,0 +1,9 @@
+create a functional component: <rafc>
+
+npm run start  **
+
+useState : ./component/AddItem.js
+
+    -component level state
+        AND
+    -controlled components within the form
