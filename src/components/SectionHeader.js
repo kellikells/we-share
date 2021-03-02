@@ -2,7 +2,8 @@ import React from 'react';
 
 export const SectionHeader = () => {
     return (
-        <div>
+        <div className='section'>
+
             <h4 className='text-xl'>WeHave:</h4>
 
         </div>
