@@ -14,9 +14,9 @@ export const ItemList = () => {
 
     return (
         <>
-            <h3>We-Have:</h3>
+            <div className='section-title'>We-Have:</div>
 
-            <ul>
+            <ul className='list'>
                 {/* MAPPING through items: */}
                 {items.map(item => (
                     <Item key={item.id} item={item}/>

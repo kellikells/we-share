@@ -3,16 +3,109 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     min-height: 100vh;
+     margin: 0;
+     background-color: #f7f7f7;
+}
+
+/* ----------------------------- */
+
+/* --------- form css ----------  */
+/* form {
+  grid-template-columns: [col1] 75% [col2] auto [end] ;
+}
+
+
+.form-group-item-name {
+  grid-column-start: col1;
+  grid-column-end: col2;
+
+}
+
+
+.form-group-item-quantity {
+    grid-column-start: col2;
+} */
+/* ----------------------------- */
+
 @layer components {
-    .container {
-        @apply mx-auto bg-red-200 py-5 px-5;
-    }
+     .container {
+          @apply my-7 mx-auto;
+     }
 
-    .section {
-        @apply py-11;
-    }
+     .app-title {
+          @apply text-2xl tracking-wider;
+     }
 
-    .AddItemForm {
-        @apply bg-gray-400;
-    }
+     .section-title {
+          @apply uppercase text-base border-b-2 border-solid border-gray-500 p-2.5  mb-2.5;
+     }
+
+     /* ---------- ITEMS ---------- */
+     .list {
+          @apply list-none p-0 mb-10;
+     }
+
+     .list li {
+          @apply bg-white shadow-xl text-black flex justify-between relative p-2.5 my-2.5 mx-0;
+     }
+
+     .list li.positive {
+          @apply border-r-4 border-solid border-green-300;
+     }
+
+     .list li.negative {
+          @apply border-r-4 border-solid border-pink-600;
+     }
+
+     .delete-btn {
+          @apply bg-pink-700 border-0 text-white text-xl leading-5 py-0.5 px-1.5 top-full left-0;
+
+          /* transform -translate-x-full -translate-y-1\/2 opacity-0 transition duration-300 ease-in-out */
+     }
+
+     /* ---------- FORM ---------- */
+
+     .section-form {
+          @apply table-fixed;
+     }
+     /* .section-form {
+        @apply relative;
+    } */
+
+     .form-group {
+          @apply border  border-gray-400 border-solid p-2.5 text-xs;
+     }
+
+     .item-name {
+   
+          @apply w-3/4;
+     }
+
+     .item-quantity {
+          @apply w-auto;
+     }
+
+     label {
+          @apply hidden;
+     }
+
+     /* input[type="text"] {
+          @apply absolute left-0 border border-gray-400 border-solid rounded-sm text-xs p-2.5;
+     }
+
+     input[type="number"] {
+          @apply absolute right-0 border border-gray-400 border-solid rounded-sm text-xs p-2.5;
+     } */
+
+     .add-btn {
+          @apply bg-green-700 shadow-inner text-white border-0 block text-xs mt-2.5 mr-0 mb-7 p-2.5 w-full;
+     }
+
+     /* ---------- EDIT FORM ---------- */
 }

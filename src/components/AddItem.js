@@ -15,36 +15,59 @@ export const AddItem = () => {
             itemName,
             itemQuantity: +itemQuantity
         }
-
         addItem(newItem);
     }
 
     return (
-        <div className='section'>
-            <h3>Add New Item:</h3>
+        <>
+            <div className='section-title'>Add New Item:</div>
 
-            <form onSubmit={onSubmit} className='AddItemForm'>
-                <table>
+            <form onSubmit={onSubmit}>
 
+                <table className='section section-form'>
                     <tr>
-                        <td><label htmlFor='itemName'>Text</label></td>
-                        <td>
+                        <td className='form-group item-name'>
+                            <label htmlFor='itemName'>Item Name</label>
                             {/* onChange event for whatever is being typed in  */}
                             <input type='text' value={itemName} onChange={(e) => setItemName(e.target.value)} placeholder='Item name...' />
                         </td>
-                    </tr>
 
-                    <tr>
-                        <td><label htmlFor='itemQuantity'>Qty</label></td>
-                        <td>
+                        <td className='form-group item-quantity'>
+                            <label htmlFor='itemQuantity'>Qty</label>
                             <input type='number' value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} placeholder='Enter quantity...' />
                         </td>
                     </tr>
+                </table >
 
-                    <button className='btn'>Add Item</button>
-                </table>
+                <button className='add-btn focus:bg-green-400'>Add Item</button>
+
             </form>
 
-        </div >
+        </>
+        // <div className='section section-form'>
+        //     <div className='section-title'>Add New Item:</div>
+
+        //     <form onSubmit={onSubmit}>
+
+        //         <div className='form-group-item-name'>
+        //             <label htmlFor='itemName'>Item Name</label>
+        //             {/* onChange event for whatever is being typed in  */}
+        //             <input type='text' value={itemName} onChange={(e) => setItemName(e.target.value)} placeholder='Item name...' />
+        //         </div>
+
+        //         <div className='form-group-item-quantity'>
+        //             <label htmlFor='itemQuantity'>Qty</label>
+        //             <input type='number' value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} placeholder='Enter quantity...' />
+        //         </div>
+
+        //         <button className='add-btn focus:bg-green-400'>Add Item</button>
+
+
+
+        //     {/* <button className='add-btn focus:bg-green-400'>Add Item</button> */}
+
+        //     </form>
+
+        // </div >
     );
 }

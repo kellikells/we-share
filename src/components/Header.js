@@ -3,7 +3,8 @@ import React from 'react';
 export const Header = () => {
     return (
         <div className='section'>
-            <h2>WeShare App</h2>
+            <div className='app-title'>We Share</div>
+
 
             {/* add a nav */}
         </div>
