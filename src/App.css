@@ -39,7 +39,7 @@ body {
      }
 
      .app-title {
-          @apply text-2xl tracking-wider;
+          @apply text-2xl tracking-wider text-center;
      }
 
      .section-title {
@@ -65,9 +65,11 @@ body {
 
      .delete-btn {
           @apply bg-pink-700 border-0 text-white text-xl leading-5 py-0.5 px-1.5 top-full left-0;
-
-          /* transform -translate-x-full -translate-y-1\/2 opacity-0 transition duration-300 ease-in-out */
      }
+
+     /* .item-quantity {
+         @apply border-r-4 border-solid border-gray-600;
+     } */
 
      /* ---------- FORM ---------- */
 
