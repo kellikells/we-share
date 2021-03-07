@@ -3,9 +3,7 @@ import { GlobalContext } from '../context/GlobalState';
 
 export const Item = ({ item }) => {
 
-    const { deleteItem } = useContext(GlobalContext);
-
-
+    const { useOne, useAll, deleteItem } = useContext(GlobalContext);
 
     // ternary operator to determine item color (have or don't have)
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
@@ -13,11 +11,10 @@ export const Item = ({ item }) => {
 
     return (
 
-        <div key={item.id} className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
+        <div className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
 
             <div className='list-grid'>
 
-                
                 {/* ----- quantity ----- */}
                 <div className='item-qty'>{item.itemQuantity}</div>
 
@@ -29,17 +26,19 @@ export const Item = ({ item }) => {
                 </div>
 
                 
-                {/* ----- buttons ----- */}
+                {/* ----- button group ----- */}
                 <div className={sign == 'positive' ? 'item-btn-group' : 'item-btn-group-disabled'} >
 
-                    <button className='btn-use-one'>Use 1</button>
+                    {/* ----- button: use 1 ----- */}
+                    <button onClick={() => useOne(item.id)} className='btn-use-one'>Use 1</button>
 
-                    <button className='btn-use-all'>Use All</button>
+                    {/* ----- button: use all ----- */}
+                    <button onClick={() => useAll(item.id)} className='btn-use-all'>Use All</button>
 
                 </div>
 
                 
-                {/* ----- trash button ----- */}
+                {/* ----- button: delete ----- */}
                 <button onClick={() => deleteItem(item.id)} className='col-span-1  bg-white p-2 font-thin'>
                     <img src='/trash.svg' alt='delete item' />
                 </button>

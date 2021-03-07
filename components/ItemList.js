@@ -1,5 +1,5 @@
 
-// useContext hook in order to user GlobalContext
+// useContext hook in order to use GlobalContext
 import React, { useContext } from 'react';
 import { Item } from './Item';
 import { GlobalContext } from '../context/GlobalState';
@@ -14,7 +14,6 @@ export const ItemList = () => {
 
     return (
         <>
-            {/* <div className='section-title'>We-Have:</div> */}
 
             <div className='list'>
                 {/* MAPPING through items: */}

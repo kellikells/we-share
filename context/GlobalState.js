@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import AppReducer from './AppReducer';
 
 // --------------------------------
@@ -35,6 +35,21 @@ export const GlobalProvider = ({ children }) => {
     // Actions
     // >>Make calls to reducer
     // >>payload: any data we want to send to it, in this case 'id'
+
+    function useOne(id) {
+        dispatch({
+            type: 'USE_ONE',
+            payload: id
+        });
+    }
+
+    function useAll(id) {
+        dispatch({
+            type: 'USE_ALL',
+            payload: id
+        });
+    }
+
     function deleteItem(id) {
         dispatch({
             type: 'DELETE_ITEM',
@@ -56,6 +71,8 @@ export const GlobalProvider = ({ children }) => {
         // >>whatever gets wrapped = children, and in this case it's the compoents in App.js
         <GlobalContext.Provider value={{
             items: state.items,
+            useOne,
+            useAll,
             deleteItem,
             addItem
         }}>
