@@ -1,10 +1,7 @@
 create a functional component: <rafc>
 -------------------------------
 
-npm run start  **
-    or  
-npm start  **
-
+npm run start 
 
 -------------------------------
 

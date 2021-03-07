@@ -1,0 +1,25 @@
+
+-------------------------------
+1-  npx create-next-app we-share
+
+2-  npm run dev
+    (check if its working) (ctrl-C to stop)
+
+3-  npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+    (setting up tailwindCSS)
+
+4-  npx tailwindcss init -p
+    (generates: tailwind.config.js  &  postcss.config.js)
+
+5-     purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}']
+    (in tailwind.config.js, replace `purge` with this)
+
+6-  (delete ./styles/globals.css)
+    (move previous css file `App.css` into styles)
+    (rename to: index.css)
+
+
+-------------------------------
+
+
+-------------------------------
