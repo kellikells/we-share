@@ -32,26 +32,64 @@ body {
 
      /* ---------- ITEMS ---------- */
      .list {
-          @apply list-none p-0 mb-10;
+          @apply list-none p-0 mt-11 mb-10;
      }
 
-     .list li {
-          @apply bg-white shadow-xl text-black flex justify-between relative p-2.5 my-2.5 mx-0;
+     .list-item {
+          @apply flex items-center justify-center text-base font-bold my-2 md:shadow-xl;
      }
 
-     .list li.positive {
-          @apply border-r-4 border-solid border-green-300;
+     .list-grid {
+          @apply grid grid-cols-11 items-center w-full;
      }
 
-     .list li.negative {
-          @apply border-r-4 border-solid border-pink-600;
+     /* .list-grid-positive {
+          @apply grid grid-cols-11 items-center w-full border-r-4 border-solid border-green-300;
      }
+
+     .list-grid-negative {
+          @apply grid grid-cols-11 items-center w-full border-r-4 border-solid border-pink-600;
+     } */
+
+     .item-qty {
+          @apply col-span-1 bg-white p-2;
+     }
+
+     .item-name {
+          @apply col-span-5 bg-white p-2;
+     }
+     /* -------------------------------- */
+     .item-btn-group-positive {
+          @apply col-span-4 bg-white p-1 flex justify-end items-center space-x-2 text-xs border-r-4 border-solid border-blue-600;
+     }
+
+     .item-btn-group-negative {
+          @apply col-span-4 bg-white p-1 flex justify-end items-center space-x-2 text-xs  border-r-4 border-solid border-pink-600 font-extrabold;
+     }
+
+     /* -------------------------------- */
+     .btn-use-all {
+          @apply rounded p-2 w-16 text-white border-2 border-solid border-blue-600 bg-blue-600;
+     }
+
+     .btn-use-one {
+          @apply rounded p-2 w-16 text-pink-600 border-2 border-solid border-pink-600;
+     }
+     /* .btn-use-one {
+          @apply rounded p-2 w-16 text-white border-2 border-solid border-yellow-600 bg-yellow-600;
+     }
+
+     .btn-use-all {
+          @apply rounded p-2 w-16 text-blue-600 border-2 border-solid border-blue-600;
+     } */
+
+
+     /* -------------------------------- */
+
 
      .delete-btn {
           @apply bg-pink-700 border-0 text-white text-xl leading-5 py-0.5 px-1.5 top-full left-0;
      }
-
-
 
      /* ---------- FORM ---------- */
 

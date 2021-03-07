@@ -14,15 +14,15 @@ export const ItemList = () => {
 
     return (
         <>
-            <div className='section-title'>We-Have:</div>
+            {/* <div className='section-title'>We-Have:</div> */}
 
-            <ul className='list'>
+            <div className='list'>
                 {/* MAPPING through items: */}
                 {items.map(item => (
                     <Item key={item.id} item={item}/>
                 ))}
 
-            </ul>
+            </div>
         </>
 
     );
