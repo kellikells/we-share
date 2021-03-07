@@ -15,22 +15,6 @@ body {
 
 /* ----------------------------- */
 
-/* --------- form css ----------  */
-/* form {
-  grid-template-columns: [col1] 75% [col2] auto [end] ;
-}
-
-
-.form-group-item-name {
-  grid-column-start: col1;
-  grid-column-end: col2;
-
-}
-
-
-.form-group-item-quantity {
-    grid-column-start: col2;
-} */
 /* ----------------------------- */
 
 @layer components {
@@ -67,43 +51,17 @@ body {
           @apply bg-pink-700 border-0 text-white text-xl leading-5 py-0.5 px-1.5 top-full left-0;
      }
 
-     /* .item-quantity {
-         @apply border-r-4 border-solid border-gray-600;
-     } */
+
 
      /* ---------- FORM ---------- */
 
-     .section-form {
-          @apply table-fixed;
-     }
-     /* .section-form {
-        @apply relative;
-    } */
-
-     .form-group {
-          @apply border  border-gray-400 border-solid p-2.5 text-xs;
-     }
-
-     .item-name {
-   
-          @apply w-3/4;
-     }
-
-     .item-quantity {
-          @apply w-auto;
+     .form-input {
+          @apply w-full border border-gray-400 border-solid p-2.5 text-xs;
      }
 
      label {
           @apply hidden;
      }
-
-     /* input[type="text"] {
-          @apply absolute left-0 border border-gray-400 border-solid rounded-sm text-xs p-2.5;
-     }
-
-     input[type="number"] {
-          @apply absolute right-0 border border-gray-400 border-solid rounded-sm text-xs p-2.5;
-     } */
 
      .add-btn {
           @apply bg-green-700 shadow-inner text-white border-0 block text-xs mt-2.5 mr-0 mb-7 p-2.5 w-full;

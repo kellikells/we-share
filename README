@@ -1,0 +1,105 @@
+vsCode shortcut to, create a functional component: 
+    rafc
+----------------------------------------------------------------
+
+npm run start  
+----------------------------------------------------------------
+
+useState : ./component/AddItem.js
+
+    -component level state
+        AND
+    -controlled components within the form
+
+
+context:  ./context/GlobalState.js
+
+    *from the top, it is imported in App.js, by <use context hook>
+
+    -(only one context bc small application)
+        -- inside GlobalState.js we put the initial state so it is accessible anywhere
+            --- this case: items
+                ---- so we can add/delete/edit items
+
+                    items:
+                        -id
+                        -name (itemName)
+                        -quantity 
+                            -- positive = weHave
+                            -- negative = weNeed
+
+
+reducer:  ./context/AppReducer.js:
+    -specify the application state changes, in response to certain actions to our context
+    -a way to change state and send it down to components
+
+
+
+----------------------------------------------------------------
+            setting up : MongoDB 
+
+in gitbash:
+
+    1- environment variables, system variables, path:
+            C:\Program Files\MongoDB\Server\4.4\bin
+
+
+    2- cd into :
+            C:\Program Files\MongoDB\Server\4.4\bin
+
+
+    3- checking if it is still connected:    
+            mongod
+
+
+    4- in new terminal, to start the mongo shell:     
+            mongo   
+    
+    5- Replace myFirstDatabase with the name of the database that connections will use by default. 
+        You will be prompted for the password for the Database User, <username>. 
+        When entering your password, make sure all special characters are URL encoded.
+            mongo "mongodb+srv://cluster0.bii8p.mongodb.net/<myFirstDatabase>" --username <username>     
+
+----------------------------------------------------------------
+        using mongoDB:
+in bash:
+
+    1- start up mongo:
+            mongod
+    
+    2- new bash window:
+            mongo
+
+----------------------------------------------------------------
+        mongoDB commands:
+
+-check what db in: 
+    db
+
+-use a DATABASE:
+    use <DBname>
+
+
+-add a COLLECTION:
+    db.<DBname>.insert({<data>})
+
+-view COLLECTION:
+    show <DBname>
+
+-view ALL DATA IN DB:
+    db.<DBname>.find({})
+-view ALL DATA WITH PRETTY:
+    db.<DBname>.find({}).pretty()
+
+examples with .find({<parameter>})
+
+    row 1
+
+
+----------------------------------------------------------------
+
+
+
+
+----------------------------------------------------------------
+

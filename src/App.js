@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from './components/Header';
 import { ItemList } from './components/ItemList';
-import { AddItem } from './components/AddItem';
+import { AddItemForm } from './components/AddItemForm';
 
 import { GlobalProvider } from './context/GlobalState';
 
@@ -13,7 +13,7 @@ function App() {
         <Header />
       <div className='container'>
           <ItemList />
-          <AddItem />
+        <AddItemForm />
       </div>
     </GlobalProvider>
   );
