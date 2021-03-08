@@ -10,18 +10,28 @@ body {
      justify-content: center;
      min-height: 100vh;
      margin: 0;
-     /* background-color: #f7f7f7; */
+     background-color: #fff;
+     /* background-color: #fae16c; */
+
 }
 
-/* ----------------------------- */
+.wrapper {
+     background-color: #fdeea6;
+}
 
-/* ----------------------------- */
+/* ------------------------------------------------- */
+/* -------------------- FONTS -------------------- */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+.roboto {
+     font-family: "Roboto", sans-serif;
+}
+/* ------------------------------------------------- */
 
 @layer components {
- 
-
      .wrapper {
-          @apply p-5 bg-gray-100;
+          /* @apply p-5 max-h-screen; */
+          @apply p-5;
      }
 
      .container {
@@ -36,8 +46,7 @@ body {
           @apply uppercase text-base border-b-2 border-solid border-gray-500 p-2.5  mb-2.5;
      }
 
-
-    /* ---------- LIST GRID ---------- */
+     /* -------------------- LIST GRID -------------------- */
 
      .list {
           @apply list-none p-0 mt-11 mb-10;
@@ -47,10 +56,10 @@ body {
           @apply grid grid-cols-11 items-center w-full;
      }
 
-    /* ---------- ITEMS ---------- */
+     /* -------------------- ITEMS -------------------- */
 
      .list-item {
-          @apply flex items-center justify-center text-base font-bold my-2 bg-white shadow-xl border border-gray-300 ;
+          @apply flex items-center justify-center text-base font-bold my-2 bg-white shadow-xl border border-gray-300;
      }
      .list-item-disabled {
           @apply opacity-50;
@@ -66,7 +75,7 @@ body {
      .item-name-disabled {
           @apply col-span-9 p-2 line-through;
      }
-     /* -------------------------------- */
+     /* ---------------------------------------------------- */
 
      .item-btn-group {
           @apply col-span-4  p-1 flex justify-end items-center space-x-2 text-xs;
@@ -75,10 +84,10 @@ body {
           @apply hidden;
      }
 
-     /* -------------------------------- */
+     /* ---------------------------------------------------- */
 
      .btn-use-one {
-          @apply rounded py-2 px-1.5 w-16
+          @apply rounded-lg py-2 px-1.5 w-16
                     border-2 border-solid border-yellow-600 
                     hover:bg-yellow-100 bg-yellow-600 
                     hover:text-yellow-700  text-white 
@@ -92,14 +101,13 @@ body {
                     hover:text-blue-800 text-white
                     transition duration-300;
      }
-     /* -------------------------------- */
+     /* ---------------------------------------------------- */
 
      .btn-delete {
           @apply col-span-1 p-2;
      }
 
-
-     /* ---------- FORM ---------- */
+     /* -------------------- FORM -------------------- */
 
      .form-input {
           @apply w-full border border-gray-400 border-solid p-2.5 text-xs;
@@ -113,5 +121,5 @@ body {
           @apply bg-green-700 shadow-inner text-white border-0 block text-sm mt-2.5 mr-0 mb-7 p-2.5 w-full;
      }
 
-     /* ---------- EDIT FORM ---------- */
+     /* -------------------- EDIT FORM -------------------- */
 }
