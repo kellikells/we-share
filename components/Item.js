@@ -13,7 +13,15 @@ export const Item = ({ item }) => {
 
         <div className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
 
+          
+
             <div className='list-grid'>
+
+                {/* ----- button: delete ----- */}
+                <button onClick={() => deleteItem(item.id)} className='btn-delete'>
+                    <img src='/trash.svg' alt='delete item' />
+                </button>
+
 
                 {/* ----- quantity ----- */}
                 <div className='item-qty'>{item.itemQuantity}</div>
@@ -39,9 +47,9 @@ export const Item = ({ item }) => {
 
                 
                 {/* ----- button: delete ----- */}
-                <button onClick={() => deleteItem(item.id)} className='col-span-1  bg-white p-2 font-thin'>
+                {/* <button onClick={() => deleteItem(item.id)} className={sign == 'positive' ? 'btn-delete' : 'btn-delete-disabled'}>
                     <img src='/trash.svg' alt='delete item' />
-                </button>
+                </button> */}
 
             </div>
         </div>

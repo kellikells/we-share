@@ -11,10 +11,12 @@ import { GlobalProvider } from '../context/GlobalState';
 const App = () => {
   return (
     <GlobalProvider>
+      <div className='wrapper'>
         <Header />
       <div className='container'>
           <ItemList />
         <AddItemForm />
+        </div>
       </div>
     </GlobalProvider>
   );

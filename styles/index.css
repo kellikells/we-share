@@ -10,7 +10,7 @@ body {
      justify-content: center;
      min-height: 100vh;
      margin: 0;
-     background-color: #f7f7f7;
+     /* background-color: #f7f7f7; */
 }
 
 /* ----------------------------- */
@@ -18,6 +18,12 @@ body {
 /* ----------------------------- */
 
 @layer components {
+ 
+
+     .wrapper {
+          @apply p-5 bg-gray-100;
+     }
+
      .container {
           @apply my-7 mx-auto;
      }
@@ -30,67 +36,68 @@ body {
           @apply uppercase text-base border-b-2 border-solid border-gray-500 p-2.5  mb-2.5;
      }
 
-     /* ---------- ITEMS ---------- */
+
+    /* ---------- LIST GRID ---------- */
+
      .list {
           @apply list-none p-0 mt-11 mb-10;
      }
-
-     .list-item {
-          @apply flex items-center justify-center text-base font-bold my-2 md:shadow-xl;
-     }
-     .list-item-disabled {
-          @apply opacity-50;
-     }
-/* $([Parent Container]).find('input').each(function () {
-     $(this).attr('disabled', 'disabled');
- }); */
 
      .list-grid {
           @apply grid grid-cols-11 items-center w-full;
      }
 
-     /* .list-grid-positive {
-          @apply grid grid-cols-11 items-center w-full border-r-4 border-solid border-green-300;
+    /* ---------- ITEMS ---------- */
+
+     .list-item {
+          @apply flex items-center justify-center text-base font-bold my-2 bg-white shadow-xl border border-gray-300 ;
+     }
+     .list-item-disabled {
+          @apply opacity-50;
      }
 
-     .list-grid-negative {
-          @apply grid grid-cols-11 items-center w-full border-r-4 border-solid border-pink-600;
-     } */
-
      .item-qty {
-          @apply col-span-1 bg-white p-2;
+          @apply col-span-1 p-2;
      }
 
      .item-name {
-          @apply col-span-5 bg-white p-2;
+          @apply col-span-5  p-2;
      }
      .item-name-disabled {
           @apply col-span-9 p-2 line-through;
      }
      /* -------------------------------- */
+
      .item-btn-group {
-          @apply col-span-4 bg-white p-1 flex justify-end items-center space-x-2 text-xs border-r-4 border-solid border-blue-600;
+          @apply col-span-4  p-1 flex justify-end items-center space-x-2 text-xs;
      }
      .item-btn-group-disabled {
           @apply hidden;
      }
 
      /* -------------------------------- */
-     .btn-use-all {
-          @apply rounded p-2 w-16 text-white border-2 border-solid border-blue-600 bg-blue-600;
-     }
 
      .btn-use-one {
-          @apply rounded p-2 w-16 text-pink-600 border-2 border-solid border-pink-600;
+          @apply rounded py-2 px-1.5 w-16
+                    border-2 border-solid border-yellow-600 
+                    hover:bg-yellow-100 bg-yellow-600 
+                    hover:text-yellow-700  text-white 
+                    transition duration-300;
      }
 
-
-
+     .btn-use-all {
+          @apply rounded-lg py-2 px-1.5 w-16
+                    border-2 border-solid border-blue-600
+                    hover:bg-blue-200  bg-blue-600
+                    hover:text-blue-800 text-white
+                    transition duration-300;
+     }
      /* -------------------------------- */
 
-     .delete-btn {
-          @apply bg-pink-700 border-0 text-white text-xl leading-5 py-0.5 px-1.5 top-full left-0;
+     .btn-delete {
+          @apply col-span-1 p-2;
      }
+
 
      /* ---------- FORM ---------- */
 
@@ -103,7 +110,7 @@ body {
      }
 
      .add-btn {
-          @apply bg-green-700 shadow-inner text-white border-0 block text-xs mt-2.5 mr-0 mb-7 p-2.5 w-full;
+          @apply bg-green-700 shadow-inner text-white border-0 block text-sm mt-2.5 mr-0 mb-7 p-2.5 w-full;
      }
 
      /* ---------- EDIT FORM ---------- */
