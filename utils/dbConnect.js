@@ -4,6 +4,7 @@ const connection = {};
 
 // function to check if there is already a connection to the database, or else it will create a connection 
 async function dbConnect() {
+    
     if (connection.isConnected) {
         return;
     }
@@ -14,7 +15,9 @@ async function dbConnect() {
     });
 
     connection.isConnected = db.connections[0].readyState;
+
     console.log(connection.isConnected);
+
 }
 
 export default dbConnect;

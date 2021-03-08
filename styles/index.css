@@ -31,7 +31,7 @@ body {
 @layer components {
      .wrapper {
           /* @apply p-5 max-h-screen; */
-          @apply p-5;
+          @apply p-5 roboto;
      }
 
      .container {
