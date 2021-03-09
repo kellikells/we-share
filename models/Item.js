@@ -1,10 +1,10 @@
+
 const mongoose = require('mongoose');
 
 const ItemSchema = new mongoose.Schema({
     itemName: {
         type: String,
         required: [true, 'Please add an item name'],
-        trim: true,
         maxlength: [40, 'Item name cannot be more than 40 characters']
     },
     itemQuantity: {
