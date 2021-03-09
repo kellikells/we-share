@@ -5,21 +5,21 @@ import { Header } from '../components/Header';
 import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';
 
-import { GlobalProvider } from '../context/GlobalState';
+// import { GlobalProvider } from '../context/GlobalState';
 
 
 
-const Index = () => {
+const Index = ({ items }) => {
   return (
-    <GlobalProvider>
-      <div className='wrapper'>
-        <Header />
+    // <GlobalProvider>
+    <div className='wrapper'>
+      <Header />
       <div className='container'>
-          <ItemList  />
+        <ItemList items={items} />
         <AddItemForm />
-        </div>
       </div>
-    </GlobalProvider>
+    </div>
+    // </GlobalProvider>
   );
 }
 // const Index = ({ items }) => {

@@ -13,8 +13,6 @@ export const Item = ({ item }) => {
 
         <div className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
 
-          
-
             <div className='list-grid'>
 
                 {/* ----- button: delete ----- */}
