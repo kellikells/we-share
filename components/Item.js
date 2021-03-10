@@ -11,7 +11,7 @@ export const Item = ({ item }) => {
 
     return (
 
-        <div className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
+        <div key={item.id} className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
 
             <div className='list-grid'>
 

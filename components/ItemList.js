@@ -2,7 +2,7 @@
 // useContext hook in order to use GlobalContext
 import React, { useContext } from 'react';
 import { Item } from './Item';
-import { GlobalContext } from '../context/GlobalState';
+// import { GlobalContext } from '../context/GlobalState';
 
 
 // export const ItemList = ({ items }) => {
@@ -21,7 +21,7 @@ export const ItemList = ({items}) => {
             <div className='list'>
                 {/* MAPPING through items: */}
                 {items.map(item => (
-                    <Item key={item.id} item={item}/>
+                    <Item key={item._id} item={item}/>
                 ))}
 
             </div>
