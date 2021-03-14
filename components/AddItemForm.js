@@ -67,22 +67,6 @@ export const AddItemForm = () => {
     }
 
 
-    // const [itemName, setItemName] = useState('');
-    // const [itemQuantity, setItemQuantity] = useState(0);
-
-    // const { addItem } = useContext(GlobalContext);
-
-    // const onSubmit = e => {
-    //     e.preventDefault();
-
-    //     const newItem = {
-    //         id: Math.floor(Math.random() * 100000000),
-    //         itemName,
-    //         itemQuantity: +itemQuantity
-    //     }
-    //     addItem(newItem);
-    // }
-
     return (
         <div>
 

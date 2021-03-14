@@ -1,19 +1,21 @@
-// const express = require('express');
+const express = require('express');
 
-// const router = express.Router();
+const router = express.Router();
 
-import { useRouter } from 'next/router';
+// import 
+
+// import { useRouter } from 'next/router';
 const { getItems, addItem, deleteItem } = require('../controllers/items');
 
-const router = useRouter();
-// router.get('/', (req, res) => res.send('Hello'));
-router
-    .route('/')
-    .get(getItems)
-    .post(addItem);
+// const router = useRouter();
+router.get('/', (req, res) => res.send('Hello'));
+// router
+//     .route('/')
+//     .get(getItems)
+//     .post(addItem);
 
-router
-    .route('/:id')
-    .delete(deleteItem);
+// router
+//     .route('/:id')
+//     .delete(deleteItem);
 
-module.exports = router;
+// module.exports = router;

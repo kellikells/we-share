@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 
 // --------------------------------
 // initial state
@@ -34,7 +35,7 @@ export const GlobalProvider = ({ children }) => {
 
     async function getItems() {
         try {
-            const res = await axios.get('/api/items');
+            const res = await axios.get('http://localhost:3000/api/items');
 
             dispatch({
                 type: 'GET_ITEMS',
@@ -48,7 +49,16 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
+// Index.getInitialProps = async () => {
 
+//   const res = await fetch(`http://localhost:3000/api/items`);
+
+//   // the api sends back an OBJECT and it has a PROPERTY 'data' on it, so here we extract that property
+//   const { data } = await res.json();
+
+//   // returning an OBJECT with a PROPERTY 'items' which has the VALUE 'data'
+//   return { items: data }
+// }
 
     function useOne(id) {
         dispatch({

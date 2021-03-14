@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "express": "^4.17.1",
     "isomorphic-unfetch": "^3.1.0",
     "mongoose": "^5.11.15",
     "next": "10.0.8",

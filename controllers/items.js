@@ -4,21 +4,59 @@ import Item from '../models/Item';
 dbConnect();
 // desc     get all items
 // route    GET /api/items
-exports.getItems = async (req, res, next) => {
-    try {
-        const items = await Item.find({});
-        return res.status(200).json({
-            success: true,
-            count: items.length,
-            data: items
-        });
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            error: 'Server Error'
-        });
+export default async (req, res) => {
+
+    const { method } = req;
+    switch (method) {
+
+        case 'GET':
+
+            try {
+                const items = await Item.find({});
+                return res.status(200).json({
+                    success: true,
+                    count: items.length,
+                    data: items
+                });
+            } catch (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Server Error'
+                });
+            }
+            break;
     }
 }
+// exports.getItems = async (req, res) => {
+//     try {
+//         const items = await Item.find({});
+//         return res.status(200).json({
+//             success: true,
+//             count: items.length,
+//             data: items
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             success: false,
+//             error: 'Server Error'
+//         });
+//     }
+// }
+// exports.getItems = async (req, res, next) => {
+//     try {
+//         const items = await Item.find({});
+//         return res.status(200).json({
+//             success: true,
+//             count: items.length,
+//             data: items
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             success: false,
+//             error: 'Server Error'
+//         });
+//     }
+// }
 
 
 // desc     add an item

@@ -11,21 +11,21 @@ export const Item = ({ item }) => {
     const router = useRouter();
 
     const [isDeleting, setIsDeleting] = useState(false);
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
 
     useEffect(() => {
         if (isDeleting) {
             deleteItem();
         }
-        else {
-            setIsDeleting(false);
-        }
-    }, [errors]);
+        // else {
+        //     setIsDeleting(false);
+        // }
+    }, [isDeleting]);
 
 
     const deleteItem = async () => {
         // const itemId = router.query.id;
-        const itemId = item.id;
+        const itemId = item._id;
         try {
             const res = await fetch(`http://localhost:3000/api/items/${itemId}`, {
                 method: "Delete"
@@ -49,7 +49,7 @@ export const Item = ({ item }) => {
 
     return (
 
-        <div key={item.id} className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
+        <div key={item._id} className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}>
 
             <div className='list-grid'>
 
@@ -75,10 +75,10 @@ export const Item = ({ item }) => {
                 <div className={sign == 'positive' ? 'item-btn-group' : 'item-btn-group-disabled'} >
 
                     {/* ----- button: use 1 ----- */}
-                    <button onClick={() => useOne(item.id)} className='btn-use-one'>Use 1</button>
+                    <button onClick={() => useOne(item._id)} className='btn-use-one'>Use 1</button>
 
                     {/* ----- button: use all ----- */}
-                    <button onClick={() => useAll(item.id)} className='btn-use-all'>Use All</button>
+                    <button onClick={() => useAll(item._id)} className='btn-use-all'>Use All</button>
 
                 </div>
 
@@ -93,11 +93,11 @@ export const Item = ({ item }) => {
     );
 }
 
-Item.getInitialProps = async ({ query: { id } }) => {
-    const res = await fetch(`http://localhost:3000/api/items/${id}`);
-    const { data } = await res.json();
+// Item.getInitialProps = async ({ query: { id } }) => {
+//     const res = await fetch(`http://localhost:3000/api/items/${id}`);
+//     const { data } = await res.json();
 
-    return { item: data }
-}
+//     return { item: data }
+// }
 
 // export default Note;

@@ -6,7 +6,7 @@ import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';
 
 
-const Index = ({ items }) => {
+const Index = () => {
   return (
     <GlobalProvider >
       <div className='wrapper'>
@@ -34,13 +34,21 @@ const Index = ({ items }) => {
 // }
 
 export async function getStaticProps() {
-  const res = await fetch(`http://localhost:3000/api/items`);
+  const res = await fetch('http://localhost:3000/api/items');
 
   // the api sends back an OBJECT and it has a PROPERTY 'data' on it, so here we extract that property
-  const { data } = await res.json();
-
+  const items = await res.json();
+  if (!items) {
+    return {
+      notFound: true,
+    }
+  }
   // returning an OBJECT with a PROPERTY 'items' which has the VALUE 'data'
-  return { props: { items: data } }
+  return {
+    props: {
+      items,
+    },
+  }
 }
 
 
