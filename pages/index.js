@@ -1,41 +1,24 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch';
-
+import { GlobalProvider } from '../context/GlobalState';
 import { Header } from '../components/Header';
 import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';
-// import { dbConnect } from '../utils/dbConnect';
-
-// import { GlobalProvider } from '../context/GlobalState';
-
 
 
 const Index = ({ items }) => {
   return (
-
-    <div className='wrapper'>
-      <Header />
-      <div className='container'>
-        <ItemList items={items} />
-        <AddItemForm />
+    <GlobalProvider >
+      <div className='wrapper'>
+        <Header />
+        <div className='container'>
+          <ItemList />
+          <AddItemForm />
+        </div>
       </div>
-    </div>
-
+    </GlobalProvider>
   );
 }
-// const Index = ({ items }) => {
-//   return (
-//     <GlobalProvider>
-//       <div className='wrapper'>
-//         <Header />
-//       <div className='container'>
-//           <ItemList items={items} />
-//         <AddItemForm />
-//         </div>
-//       </div>
-//     </GlobalProvider>
-//   );
-// }
 
 
 // function run server side, to get data by API request and given as a prop

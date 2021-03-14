@@ -3,10 +3,12 @@ import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
 export const AddItemForm = () => {
+    const router = useRouter();
+    
     const [form, setForm] = useState({ itemName: '', itemQuantity: 0 });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState({});
-    const router = useRouter();
+  
 
     useEffect(() => {
         if (isSubmitting) {
@@ -85,51 +87,51 @@ export const AddItemForm = () => {
         <div>
 
 
-            {
+            {/* {
                 isSubmitting
                     ? <p> it's loading </p>
-                    :<>
-                    <form form onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-3">
+                    :<> */}
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-3">
 
-                            <div className="col-span-2 ...">
-                                <label htmlFor='itemName'>Item Name</label>
+                    <div className="col-span-2 ...">
+                        <label htmlFor='itemName'>Item Name</label>
 
-                                <input
-                                    className='form-input'
-                                    type='text'
-                                    placeholder='enter item name'
-                                    // value={itemName}
-                                    name='itemName'
-                                    // onChange={(e) => setItemName(e.target.value)}
-                                        error = {errors.itemName ? { content: 'Please enter an item name'} : null}
-                                    onChange={handleChange}
-                                />
+                        <input
+                            className='form-input'
+                            type='text'
+                            placeholder='enter item name'
+                            // value={itemName}
+                            name='itemName'
+                            // onChange={(e) => setItemName(e.target.value)}
+                            error={errors.itemName ? { content: 'Please enter an item name' } : null}
+                            onChange={handleChange}
+                        />
 
-                            </div>
+                    </div>
 
-                            <div className="...">
-                                <label htmlFor='itemQuantity'>Qty</label>
+                    <div className="...">
+                        <label htmlFor='itemQuantity'>Qty</label>
 
-                                <input className='form-input'
-                                    type='number'
-                                    placeholder='enter quantity'
-                                    // value={itemQuantity}
-                                    name='itemQuantity'
-                                    // onChange={(e) => setItemQuantity(e.target.value)}
-                                    error= {errors.itemQuantity ? {content : 'Please put a number'} : null}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <input className='form-input'
+                            type='number'
+                            placeholder='enter quantity'
+                            // value={itemQuantity}
+                            name='itemQuantity'
+                            // onChange={(e) => setItemQuantity(e.target.value)}
+                            error={errors.itemQuantity ? { content: 'Please put a number' } : null}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                            <div className="col-span-3 ...">
-                                <button type='submit' className='add-btn focus:bg-green-400'>Add Item</button>
-                            </div>
-                        </div>
+                    <div className="col-span-3 ...">
+                        <button type='submit' className='add-btn focus:bg-green-400'>Add Item</button>
+                    </div>
+                </div>
 
-                        </form>
-                        </>
-            }
+            </form>
+            {/* </> */}
+        {/* // } */}
         </div >
     );
 }

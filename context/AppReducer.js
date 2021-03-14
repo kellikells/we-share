@@ -1,5 +1,15 @@
 export default (state, action) => {
     switch (action.type) {
+        case 'GET_ITEMS':
+            return {
+                ...state,
+                loading: false,
+                items: action.payload
+            }
+
+
+
+
         case 'USE_ONE':
             return {
                 ...state,
@@ -10,7 +20,7 @@ export default (state, action) => {
             return {
                 ...state,
                 items: state.items.map(item => (item.id == action.payload ? { id: item.id, itemName: item.itemName, itemQuantity: 0 }
-                    : item ))
+                    : item))
             }
         case 'DELETE_ITEM':
             return {
@@ -21,6 +31,12 @@ export default (state, action) => {
             return {
                 ...state,
                 items: [action.payload, ...state.items]
+            }
+
+        case 'ITEM_ERROR':
+            return {
+                ...state,
+                error: action.payload
             }
 
         default:

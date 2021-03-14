@@ -1,9 +1,47 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../context/GlobalState';
+// import React, { useContext } from 'react';
+// import { GlobalContext } from '../context/GlobalState';
+
+
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import fetch from 'isomorphic-unfetch';
+
 
 export const Item = ({ item }) => {
+    const router = useRouter();
 
-    const { useOne, useAll, deleteItem } = useContext(GlobalContext);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if (isDeleting) {
+            deleteItem();
+        }
+        else {
+            setIsDeleting(false);
+        }
+    }, [errors]);
+
+
+    const deleteItem = async () => {
+        // const itemId = router.query.id;
+        const itemId = item.id;
+        try {
+            const res = await fetch(`http://localhost:3000/api/items/${itemId}`, {
+                method: "Delete"
+            });
+
+            router.push("/");
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        // close();
+    }
+    // const { useOne, useAll, deleteItem } = useContext(GlobalContext);
 
     // ternary operator to determine item color (have or don't have)
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
@@ -16,7 +54,8 @@ export const Item = ({ item }) => {
             <div className='list-grid'>
 
                 {/* ----- button: delete ----- */}
-                <button onClick={() => deleteItem(item.id)} className='btn-delete'>
+                <button onClick={handleDelete} className='btn-delete'>
+                {/* <button onClick={handleDelete} className='btn-delete'> */}
                     <img src='/trash.svg' alt='delete item' />
                 </button>
 
@@ -53,3 +92,12 @@ export const Item = ({ item }) => {
         </div>
     );
 }
+
+Item.getInitialProps = async ({ query: { id } }) => {
+    const res = await fetch(`http://localhost:3000/api/items/${id}`);
+    const { data } = await res.json();
+
+    return { item: data }
+}
+
+// export default Note;
