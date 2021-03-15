@@ -14,46 +14,17 @@ export const Item = ({ item }) => {
     const [isUsingAll, setIsUsingAll] = useState(false);
     const [form, setForm] = useState({ itemName: item.itemName, itemQuantity: item.itemQuantity });
 
-    // setState 
+    //  ----- delete item function -----
     const handleDelete = async () => {
         setIsDeleting(true);
     }
-    const handleUseOne = async () => {
-        setIsUsingOne(true);
-        setForm({
-            itemName: item.itemName,
-            itemQuantity: item.itemQuantity - 1,
-        });
-    }
-    const handleUseAll = async () => {
-        setIsUsingAll(true);
-        setForm({
-            itemName: item.itemName,
-            itemQuantity: 0,
-        });
-    }
 
-    // useEffect 
     useEffect(() => {
         if (isDeleting) {
             deleteItem(item._id);
             deleteItemDB();
         }
     }, [isDeleting]);
-
-    useEffect(() => {
-        if (isUsingOne) {
-            useOne(item._id);
-            useOneDB();
-        }
-    }, [isUsingOne]);
-
-    useEffect(() => {
-        if (isUsingAll) {
-            useAll(item._id);
-            useAllDB();
-        }
-    }, [isUsingAll]);
 
 
     const deleteItemDB = async () => {
@@ -68,6 +39,23 @@ export const Item = ({ item }) => {
             console.log(error)
         }
     }
+    // ----------END: delete item---------------
+
+    //  ----- useOne item function -----
+    const handleUseOne = async () => {
+        setIsUsingOne(true);
+        setForm({
+            itemName: item.itemName,
+            itemQuantity: item.itemQuantity - 1,
+        });
+    }
+
+    useEffect(() => {
+        if (isUsingOne) {
+            useOne(item._id);
+            useOneDB();
+        }
+    }, [isUsingOne]);
 
     const useOneDB = async () => {
         try {
@@ -84,7 +72,23 @@ export const Item = ({ item }) => {
             return (`error: ${error}`);
         }
     }
+    // ----------END: useOne---------------
 
+    //  ----- useAll items function -----
+    const handleUseAll = async () => {
+        setIsUsingAll(true);
+        setForm({
+            itemName: item.itemName,
+            itemQuantity: 0,
+        });
+    }
+
+    useEffect(() => {
+        if (isUsingAll) {
+            useAll(item._id);
+            useAllDB();
+        }
+    }, [isUsingAll]);
 
     const useAllDB = async () => {
         try {
@@ -102,7 +106,7 @@ export const Item = ({ item }) => {
         }
     }
 
-
+    // ----------END: useAll---------------
 
 
     // ternary operator to determine item color (have or don't have)
@@ -145,13 +149,6 @@ export const Item = ({ item }) => {
                         </button>
 
                 </div>
-
-
-                {/* ----- button: delete ----- */}
-                {/* <button onClick={() => deleteItem(item.id)} className={sign == 'positive' ? 'btn-delete' : 'btn-delete-disabled'}>
-                    <img src='/trash.svg' alt='delete item' />
-                </button> */}
-
             </div>
         </div>
     );

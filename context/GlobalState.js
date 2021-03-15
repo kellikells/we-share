@@ -57,16 +57,6 @@ export const GlobalProvider = ({ children }) => {
                 type: 'DELETE_ITEM',
                 payload: id
             });
-            // const res = await fetch(`http://localhost:3000/api/items/${itemId}`, {
-            //     method: "Delete"
-            // });
-
-            // router.push("/");
-
-            // dispatch({
-            //     type: 'DELETE_ITEM',
-            //     payload: id
-            // });
 
         } catch (error) {
             console.log(error)

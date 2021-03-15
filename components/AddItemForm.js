@@ -1,17 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
+import { GlobalContext } from '../context/GlobalState';
 
 export const AddItemForm = () => {
     const router = useRouter();
-    
+
+    const { addItem } = useContext(GlobalContext);
+
     const [form, setForm] = useState({ itemName: '', itemQuantity: 0 });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState({});
-  
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let errs = validate();
+        setErrors(errs);
+        setIsSubmitting(true);
+    }
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const validate = () => {
+        let err = {};
+        if (!form.itemName) {
+            err.itemName = 'item name is required';
+        }
+        if (!form.itemQuantity) {
+            err.itemQuantity = 'quantity is required';
+        }
+        return err;
+    }
 
     useEffect(() => {
         if (isSubmitting) {
+            addItem(form)
             if (Object.keys(errors).length === 0) {
                 createItem();
             }
@@ -39,57 +67,26 @@ export const AddItemForm = () => {
 
     // form submission 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let errs = validate();
-        setErrors(errs);
-        setIsSubmitting(true);
-    }
-
-    const handleChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const validate = () => {
-        let err = {};
-
-        if (!form.itemName) {
-            err.itemName = 'item name is required';
-        }
-        if (!form.itemQuantity) {
-            err.itemQuantity = 'quantity is required';
-        }
-
-        return err;
-    }
+   
 
 
     return (
         <div>
 
-
-            {/* {
-                isSubmitting
-                    ? <p> it's loading </p>
-                    :<> */}
             <form onSubmit={handleSubmit}>
+
                 <div className="grid grid-cols-3">
 
                     <div className="col-span-2 ...">
                         <label htmlFor='itemName'>Item Name</label>
 
                         <input
+                            onChange={handleChange}
+                            name='itemName'
                             className='form-input'
                             type='text'
                             placeholder='enter item name'
-                            // value={itemName}
-                            name='itemName'
-                            // onChange={(e) => setItemName(e.target.value)}
                             error={errors.itemName ? { content: 'Please enter an item name' } : null}
-                            onChange={handleChange}
                         />
 
                     </div>
@@ -97,15 +94,15 @@ export const AddItemForm = () => {
                     <div className="...">
                         <label htmlFor='itemQuantity'>Qty</label>
 
-                        <input className='form-input'
+                        <input
+                            onChange={handleChange}
+                            name='itemQuantity'
+                            className='form-input'
                             type='number'
                             placeholder='enter quantity'
-                            // value={itemQuantity}
-                            name='itemQuantity'
-                            // onChange={(e) => setItemQuantity(e.target.value)}
                             error={errors.itemQuantity ? { content: 'Please put a number' } : null}
-                            onChange={handleChange}
                         />
+
                     </div>
 
                     <div className="col-span-3 ...">
@@ -114,8 +111,7 @@ export const AddItemForm = () => {
                 </div>
 
             </form>
-            {/* </> */}
-        {/* // } */}
+ 
         </div >
     );
 }
