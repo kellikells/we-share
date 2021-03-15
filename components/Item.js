@@ -1,29 +1,34 @@
-// import React, { useContext } from 'react';
-// import { GlobalContext } from '../context/GlobalState';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../context/GlobalState';
 
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
 
 export const Item = ({ item }) => {
-    const router = useRouter();
 
+    const { useOne, useAll, deleteItem } = useContext(GlobalContext);
+    // const { deleteItem } = useContext(GlobalContext);
+
+
+    const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
-    // const [errors, setErrors] = useState({});
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+    }
 
     useEffect(() => {
         if (isDeleting) {
-            deleteItem();
+            deleteItem(item._id);
+            deleteItemDB();
         }
-        // else {
-        //     setIsDeleting(false);
-        // }
     }, [isDeleting]);
 
 
-    const deleteItem = async () => {
+    const deleteItemDB = async () => {
         // const itemId = router.query.id;
         const itemId = item._id;
         try {
@@ -37,11 +42,8 @@ export const Item = ({ item }) => {
         }
     }
 
-    const handleDelete = async () => {
-        setIsDeleting(true);
-        // close();
-    }
-    // const { useOne, useAll, deleteItem } = useContext(GlobalContext);
+
+
 
     // ternary operator to determine item color (have or don't have)
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
@@ -55,7 +57,10 @@ export const Item = ({ item }) => {
 
                 {/* ----- button: delete ----- */}
                 <button onClick={handleDelete} className='btn-delete'>
-                {/* <button onClick={handleDelete} className='btn-delete'> */}
+                {/* <button
+                    onClick={() => deleteItem(item._id)}
+                    className='btn-delete'> */}
+                    
                     <img src='/trash.svg' alt='delete item' />
                 </button>
 
@@ -63,14 +68,14 @@ export const Item = ({ item }) => {
                 {/* ----- quantity ----- */}
                 <div className='item-qty'>{item.itemQuantity}</div>
 
-                
+
                 {/* ----- item name ----- */}
                 <div className={sign == 'positive' ? 'item-name' :
                     'item-name-disabled'} >
                     {item.itemName}
                 </div>
 
-                
+
                 {/* ----- button group ----- */}
                 <div className={sign == 'positive' ? 'item-btn-group' : 'item-btn-group-disabled'} >
 
@@ -82,7 +87,7 @@ export const Item = ({ item }) => {
 
                 </div>
 
-                
+
                 {/* ----- button: delete ----- */}
                 {/* <button onClick={() => deleteItem(item.id)} className={sign == 'positive' ? 'btn-delete' : 'btn-delete-disabled'}>
                     <img src='/trash.svg' alt='delete item' />

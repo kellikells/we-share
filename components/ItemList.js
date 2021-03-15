@@ -1,9 +1,11 @@
 
+// import React, { useState, useEffect } from 'react';
+import { Item } from './Item';
+
 // useContext hook in order to use GlobalContext
 import React, { useContext, useEffect } from 'react';
-import { Item } from './Item';
 import { GlobalContext } from '../context/GlobalState';
-// import { getItems }
+
 
 
 export const ItemList = () => {

@@ -6,7 +6,7 @@ import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';
 
 
-const Index = () => {
+const Index = ({items}) => {
   return (
     <GlobalProvider >
       <div className='wrapper'>

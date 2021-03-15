@@ -49,16 +49,41 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
-// Index.getInitialProps = async () => {
 
-//   const res = await fetch(`http://localhost:3000/api/items`);
+    async function deleteItem(id) {
+        try {
 
-//   // the api sends back an OBJECT and it has a PROPERTY 'data' on it, so here we extract that property
-//   const { data } = await res.json();
+            dispatch({
+                type: 'DELETE_ITEM',
+                payload: id
+            });
+            // const res = await fetch(`http://localhost:3000/api/items/${itemId}`, {
+            //     method: "Delete"
+            // });
 
-//   // returning an OBJECT with a PROPERTY 'items' which has the VALUE 'data'
-//   return { items: data }
-// }
+            // router.push("/");
+
+            // dispatch({
+            //     type: 'DELETE_ITEM',
+            //     payload: id
+            // });
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+
+
+
+    function addItem(item) {
+        dispatch({
+            type: 'ADD_ITEM',
+            payload: item
+        });
+    }
 
     function useOne(id) {
         dispatch({
@@ -74,19 +99,8 @@ export const GlobalProvider = ({ children }) => {
         });
     }
 
-    function deleteItem(id) {
-        dispatch({
-            type: 'DELETE_ITEM',
-            payload: id
-        });
-    }
 
-    function addItem(item) {
-        dispatch({
-            type: 'ADD_ITEM',
-            payload: item
-        });
-    }
+
 
     return (
 
