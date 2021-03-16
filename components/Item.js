@@ -114,18 +114,18 @@ export const Item = ({ item }) => {
 
     return (
 
-        <div key={item._id} className={sign == 'positive' ? 'list-item-container' : 'list-item-container-disabled'}>
+        <div className={sign == 'positive' ? 'list-item-container' : 'list-item-container-disabled'} key={item._id}>
 
             <div className='list-grid'>
 
 
 
                 {/* ----- quantity ----- */}
-                <div className='item-qty'>{item.itemQuantity}</div>
+                <div className='item quantity'>{item.itemQuantity}</div>
 
                 {/* ----- item name ----- */}
-                <div className={sign == 'positive' ? 'item-name' :
-                    'item-name-disabled'} >
+                <div className={sign == 'positive' ? ' item name' :
+                    'item name-disabled'} >
                     {item.itemName}
                 </div>
 

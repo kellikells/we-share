@@ -16,35 +16,32 @@ body {
 
 /* ------------------------------------------------- */
 /* -------------------- FONTS -------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&family=Julius+Sans+One&family=Pacifico&family=Quicksand:wght@500&family=Source+Sans+Pro:wght@700&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
-.roboto {
-     font-family: "Roboto", sans-serif;
+.fontArchivo {
+     font-family: "Archivo Narrow", sans-serif;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Karla:wght@500&display=swap");
-.karla {
-     font-family: "Karla", sans-serif;
+.fontJulius {
+     font-family: "Julius Sans One", sans-serif;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap");
-.playFair-font {
-     font-family: "Playfair Display", serif;
+.fontPacifico {
+     font-family: "Pacifico", cursive;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Halant:wght@600&display=swap");
-.halant-font {
-     font-family: "Halant", serif;
+.fontQuicksand {
+     font-family: "Quicksand", sans-serif;
+}
+.fontSansPro {
+     font-family: "Source Sans Pro", sans-serif;
 }
 /* ------------------------------------------------- */
 
 @layer components {
      .container {
-          @apply p-5 karla w-3/5 max-h-screen mx-auto;
+          @apply p-5 w-full max-h-screen mx-auto;
      }
 
      .app-title {
-          @apply halant-font text-2xl tracking-wider;
+          @apply fontPacifico text-5xl tracking-wider text-center;
      }
 
      /* -------------------- LIST GRID -------------------- */
@@ -53,26 +50,28 @@ body {
           @apply list-none p-0 mt-11 mb-10;
      }
      .list-item-container {
-          @apply flex items-center justify-center text-base my-2 bg-white shadow-xl border border-gray-300 rounded-xl;
+          @apply flex items-center justify-center text-base my-2 bg-white shadow-xl border border-gray-300;
      }
      .list-item-container-disabled {
           @apply opacity-50;
      }
      .list-grid {
-          @apply grid grid-cols-11  w-full;
+          @apply grid grid-cols-11  w-full ;
      }
 
      /* -------------------- ITEMS -------------------- */
-
-     .item-qty {
-          @apply col-span-1 p-2;
+     .item { 
+          @apply p-2 flex flex-col justify-center;
+     }
+     .quantity {
+          @apply col-span-1 p-2 text-center;
      }
 
-     .item-name {
-          @apply col-span-4  p-2;
+     .name {
+          @apply col-span-4 p-2 flex justify-center flex-col   ;
      }
-     .item-name-disabled {
-          @apply col-span-9 p-2 line-through;
+     .name-disabled {
+          @apply col-span-4 p-2 line-through;
      }
      /* -------------- BUTTON GROUP --------------------- */
 
@@ -80,11 +79,9 @@ body {
           @apply col-span-6  p-1 flex justify-end items-end space-x-2;
      }
 
-
      /* ----------------- BUTTONS ------------------------ */
      .btn {
-          @apply rounded-lg py-2 px-1.5 w-16
-                    border-2 border-solid text-sm;
+          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center;
      }
      .disabled {
           @apply hidden;
@@ -124,7 +121,7 @@ body {
      }
 
      .add-btn {
-          @apply bg-green-700 shadow-inner text-white border-0 block text-sm mt-2.5 mr-0 mb-7 p-2.5 w-full;
+          @apply bg-green-600 shadow-inner text-white border-0 block text-xl font-bold my-2.5 mr-0 p-2.5 w-full;
      }
 
      /* -------------------- EDIT FORM -------------------- */
