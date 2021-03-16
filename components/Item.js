@@ -115,17 +115,18 @@ export const Item = ({ item }) => {
     return (
 
         <div className={sign == 'positive' ? 'list-item-container' : 'list-item-container-disabled'} key={item._id}>
-
+        {/* // <div key={item._id} className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}> */}
+            
             <div className='list-grid'>
 
 
 
                 {/* ----- quantity ----- */}
-                <div className='item quantity'>{item.itemQuantity}</div>
+                <div className='item-qty'>{item.itemQuantity}</div>
 
                 {/* ----- item name ----- */}
-                <div className={sign == 'positive' ? ' item name' :
-                    'item name-disabled'} >
+                <div className={sign == 'positive' ? 'item-name' :
+                    'item-name-disabled'} >
                     {item.itemName}
                 </div>
 
@@ -134,20 +135,20 @@ export const Item = ({ item }) => {
 
                     {/* ----- button: use 1 ----- */}
                     <button onClick={handleUseOne}
-                        className={sign == 'positive' ? 'btn use-one' : 'disabled'}
+                        className={sign == 'positive' ? 'btn-use-one' : 'btn-disabled'}
                         >
                         Use 1
                         </button>
 
                     {/* ----- button: use all ----- */}
                     <button onClick={handleUseAll}
-                        className={sign == 'positive' ? 'btn use-all' : 'disabled'}>
+                        className={sign == 'positive' ? 'btn-use-all' : 'btn-disabled'}>
                         Use All
                         </button>
 
                     {/* ----- button: delete ----- */}
                     <button onClick={handleDelete}
-                        className='btn delete'>
+                        className='btn-delete'>
                         {/* <img src='/trash.svg' alt='delete item' /> */}Delete
                     </button>
                 </div>

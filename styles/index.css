@@ -69,14 +69,14 @@ body {
      .item {
           @apply p-2 flex flex-col justify-center;
      }
-     .quantity {
-          @apply fontJulius  col-span-1 text-center;
+     .item-qty {
+          @apply fontJulius  p-2 flex flex-col justify-center col-span-1 text-center;
      }
 
-     .name {
-          @apply fontArchivo col-span-4 font-bold;
+     .item-name {
+          @apply fontArchivo p-2 flex flex-col justify-center col-span-4 font-bold;
      }
-     .name-disabled {
+     .item-name-disabled {
           @apply col-span-4 p-2 line-through;
      }
      /* -------------- BUTTON GROUP --------------------- */
@@ -86,35 +86,37 @@ body {
      }
 
      /* ----------------- BUTTONS ------------------------ */
-     .btn {
+     /* .btn {
           @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center;
-     }
-     .disabled {
+     } */
+     .btn-disabled {
           @apply hidden;
      }
 
-     .use-one {
-          @apply 
-                    border-yellow-600 
-                    bg-yellow-100 hover:bg-yellow-600 
-                    text-yellow-700 hover:text-white 
-                    transition duration-300;
+     .btn-use-one {
+          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center 
+               border-yellow-600 
+               bg-yellow-100 hover:bg-yellow-600 
+               text-yellow-700 hover:text-white 
+               transition duration-300;
      }
 
-     .use-all {
-          @apply fontSansPro
-                    border-blue-600
-                    bg-blue-200  hover:bg-blue-600
-                    text-blue-800 hover:text-white
-                    transition duration-300;
+     .btn-use-all {
+          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center 
+               fontSansPro
+               border-blue-600
+               bg-blue-200  hover:bg-blue-600
+               text-blue-800 hover:text-white
+               transition duration-300;
      }
 
-     .delete {
-          @apply fontArchivo
-                    border-red-600
-                    bg-red-200  hover:bg-red-600
-                    text-red-800 hover:text-white
-                    transition duration-300;
+     .btn-delete {
+          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center 
+               fontArchivo
+               border-red-600
+               bg-red-200  hover:bg-red-600
+               text-red-800 hover:text-white
+               transition duration-300;
      }
 
      /* ---------------------------------------------------- */
