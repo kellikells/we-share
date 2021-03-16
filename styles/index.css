@@ -18,15 +18,21 @@ body {
 /* -------------------- FONTS -------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&family=Julius+Sans+One&family=Pacifico&family=Quicksand:wght@500&family=Source+Sans+Pro:wght@700&display=swap");
 
+/* itemName */
 .fontArchivo {
      font-family: "Archivo Narrow", sans-serif;
 }
+
+/* quantity  */
 .fontJulius {
      font-family: "Julius Sans One", sans-serif;
 }
+
+/* app title  */
 .fontPacifico {
      font-family: "Pacifico", cursive;
 }
+
 .fontQuicksand {
      font-family: "Quicksand", sans-serif;
 }
@@ -50,25 +56,25 @@ body {
           @apply list-none p-0 mt-11 mb-10;
      }
      .list-item-container {
-          @apply flex items-center justify-center text-base my-2 bg-white shadow-xl border border-gray-300;
+          @apply flex items-center justify-center text-lg my-2 bg-white shadow-xl border border-gray-300;
      }
      .list-item-container-disabled {
           @apply opacity-50;
      }
      .list-grid {
-          @apply grid grid-cols-11  w-full ;
+          @apply grid grid-cols-11  w-full;
      }
 
      /* -------------------- ITEMS -------------------- */
-     .item { 
+     .item {
           @apply p-2 flex flex-col justify-center;
      }
      .quantity {
-          @apply col-span-1 p-2 text-center;
+          @apply fontJulius  col-span-1 text-center;
      }
 
      .name {
-          @apply col-span-4 p-2 flex justify-center flex-col   ;
+          @apply fontArchivo col-span-4 font-bold;
      }
      .name-disabled {
           @apply col-span-4 p-2 line-through;
@@ -88,21 +94,24 @@ body {
      }
 
      .use-one {
-          @apply border-yellow-600 
+          @apply 
+                    border-yellow-600 
                     bg-yellow-100 hover:bg-yellow-600 
                     text-yellow-700 hover:text-white 
                     transition duration-300;
      }
 
      .use-all {
-          @apply border-blue-600
+          @apply fontSansPro
+                    border-blue-600
                     bg-blue-200  hover:bg-blue-600
                     text-blue-800 hover:text-white
                     transition duration-300;
      }
 
      .delete {
-          @apply border-red-600
+          @apply fontArchivo
+                    border-red-600
                     bg-red-200  hover:bg-red-600
                     text-red-800 hover:text-white
                     transition duration-300;
