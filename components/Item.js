@@ -23,6 +23,9 @@ export const Item = ({ item }) => {
         if (isDeleting) {
             deleteItem(item._id);
             deleteItemDB();
+
+            console.log(`http://localhost:3000/api/items/${item._id}`);
+            
         }
     }, [isDeleting]);
 
@@ -54,6 +57,8 @@ export const Item = ({ item }) => {
         if (isUsingOne) {
             useOne(item._id);
             useOneDB();
+
+            console.log(`http://localhost:3000/api/items/${item._id}`);
         }
     }, [isUsingOne]);
 
@@ -87,6 +92,8 @@ export const Item = ({ item }) => {
         if (isUsingAll) {
             useAll(item._id);
             useAllDB();
+
+            console.log(`http://localhost:3000/api/items/${item._id}`)
         }
     }, [isUsingAll]);
 

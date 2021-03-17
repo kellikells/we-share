@@ -50,30 +50,71 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    // async function deleteItem(id) {
+    //     try {
+
+    //         dispatch({
+    //             type: 'DELETE_ITEM',
+    //             payload: id
+    //         });
+
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
     async function deleteItem(id) {
         try {
+            await axios.delete(`http://localhost:3000/api/items/${id}`);
 
             dispatch({
                 type: 'DELETE_ITEM',
                 payload: id
             });
-
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
+            dispatch({
+                type: 'ITEM_ERROR',
+                payload: err.response.data.error
+            });
         }
     }
 
+    async function addItem(item) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
 
+        try {
+            const res = await axios.post('http://localhost:3000/api/items', item, config);
 
-
-
-
-    function addItem(item) {
-        dispatch({
-            type: 'ADD_ITEM',
-            payload: item
-        });
+            dispatch({
+                type: 'ADD_ITEM',
+                payload: res.data.data
+            });
+        } catch (err) {
+            dispatch({
+                type: 'ITEM_ERROR',
+                payload: err.response.data.error
+            });
+        }
     }
+    // function deleteItem(id) {
+    //     dispatch({
+    //         type: 'DELETE_ITEM',
+    //         payload: id
+   
+    //     });
+    // }
+
+
+    // function addItem(item) {
+    //     dispatch({
+    //         type: 'ADD_ITEM',
+    //         payload: item
+    //     });
+    // }
 
     function useOne(id) {
         dispatch({
