@@ -8,30 +8,20 @@ export const Item = ({ item }) => {
 
     const { deleteItem, useOne, useAll, } = useContext(GlobalContext);
 
-    //  useState 
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [isUsingOne, setIsUsingOne] = useState(false);
-    const [isUsingAll, setIsUsingAll] = useState(false);
+ 
     const [form, setForm] = useState({ itemName: item.itemName, itemQuantity: item.itemQuantity });
 
     //  ----- delete item function -----
     const handleDelete = async () => {
-        setIsDeleting(true);
+        // setIsDeleting(true);
+        deleteItem(item._id);
+        deleteItemDB();
     }
 
-    useEffect(() => {
-        if (isDeleting) {
-            deleteItem(item._id);
-            deleteItemDB();
 
-            console.log(`http://localhost:3000/api/items/${item._id}`);
-            
-        }
-    }, [isDeleting]);
 
 
     const deleteItemDB = async () => {
-        // const itemId = router.query.id;
         const itemId = item._id;
         try {
             const res = await fetch(`http://localhost:3000/api/items/${itemId}`, {
@@ -45,26 +35,20 @@ export const Item = ({ item }) => {
     // ----------END: delete item---------------
 
     //  ----- useOne item function -----
-    const handleUseOne = async () => {
-        setIsUsingOne(true);
+    const handleClick = async (id) => {
+        // setIsUsingOne(true);
         setForm({
             itemName: item.itemName,
             itemQuantity: item.itemQuantity - 1,
         });
+        useOne(item._id);
+        useOneDB(id);
     }
 
-    useEffect(() => {
-        if (isUsingOne) {
-            useOne(item._id);
-            useOneDB();
 
-            console.log(`http://localhost:3000/api/items/${item._id}`);
-        }
-    }, [isUsingOne]);
-
-    const useOneDB = async () => {
+    const useOneDB = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/items/${item._id}`, {
+            const res = await fetch(`http://localhost:3000/api/items/${id}`, {
                 method: 'PUT',
                 headers: {
                     "Accept": "application/json",
@@ -81,21 +65,16 @@ export const Item = ({ item }) => {
 
     //  ----- useAll items function -----
     const handleUseAll = async () => {
-        setIsUsingAll(true);
+        // setIsUsingAll(true);
         setForm({
             itemName: item.itemName,
             itemQuantity: 0,
         });
+        useAll(item._id);
+        useAllDB();
     }
 
-    useEffect(() => {
-        if (isUsingAll) {
-            useAll(item._id);
-            useAllDB();
 
-            console.log(`http://localhost:3000/api/items/${item._id}`)
-        }
-    }, [isUsingAll]);
 
     const useAllDB = async () => {
         try {
@@ -122,8 +101,7 @@ export const Item = ({ item }) => {
     return (
 
         <div className={sign == 'positive' ? 'list-item-container' : 'list-item-container-disabled'} key={item._id}>
-        {/* // <div key={item._id} className={sign == 'positive' ? 'list-item' : 'list-item-disabled'}> */}
-            
+
             <div className='list-grid'>
 
 
@@ -134,16 +112,16 @@ export const Item = ({ item }) => {
                 {/* ----- item name ----- */}
                 <div className={sign == 'positive' ? 'item-name' :
                     'item-name-disabled'} >
-                    {item.itemName}
+                    {item.itemName} - {item._id}
                 </div>
 
                 {/* ----- button group ----- */}
                 <div className='item-btn-group' >
 
                     {/* ----- button: use 1 ----- */}
-                    <button onClick={handleUseOne}
+                    <button onClick={() => handleClick(item._id)}
                         className={sign == 'positive' ? 'btn-use-one' : 'btn-disabled'}
-                        >
+                    >
                         Use 1
                         </button>
 
