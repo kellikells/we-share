@@ -65,17 +65,13 @@ export const AddItemForm = () => {
         }
     }
 
-    // form submission 
-
-   
-
 
     return (
         <div>
 
             <form onSubmit={handleSubmit}>
 
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-3 gap-2">
 
                     <div className="col-span-2 ...">
                         <label htmlFor='itemName'>Item Name</label>
