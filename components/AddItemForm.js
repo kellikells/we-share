@@ -1,79 +1,92 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import fetch from 'isomorphic-unfetch';
+// import React, { useContext, useState, useEffect } from 'react';
+// import { useRouter } from 'next/router';
+// import fetch from 'isomorphic-unfetch';
+import React, { useState, useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 
 export const AddItemForm = () => {
-    const router = useRouter();
+    // const router = useRouter();
+
+    const [itemName, setItemName] = useState('');
+    const [itemQuantity, setItemQuantity] = useState(0);
 
     const { addItem } = useContext(GlobalContext);
 
-    const [form, setForm] = useState({ itemName: '', itemQuantity: 0 });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [errors, setErrors] = useState({});
+    // const [form, setForm] = useState({ itemName: '', itemQuantity: 0 });
+    // const [isSubmitting, setIsSubmitting] = useState(false);
+    // const [errors, setErrors] = useState({});
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     let errs = validate();
+    //     setErrors(errs);
+    //     setIsSubmitting(true);
+    // }
+
+    // const handleChange = (e) => {
+    //     setForm({
+    //         ...form,
+    //         [e.target.name]: e.target.value
+    //     })
+    // }
+
+    // const validate = () => {
+    //     let err = {};
+    //     if (!form.itemName) {
+    //         err.itemName = 'item name is required';
+    //     }
+    //     if (!form.itemQuantity) {
+    //         err.itemQuantity = 'quantity is required';
+    //     }
+    //     return err;
+    // }
+
+    // useEffect(() => {
+    //     if (isSubmitting) {
+    //         addItem(form)
+    //         if (Object.keys(errors).length === 0) {
+    //             createItem();
+    //         }
+    //         else {
+    //             setIsSubmitting(false);
+    //         }
+    //     }
+    // }, [errors])
+
+    // const createItem = async () => {
+    //     try {
+    //         const res = await fetch('http://localhost:3000/api/items', {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Accept": "application/json",
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(form)
+    //         })
+    //         router.push("/");
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    const onSubmit = e => {
         e.preventDefault();
-        let errs = validate();
-        setErrors(errs);
-        setIsSubmitting(true);
+
+        const newItem = {
+            itemName,
+            itemQuantity: +itemQuantity
+        }
+
+        addItem(newItem);
     }
 
-    const handleChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-    }
 
-    const validate = () => {
-        let err = {};
-        if (!form.itemName) {
-            err.itemName = 'item name is required';
-        }
-        if (!form.itemQuantity) {
-            err.itemQuantity = 'quantity is required';
-        }
-        return err;
-    }
-
-    useEffect(() => {
-        if (isSubmitting) {
-            addItem(form)
-            if (Object.keys(errors).length === 0) {
-                createItem();
-            }
-            else {
-                setIsSubmitting(false);
-            }
-        }
-    }, [errors])
-
-    const createItem = async () => {
-        try {
-            const res = await fetch('http://localhost:3000/api/items', {
-                method: 'POST',
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(form)
-            })
-            router.push("/");
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    // form submission 
-
-   
 
 
     return (
         <div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
 
                 <div className="grid grid-cols-3">
 
@@ -81,12 +94,12 @@ export const AddItemForm = () => {
                         <label htmlFor='itemName'>Item Name</label>
 
                         <input
-                            onChange={handleChange}
-                            name='itemName'
+                            onChange={(e) => setItemName(e.target.value)} 
+                            value={itemName}
                             className='form-input'
                             type='text'
                             placeholder='enter item name'
-                            error={errors.itemName ? { content: 'Please enter an item name' } : null}
+                            // error={errors.itemName ? { content: 'Please enter an item name' } : null}
                         />
 
                     </div>
@@ -95,12 +108,12 @@ export const AddItemForm = () => {
                         <label htmlFor='itemQuantity'>Qty</label>
 
                         <input
-                            onChange={handleChange}
-                            name='itemQuantity'
+                            onChange={(e) => setItemQuantity(e.target.value)} 
+                            value={itemQuantity}
                             className='form-input'
                             type='number'
                             placeholder='enter quantity'
-                            error={errors.itemQuantity ? { content: 'Please put a number' } : null}
+                            // error={errors.itemQuantity ? { content: 'Please put a number' } : null}
                         />
 
                     </div>
@@ -111,7 +124,7 @@ export const AddItemForm = () => {
                 </div>
 
             </form>
- 
+
         </div >
     );
 }

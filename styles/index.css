@@ -43,7 +43,7 @@ body {
 
 @layer components {
      .container {
-          @apply p-5 w-full max-h-screen mx-auto;
+          @apply p-5 w-full md:w-2/3 max-h-screen mx-auto;
      }
 
      .app-title {

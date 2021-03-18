@@ -1,12 +1,11 @@
 import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
-import fetch from 'isomorphic-unfetch';
+
 
 // --------------------------------
 // initial state
 // >>any "initial state" would go inside this object, in this case only "items"
-
 const initialState = {
     items: [],
     error: null,
@@ -32,6 +31,8 @@ export const GlobalProvider = ({ children }) => {
     // Actions
     // >>Make calls to reducer
     // >>payload: any data we want to send to it, in this case 'id'
+    // --------------------------------------------------------------
+    // --------------------------------------------------------------
 
     async function getItems() {
         try {
@@ -50,36 +51,15 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    // async function deleteItem(id) {
-    //     try {
+    // --------------------------------------------------------------
+    // --------------------------------------------------------------
 
-    //         dispatch({
-    //             type: 'DELETE_ITEM',
-    //             payload: id
-    //         });
 
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    async function deleteItem(id) {
-        try {
-            await axios.delete(`http://localhost:3000/api/items/${id}`);
-
-            dispatch({
-                type: 'DELETE_ITEM',
-                payload: id
-            });
-        } catch (err) {
-            dispatch({
-                type: 'ITEM_ERROR',
-                payload: err.response.data.error
-            });
-        }
-    }
+    // --------------------------------------------------------------
+    // --------------------------------------------------------------
 
     async function addItem(item) {
+
         const config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -100,36 +80,91 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
-    // function deleteItem(id) {
+    // --------------------------------------------------------------
+    // --------------------------------------------------------------
+
+    async function useOne(id, itemName, itemQuantity) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        const item = {
+            itemName: itemName,
+            itemQuantity: itemQuantity - 1
+        }
+
+        try {
+            await axios.put(`http://localhost:3000/api/items/${id}`, item, config);
+            dispatch({
+                type: 'USE_ONE',
+                payload: id
+            });
+
+        } catch (err) {
+            dispatch({
+                type: 'ITEM_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
+
+    // --------------------------------------------------------------
+    // --------------------------------------------------------------
+
+
+    async function useAll(id, itemName) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        const item = {
+            itemName: itemName,
+            itemQuantity: 0
+        }
+        try {
+            await axios.put(`http://localhost:3000/api/items/${id}`, item, config);
+
+            dispatch({
+                type: 'USE_ONE',
+                payload: id
+            });
+
+        } catch (err) {
+            dispatch({
+                type: 'ITEM_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
+
+
+
+    async function deleteItem(id) {
+        try {
+            await axios.delete(`http://localhost:3000/api/items/${id}`);
+
+            dispatch({
+                type: 'DELETE_ITEM',
+                payload: id
+            });
+        } catch (err) {
+            dispatch({
+                type: 'ITEM_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
+    //     function deleteItem(id) {
     //     dispatch({
     //         type: 'DELETE_ITEM',
     //         payload: id
-   
+
     //     });
     // }
-
-
-    // function addItem(item) {
-    //     dispatch({
-    //         type: 'ADD_ITEM',
-    //         payload: item
-    //     });
-    // }
-
-    function useOne(id) {
-        dispatch({
-            type: 'USE_ONE',
-            payload: id
-        });
-    }
-
-    function useAll(id) {
-        dispatch({
-            type: 'USE_ALL',
-            payload: id
-        });
-    }
-
 
 
 
@@ -152,5 +187,5 @@ export const GlobalProvider = ({ children }) => {
             {children}
 
         </GlobalContext.Provider>);
-
 }
+

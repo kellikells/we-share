@@ -11,11 +11,18 @@ export const ItemList = () => {
     // destructuring allows us to just pull out : items 
     // typeof items = array
     // so we need to MAP through it, and output each item as a separate component
+
+
     const { items, getItems } = useContext(GlobalContext);
+
+
 
     useEffect(() => {
         getItems();
     }, []);
+
+
+    
 
     return (
         <>
