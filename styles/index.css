@@ -6,14 +6,9 @@
 body {
      display: flex;
      flex-direction: column;
-     /* align-items: center; */
-     /* justify-content: center; */
-     /* min-height: 100vh; */
      margin: 0;
      background-color: #fff;
-     /* background-color: #fae16c; */
 }
-
 
 input:focus::placeholder {
   color: transparent;
@@ -23,24 +18,12 @@ input:focus::placeholder {
 /* -------------------- FONTS -------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&family=Julius+Sans+One&family=Pacifico&family=Quicksand:wght@500&family=Source+Sans+Pro:wght@700&display=swap");
 
-/* itemName */
-.fontArchivo {
-     font-family: "Archivo Narrow", sans-serif;
-}
-
-/* quantity  */
-.fontJulius {
-     font-family: "Julius Sans One", sans-serif;
-}
 
 /* app title  */
 .fontPacifico {
      font-family: "Pacifico", cursive;
 }
 
-.fontQuicksand {
-     font-family: "Quicksand", sans-serif;
-}
 .fontSansPro {
      font-family: "Source Sans Pro", sans-serif;
 }
@@ -48,7 +31,8 @@ input:focus::placeholder {
 
 @layer components {
      .container {
-          @apply fontSansPro p-5 w-full max-h-screen mx-auto;
+          @apply fontSansPro p-5 w-full max-h-screen mx-auto 
+               md:max-w-4xl;
      }
 
      .app-title {
@@ -61,7 +45,7 @@ input:focus::placeholder {
           @apply list-none p-0 mt-11 mb-10;
      }
      .list-item-container {
-          @apply flex items-center justify-center text-lg my-2 bg-white shadow-xl border border-gray-300;
+          @apply flex-wrap items-center justify-center text-lg my-2 bg-white shadow-xl border border-gray-300;
      }
      .list-item-container-disabled {
           @apply opacity-50;
@@ -71,15 +55,13 @@ input:focus::placeholder {
      }
 
      /* -------------------- ITEMS -------------------- */
-     /* .item {
-          @apply p-2 flex flex-col justify-center;
-     } */
+  
      .item-qty {
           @apply p-2 flex flex-col justify-center col-span-1 text-center;
      }
 
      .item-name {
-          @apply p-2 flex flex-col justify-center col-span-4 font-bold;
+          @apply p-2 flex-wrap flex-col justify-center col-span-4 font-bold;
      }
      .item-name-disabled {
           @apply col-span-4 p-2 line-through;
@@ -87,22 +69,18 @@ input:focus::placeholder {
      /* -------------- BUTTON GROUP --------------------- */
 
      .item-btn-group {
-          @apply col-span-6 flex justify-end items-end space-x-2;
+          @apply col-span-6 flex justify-end items-center space-x-2  text-center;
      }
-     /* .item-btn-group {
-          @apply col-span-6 p-1 flex justify-end items-end space-x-2;
-     } */
+  
 
      /* ----------------- BUTTONS ------------------------ */
-     /* .btn {
-          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center;
-     } */
+  
      .btn-disabled {
           @apply hidden;
      }
 
      .btn-use-one {
-          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center min-h-full
+          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center h-11
                border-yellow-600 
                bg-yellow-500 hover:bg-yellow-600 
                text-white 
@@ -110,7 +88,7 @@ input:focus::placeholder {
      }
 
      .btn-use-all {
-          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center min-h-full
+          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center h-11
                border-blue-600
                bg-blue-500  hover:bg-blue-600
                text-white
@@ -118,7 +96,7 @@ input:focus::placeholder {
      }
 
      .btn-delete {
-          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center min-h-full
+          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center h-11
                border-red-600
                bg-red-500  hover:bg-red-600
                text-white

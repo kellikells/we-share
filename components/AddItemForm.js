@@ -1,16 +1,63 @@
-// import React, { useContext, useState, useEffect } from 'react';
-// import { useRouter } from 'next/router';
-// import fetch from 'isomorphic-unfetch';
 import React, { useState, useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 
 export const AddItemForm = () => {
-    // const router = useRouter();
 
     const [itemName, setItemName] = useState('');
     const [itemQuantity, setItemQuantity] = useState(0);
 
     const { addItem } = useContext(GlobalContext);
+
+    const onSubmit = e => {
+        e.preventDefault();
+        const newItem = {
+            itemName,
+            itemQuantity: +itemQuantity
+        }
+        addItem(newItem);
+    }
+
+    return (
+        <div>
+
+            <form onSubmit={onSubmit}>
+                <div className="grid grid-cols-3">
+
+                    <div className="col-span-2 ...">
+                        <label htmlFor='itemName'>Item Name</label>
+                        <input
+                            onChange={(e) => setItemName(e.target.value)} 
+                            value={itemName}
+                            className='form-input'
+                            type='text'
+                            placeholder='enter item name'
+                            // error={errors.itemName ? { content: 'Please enter an item name' } : null}
+                        />
+                    </div>
+
+                    <div className="...">
+                        <label htmlFor='itemQuantity'>Qty</label>
+                        <input
+                            onChange={(e) => setItemQuantity(e.target.value)} 
+                            value={itemQuantity}
+                            className='form-input'
+                            type='number'
+                            placeholder='enter quantity'
+                            // error={errors.itemQuantity ? { content: 'Please put a number' } : null}
+                        />
+                    </div>
+
+                    <div className="col-span-3 ...">
+                        <button type='submit' className='add-btn focus:bg-green-400'>Add Item</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div >
+    );
+}
+
 
     // const [form, setForm] = useState({ itemName: '', itemQuantity: 0 });
     // const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,63 +115,3 @@ export const AddItemForm = () => {
     //         console.log(error);
     //     }
     // }
-
-    const onSubmit = e => {
-        e.preventDefault();
-
-        const newItem = {
-            itemName,
-            itemQuantity: +itemQuantity
-        }
-
-        addItem(newItem);
-    }
-
-
-
-
-    return (
-        <div>
-
-            <form onSubmit={onSubmit}>
-
-                <div className="grid grid-cols-3">
-
-                    <div className="col-span-2 ...">
-                        <label htmlFor='itemName'>Item Name</label>
-
-                        <input
-                            onChange={(e) => setItemName(e.target.value)} 
-                            value={itemName}
-                            className='form-input'
-                            type='text'
-                            placeholder='enter item name'
-                            // error={errors.itemName ? { content: 'Please enter an item name' } : null}
-                        />
-
-                    </div>
-
-                    <div className="...">
-                        <label htmlFor='itemQuantity'>Qty</label>
-
-                        <input
-                            onChange={(e) => setItemQuantity(e.target.value)} 
-                            value={itemQuantity}
-                            className='form-input'
-                            type='number'
-                            placeholder='enter quantity'
-                            // error={errors.itemQuantity ? { content: 'Please put a number' } : null}
-                        />
-
-                    </div>
-
-                    <div className="col-span-3 ...">
-                        <button type='submit' className='add-btn focus:bg-green-400'>Add Item</button>
-                    </div>
-                </div>
-
-            </form>
-
-        </div >
-    );
-}

@@ -20,8 +20,6 @@ export const ItemList = () => {
     useEffect(() => {
         getItems();
     }, []);
-
-
     
 
     return (

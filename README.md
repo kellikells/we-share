@@ -18,6 +18,9 @@
 
 =============================================================
 
+![mobile](public/mobile_screen.png)
+
+![desktop](public/desktop_screen.png)
 
 
 

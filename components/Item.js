@@ -1,18 +1,9 @@
-// import React, { useContext, useState, useEffect } from 'react';
-// import { useRouter } from 'next/router';
-// import fetch from 'isomorphic-unfetch';
 import React, { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState';
 
 export const Item = ({ item }) => {
-    // const router = useRouter();
     
-
     const { deleteItem, useOne, useAll, } = useContext(GlobalContext);
-
-
-    // -------------------- END: useAll -----------------------
-
 
     // ternary operator to determine item color (have or don't have)
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
@@ -24,8 +15,7 @@ export const Item = ({ item }) => {
             <div className='list-grid'>
 
                 {/* ----- quantity ----- */}
-                <div className='item-qty'>{item.itemQuantity} {item._id}</div>
-
+                <div className='item-qty'>{item.itemQuantity} </div>
 
                 {/* ----- item name ----- */}
                 <div className={sign == 'positive' ? 'item-name' :
@@ -33,10 +23,8 @@ export const Item = ({ item }) => {
                     {item.itemName}
                 </div>
 
-
                 {/* ----- button group ----- */}
                 <div className='item-btn-group' >
-
 
                     {/* ----- button: use 1 ----- */}
                     <button onClick={() => useOne(item._id, item.itemName, item.itemQuantity)}
@@ -45,16 +33,13 @@ export const Item = ({ item }) => {
                         Use 1
                         </button>
 
-
                     {/* ----- button: use all ----- */}
                     <button onClick={() => useAll(item._id, item.itemName)}
                         className={sign == 'positive' ? 'btn-use-all' : 'btn-disabled'}>
                         Use All
                         </button>
 
-
                     {/* ----- button: delete ----- */}
-
                     <button onClick={() => deleteItem(item._id)}
                         className='btn-delete'>
                         Delete
