@@ -14,6 +14,11 @@ body {
      /* background-color: #fae16c; */
 }
 
+
+input:focus::placeholder {
+  color: transparent;
+}
+
 /* ------------------------------------------------- */
 /* -------------------- FONTS -------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&family=Julius+Sans+One&family=Pacifico&family=Quicksand:wght@500&family=Source+Sans+Pro:wght@700&display=swap");
@@ -43,7 +48,7 @@ body {
 
 @layer components {
      .container {
-          @apply p-5 w-full md:w-2/3 max-h-screen mx-auto;
+          @apply fontSansPro p-5 w-full max-h-screen mx-auto;
      }
 
      .app-title {
@@ -66,15 +71,15 @@ body {
      }
 
      /* -------------------- ITEMS -------------------- */
-     .item {
+     /* .item {
           @apply p-2 flex flex-col justify-center;
-     }
+     } */
      .item-qty {
-          @apply fontJulius  p-2 flex flex-col justify-center col-span-1 text-center;
+          @apply p-2 flex flex-col justify-center col-span-1 text-center;
      }
 
      .item-name {
-          @apply fontArchivo p-2 flex flex-col justify-center col-span-4 font-bold;
+          @apply p-2 flex flex-col justify-center col-span-4 font-bold;
      }
      .item-name-disabled {
           @apply col-span-4 p-2 line-through;
@@ -82,8 +87,11 @@ body {
      /* -------------- BUTTON GROUP --------------------- */
 
      .item-btn-group {
-          @apply col-span-6  p-1 flex justify-end items-end space-x-2;
+          @apply col-span-6 flex justify-end items-end space-x-2;
      }
+     /* .item-btn-group {
+          @apply col-span-6 p-1 flex justify-end items-end space-x-2;
+     } */
 
      /* ----------------- BUTTONS ------------------------ */
      /* .btn {
@@ -94,28 +102,26 @@ body {
      }
 
      .btn-use-one {
-          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center 
+          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center min-h-full
                border-yellow-600 
-               bg-yellow-100 hover:bg-yellow-600 
-               text-yellow-700 hover:text-white 
+               bg-yellow-500 hover:bg-yellow-600 
+               text-white 
                transition duration-300;
      }
 
      .btn-use-all {
-          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center 
-               fontSansPro
+          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center min-h-full
                border-blue-600
-               bg-blue-200  hover:bg-blue-600
-               text-blue-800 hover:text-white
+               bg-blue-500  hover:bg-blue-600
+               text-white
                transition duration-300;
      }
 
      .btn-delete {
-          @apply inline-block whitespace-nowrap rounded-lg py-2 px-1.5 w-16 border-2 border-solid text-sm text-center 
-               fontArchivo
+          @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center min-h-full
                border-red-600
-               bg-red-200  hover:bg-red-600
-               text-red-800 hover:text-white
+               bg-red-500  hover:bg-red-600
+               text-white
                transition duration-300;
      }
 
@@ -124,7 +130,7 @@ body {
      /* -------------------- FORM -------------------- */
 
      .form-input {
-          @apply w-full border border-gray-400 border-solid p-2.5 text-xs;
+          @apply w-full border-gray-400 border-solid border-2 p-2.5 text-lg;
      }
 
      label {
@@ -132,7 +138,12 @@ body {
      }
 
      .add-btn {
-          @apply bg-green-600 shadow-inner text-white border-0 block text-xl font-bold my-2.5 mr-0 p-2.5 w-full;
+          @apply block text-xl tracking-wider font-bold mb-2.5 mr-0 p-2.5 w-full 
+               shadow-inner border-2 border-solid
+               border-green-600
+               bg-green-500 hover:bg-green-600
+               text-white 
+               transition duration-300;
      }
 
      /* -------------------- EDIT FORM -------------------- */
