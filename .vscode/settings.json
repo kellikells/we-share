@@ -1,9 +1,0 @@
-{
-    "files.autoSave": "afterDelay",
-    "editor.codeActionsOnSave": null,
-    "eslint.format.enable": true,
-    // "editor.quickSuggestions": null,
-    "emmet.triggerExpansionOnTab": true
-
-    // "editor.quickSuggestions": null
-}
