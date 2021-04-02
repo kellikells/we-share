@@ -6,7 +6,7 @@ export const AddItemForm = () => {
     const [itemName, setItemName] = useState('');
     const [itemQuantity, setItemQuantity] = useState(0);
 
-    const { addItem } = useContext(GlobalContext);
+    const { addItem, getItems } = useContext(GlobalContext);
 
     const onSubmit = e => {
         e.preventDefault();
@@ -15,6 +15,9 @@ export const AddItemForm = () => {
             itemQuantity: +itemQuantity
         }
         addItem(newItem);
+        setItemName('');
+        setItemQuantity(0);
+        getItems();
     }
 
     return (
@@ -26,6 +29,7 @@ export const AddItemForm = () => {
                     <div className="col-span-2 ...">
                         <label htmlFor='itemName'>Item Name</label>
                         <input
+                            id='name-input'
                             onChange={(e) => setItemName(e.target.value)} 
                             value={itemName}
                             className='form-input'
@@ -38,6 +42,7 @@ export const AddItemForm = () => {
                     <div className="...">
                         <label htmlFor='itemQuantity'>Qty</label>
                         <input
+                            id='quantity-input'
                             onChange={(e) => setItemQuantity(e.target.value)} 
                             value={itemQuantity}
                             className='form-input'
