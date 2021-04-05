@@ -20,10 +20,10 @@ export const Item = ({ item }) => {
 
         <div className={sign == 'positive' ? 'flex-wrap items-center justify-center text-lg my-2 bg-white shadow-xl border border-gray-300' : 'opacity-50'} key={item._id}>
 
-            <div className=' grid grid-cols-11  w-full'>
+            <div className='flex md:grid md:grid-cols-11  w-full'>
 
                 {/* ----- quantity ----- */}
-                <div className='p-2 flex flex-col justify-center col-span-1 text-center'>{item.itemQuantity} </div>
+                <div className='p-2 flex md:flex-col justify-center md:col-span-1 text-center'>{item.itemQuantity} </div>
 
                 {/* ----- item name ----- */}
                 <div className={sign == 'positive' ? 'p-2 flex-wrap flex-col justify-center col-span-4 font-bold' :
@@ -71,7 +71,7 @@ export const Item = ({ item }) => {
 
 
                 {/* ----- MOBILE SCREEN : toggle buttons ----- */}
-                <div className='md:hidden col-span-6 flex justify-end items-center'>
+                <div className='md:hidden flex justify-end items-center'>
 
                     <button onClick={toggleIsMobileSize} className='mobile-menu-button'>
                         <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
