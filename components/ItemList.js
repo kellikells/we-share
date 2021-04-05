@@ -24,7 +24,7 @@ export const ItemList = () => {
 
     return (
         <>
-            <div className='list'>
+            <div className='list-none p-0 mt-11 mb-10'>
                 {/* MAPPING through items: */}
                 {items.map((item, index) => (
                     <Item key={index} item={item} />

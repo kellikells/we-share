@@ -39,46 +39,8 @@ input:focus::placeholder {
           @apply fontPacifico text-5xl tracking-wider text-center;
      }
 
-     /* -------------------- LIST GRID -------------------- */
-
-     .list {
-          @apply list-none p-0 mt-11 mb-10;
-     }
-     .list-item-container {
-          @apply flex-wrap items-center justify-center text-lg my-2 bg-white shadow-xl border border-gray-300;
-     }
-     .list-item-container-disabled {
-          @apply opacity-50;
-     }
-     .list-grid {
-          @apply grid grid-cols-11  w-full;
-     }
-
-     /* -------------------- ITEMS -------------------- */
-  
-     .item-qty {
-          @apply p-2 flex flex-col justify-center col-span-1 text-center;
-     }
-
-     .item-name {
-          @apply p-2 flex-wrap flex-col justify-center col-span-4 font-bold;
-     }
-     .item-name-disabled {
-          @apply col-span-4 p-2 line-through;
-     }
-     /* -------------- BUTTON GROUP --------------------- */
-
-     .item-btn-group {
-          @apply col-span-6 flex justify-end items-center space-x-2  text-center;
-     }
-  
 
      /* ----------------- BUTTONS ------------------------ */
-  
-     .btn-disabled {
-          @apply hidden;
-     }
-
      .btn-use-one {
           @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center h-11
                border-yellow-600 
@@ -103,26 +65,12 @@ input:focus::placeholder {
                transition duration-300;
      }
 
-     /* ---------------------------------------------------- */
 
      /* -------------------- FORM -------------------- */
-
-     .form-input {
-          @apply w-full border-gray-400 border-solid border-2 p-2.5 text-lg;
-     }
 
      label {
           @apply hidden;
      }
 
-     .add-btn {
-          @apply block text-xl tracking-wider font-bold mb-2.5 mr-0 p-2.5 w-full 
-               shadow-inner border-2 border-solid
-               border-green-600
-               bg-green-500 hover:bg-green-600
-               text-white 
-               transition duration-300;
-     }
 
-     /* -------------------- EDIT FORM -------------------- */
 }
