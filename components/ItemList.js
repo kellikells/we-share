@@ -26,8 +26,8 @@ export const ItemList = () => {
         <>
             <div className='list'>
                 {/* MAPPING through items: */}
-                {items.map(item => (
-                    <Item key={item._id} item={item} />
+                {items.map((item, index) => (
+                    <Item key={index} item={item} />
                 ))}
 
             </div>
