@@ -18,115 +18,102 @@ export const Item = ({ item }) => {
 
     return (
 
-        <div className={sign == 'positive' ? 'flex-wrap items-center justify-center text-lg my-2 bg-white shadow-xl border border-gray-300' : 'opacity-50'} key={item._id}>
+        <div className={sign == 'positive' ? 'flex mx-auto items-center justify-between text-lg my-2 bg-white shadow-xl border border-gray-300' : 'opacity-50'} key={item._id}>
 
-            <div className='flex md:grid md:grid-cols-11  w-full'>
+            <div className='flex space-x-4'>
 
                 {/* ----- quantity ----- */}
-                <div className='p-2 flex md:flex-col justify-center md:col-span-1 text-center'>{item.itemQuantity} </div>
+                <div className='p-2 flex justify-center text-center'>{item.itemQuantity} </div>
 
                 {/* ----- item name ----- */}
-                <div className={sign == 'positive' ? 'p-2 flex-wrap flex-col justify-center col-span-4 font-bold' :
-                    'col-span-4 p-2 line-through'} >
+                <div className={sign == 'positive' ? 'p-2 flex-wrap  justify-center font-bold' :
+                    'p-2 line-through'} >
                     {item.itemName}
                 </div>
 
+            </div>
 
 
+            {/* ----- MEDIUM SCREEN + : button group ----- */}
+            <div className='invisible md:visible md:flex md:justify-end md:items-center md:space-x-2  md:text-center' >
 
-                {/* ----- MEDIUM SCREEN + : button group ----- */}
-                <div className='invisible md:visible col-span-6 flex justify-end items-center space-x-2  text-center' >
+                {/* ----- button: use 1 ----- */}
+                <button onClick={() => {
+                    useOne(item._id, item.itemName, item.itemQuantity);
+                    getItems();
+                }}
+                    className={sign == 'positive' ? 'btn-use-one' : ''}
+                >
+                    Use 1
+                </button>
 
-                    {/* ----- button: use 1 ----- */}
-                    <button onClick={() => {
-                        useOne(item._id, item.itemName, item.itemQuantity);
-                        getItems();
-                    }}
-                        className={sign == 'positive' ? 'btn-use-one' : ''}
-                    >
-                        Use 1
-                    </button>
+                {/* ----- button: use all ----- */}
+                <button onClick={() => {
+                    useAll(item._id, item.itemName);
+                    getItems();
+                }}
+                    className={sign == 'positive' ? 'btn-use-all' : 'hidden'}>
+                    Use All
+                </button>
 
-                    {/* ----- button: use all ----- */}
-                    <button onClick={() => {
-                        useAll(item._id, item.itemName);
-                        getItems();
-                    }}
-                        className={sign == 'positive' ? 'btn-use-all' : 'hidden'}>
-                        Use All
-                    </button>
-
-                    {/* ----- button: delete ----- */}
-                    <button onClick={() => {
-                        deleteItem(item._id);
-                        getItems();
-                    }}
-                        className='btn-delete'>
-                        Delete
-                    </button>
-
-                </div>
-                {/* -------------END: medium screen buttons----------- */}
-
-
-
-                {/* ----- MOBILE SCREEN : toggle buttons ----- */}
-                <div className='md:hidden flex justify-end items-center'>
-
-                    <button onClick={toggleIsMobileSize} className='mobile-menu-button'>
-                        <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
-                    </button>
-
-                </div>
-
-                {/* ----- MOBILE SCREEN : button group ----- */}
-                <div className={isMobileSize ? 'mobile-menu w-min md:hidden' : 'hidden mobile-menu md:hidden'}>
-
-                    {/* ----- button: use 1 ----- */}
-                    <button onClick={() => {
-                        useOne(item._id, item.itemName, item.itemQuantity);
-                        getItems();
-                    }}
-                        className={sign == 'positive' ? 'btn-use-one' : 'hidden'}
-                    >
-                        Use 1
-                    </button>
-
-                    {/* ----- button: use all ----- */}
-                    <button onClick={() => {
-                        useAll(item._id, item.itemName);
-                        getItems();
-                    }}
-                        className={sign == 'positive' ? 'btn-use-all' : 'hidden'}>
-                        Use All
-                    </button>
-
-                    {/* ----- button: delete ----- */}
-                    <button onClick={() => {
-                        deleteItem(item._id);
-                        getItems();
-                    }}
-                        className='btn-delete'>
-                        Delete
-                    </button>
-                    {/* <section className='border-b border-gray-500'>
-                        {menu?.length && menu.map((info, index) => (
-                            <Link key={index} href={info == 'Home' ? `/` : `/${info}`}>
-                                <a className='block py-2 px-4 text-sm hover:bg-gray-300'>{info}</a>
-                            </Link>
-                        ))}
-                    </section>
-
-
-                    {menu?.length && menu.map((topic, index) => (
-                        <Link key={index} href={`/${topic}`}>
-                            <a className='block py-2 px-4 text-sm hover:bg-gray-300'>{topic}</a>
-                        </Link>
-                    ))} */}
-                </div>
+                {/* ----- button: delete ----- */}
+                <button onClick={() => {
+                    deleteItem(item._id);
+                    getItems();
+                }}
+                    className='btn-delete'>
+                    Delete
+                </button>
 
             </div>
+            {/* -------------END: medium screen buttons----------- */}
+
+
+
+            {/* ----- MOBILE SCREEN : toggle buttons ----- */}
+            <div className='relative md:hidden flex align-items-end justify-content-end justify-end items-center'>
+
+                <button onClick={toggleIsMobileSize} className='mobile-menu-button'>
+                    <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
+                </button>
+
+            </div>
+
+            {/* ----- MOBILE SCREEN : button group ----- */}
+            <div className={isMobileSize ? 'mobile-menu w-min md:hidden' : 'hidden mobile-menu md:hidden'}>
+
+                {/* ----- button: use 1 ----- */}
+                <button onClick={() => {
+                    useOne(item._id, item.itemName, item.itemQuantity);
+                    getItems();
+                }}
+                    className={sign == 'positive' ? 'btn-use-one' : 'hidden'}
+                >
+                    Use 1
+                </button>
+
+                {/* ----- button: use all ----- */}
+                <button onClick={() => {
+                    useAll(item._id, item.itemName);
+                    getItems();
+                }}
+                    className={sign == 'positive' ? 'btn-use-all' : 'hidden'}>
+                    Use All
+                </button>
+
+                {/* ----- button: delete ----- */}
+                <button onClick={() => {
+                    deleteItem(item._id);
+                    getItems();
+                }}
+                    className='btn-delete'>
+                    Delete
+                </button>
+
+            </div>
+
         </div>
+        // </div>
     );
 }
 
