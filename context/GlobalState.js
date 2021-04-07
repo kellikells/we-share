@@ -9,8 +9,14 @@ import axios from 'axios';
 const initialState = {
     items: [],
     error: null,
-    loading: true
+    loading: true,
+    
 }
+// const initialState = {
+//     items: [],
+//     error: null,
+//     loading: true
+// }
 
 // --------------------------------
 // creating context
@@ -158,13 +164,7 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
-    //     function deleteItem(id) {
-    //     dispatch({
-    //         type: 'DELETE_ITEM',
-    //         payload: id
 
-    //     });
-    // }
 
 
 

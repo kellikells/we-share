@@ -11,13 +11,12 @@ body {
 }
 
 input:focus::placeholder {
-  color: transparent;
+     color: transparent;
 }
 
 /* ------------------------------------------------- */
 /* -------------------- FONTS -------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&family=Julius+Sans+One&family=Pacifico&family=Quicksand:wght@500&family=Source+Sans+Pro:wght@700&display=swap");
-
 
 /* app title  */
 .fontPacifico {
@@ -27,6 +26,9 @@ input:focus::placeholder {
 .fontSansPro {
      font-family: "Source Sans Pro", sans-serif;
 }
+
+
+
 /* ------------------------------------------------- */
 
 @layer components {
@@ -40,7 +42,37 @@ input:focus::placeholder {
      }
 
 
-     /* ----------------- BUTTONS ------------------------ */
+     /* -----------------MOBILE SCREEN: BUTTONS ------------------------ */
+
+     .mobile {
+          @apply relative z-10;
+     }
+
+     .btn-use-one-mobile {
+          @apply inline-block whitespace-nowrap px-1.5 w-20 border-2 border-solid text-lg text-center align-middle h-11
+               border-yellow-600 
+               bg-yellow-500 hover:bg-yellow-600 
+               text-white 
+               transition duration-300;
+     }
+
+     .btn-use-all-mobile {
+          @apply inline-block whitespace-nowrap px-1.5 w-20 border-2 border-solid text-lg text-center align-middle h-11
+               border-blue-600
+               bg-blue-500  hover:bg-blue-600
+               text-white
+               transition duration-300;
+     }
+
+     .btn-delete-mobile {
+          @apply inline-block whitespace-nowrap px-1.5 w-20 border-2 border-solid text-lg text-center align-middle h-11
+               border-red-600
+               bg-red-500  hover:bg-red-600
+               text-white
+               transition duration-300;
+     }
+
+     /* -----------------MEDIUM SCREEN: BUTTONS ------------------------ */
      .btn-use-one {
           @apply inline-block whitespace-nowrap rounded-lg px-1.5 w-16 border-2 border-solid text-lg text-center h-11
                border-yellow-600 
@@ -65,12 +97,9 @@ input:focus::placeholder {
                transition duration-300;
      }
 
-
      /* -------------------- FORM -------------------- */
 
      label {
           @apply hidden;
      }
-
-
 }

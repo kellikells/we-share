@@ -14,20 +14,24 @@ export const Item = ({ item }) => {
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
 
     // this is to toggle buttons when mobile screen 
-    const [isMobileSize, toggleIsMobileSize] = useToggle(false)
+    const [showButtons, toggleShowButtons] = useToggle(false);
+    // const [showButtons, toggleShowButtons] = useToggle(false)
+
+    // if the buttons are visible, the next click will close the button list 
+ 
 
     return (
 
-        <div className={sign == 'positive' ? 'flex mx-auto items-center justify-between text-lg my-2 bg-white shadow-xl border border-gray-300' : 'opacity-50'} key={item._id}>
+        <div className={'flex mx-auto items-center justify-between text-lg my-2 bg-white shadow-xl border border-gray-300'} key={item._id}>
 
             <div className='flex space-x-4'>
 
                 {/* ----- quantity ----- */}
-                <div className='p-2 flex justify-center text-center'>{item.itemQuantity} </div>
+                <div className={sign == 'positive' ? 'p-2 flex justify-center text-center' : 'text-red-600 p-2 flex justify-center text-center'}>{item.itemQuantity} </div>
 
                 {/* ----- item name ----- */}
                 <div className={sign == 'positive' ? 'p-2 flex-wrap  justify-center font-bold' :
-                    'p-2 line-through'} >
+                    'opacity-50 line-through p-2 flex-wrap justify-center'} >
                     {item.itemName}
                 </div>
 
@@ -36,51 +40,6 @@ export const Item = ({ item }) => {
 
             {/* ----- MEDIUM SCREEN + : button group ----- */}
             <div className='invisible md:visible md:flex md:justify-end md:items-center md:space-x-2  md:text-center' >
-
-                {/* ----- button: use 1 ----- */}
-                <button onClick={() => {
-                    useOne(item._id, item.itemName, item.itemQuantity);
-                    getItems();
-                }}
-                    className={sign == 'positive' ? 'btn-use-one' : ''}
-                >
-                    Use 1
-                </button>
-
-                {/* ----- button: use all ----- */}
-                <button onClick={() => {
-                    useAll(item._id, item.itemName);
-                    getItems();
-                }}
-                    className={sign == 'positive' ? 'btn-use-all' : 'hidden'}>
-                    Use All
-                </button>
-
-                {/* ----- button: delete ----- */}
-                <button onClick={() => {
-                    deleteItem(item._id);
-                    getItems();
-                }}
-                    className='btn-delete'>
-                    Delete
-                </button>
-
-            </div>
-            {/* -------------END: medium screen buttons----------- */}
-
-
-
-            {/* ----- MOBILE SCREEN : toggle buttons ----- */}
-            <div className='relative md:hidden flex align-items-end justify-content-end justify-end items-center'>
-
-                <button onClick={toggleIsMobileSize} className='mobile-menu-button'>
-                    <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
-                </button>
-
-            </div>
-
-            {/* ----- MOBILE SCREEN : button group ----- */}
-            <div className={isMobileSize ? 'mobile-menu w-min md:hidden' : 'hidden mobile-menu md:hidden'}>
 
                 {/* ----- button: use 1 ----- */}
                 <button onClick={() => {
@@ -106,14 +65,66 @@ export const Item = ({ item }) => {
                     deleteItem(item._id);
                     getItems();
                 }}
-                    className='btn-delete'>
+                    className='btn-delete opacity-100'>
                     Delete
                 </button>
 
             </div>
+            {/* -------------END: medium screen buttons----------- */}
 
+            {/* ---------------------------------------------------------------- */}
+
+            
+
+            {/* ------ MOBILE WRAPPER ------ */}
+            <div className='relative inline-block md:hidden'>
+                {/* ----- MOBILE SCREEN : toggle buttons ----- */}
+                <div className='md:hidden flex relative justify-content-end justify-end'>
+
+                    <button onClick={toggleShowButtons} className='mobile-menu-button'>
+                        <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
+                    </button>
+
+                </div>
+
+                {/* ----- MOBILE SCREEN : button group ----- */}
+                <div className={showButtons ? 'mobile-menu w-min origin-top-right absolute right-0 inline-block ' : 'hidden mobile-menu'}>
+
+                    {/* ----- button: use 1 ----- */}
+                    <button onClick={() => {
+                        useOne(item._id, item.itemName, item.itemQuantity);
+                        getItems()
+                        toggleShowButtons();
+                    }}
+                        className={sign == 'positive' ? 'btn-use-one-mobile mobile' : 'hidden'}
+                    >
+                        Use 1
+                    </button>
+
+                    {/* ----- button: use all ----- */}
+                    <button onClick={() => {
+                        useAll(item._id, item.itemName);
+                        getItems()
+                        toggleShowButtons();
+                    }}
+                        className={sign == 'positive' ? 'btn-use-all-mobile mobile' : 'hidden'}>
+                        Use All
+                    </button>
+
+                    {/* ----- button: delete ----- */}
+                    <button onClick={() => {
+                        deleteItem(item._id);
+                        getItems()
+                        toggleShowButtons();
+                    }}
+                        className='btn-delete-mobile mobile'>
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
         </div>
-        // </div>
     );
 }
 

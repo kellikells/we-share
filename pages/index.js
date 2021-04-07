@@ -4,17 +4,42 @@ import { GlobalProvider } from '../context/GlobalState';
 import { Header } from '../components/Header';
 import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';
+import useToggle from '../hooks/useToggle';
 
+const Index = ({ items }) => {
+  const [isMobileSize, toggleIsMobileSize] = useToggle(false);
 
-const Index = ({items}) => {
   return (
     <GlobalProvider >
       <div className='container'>
-          <Header />
-          <ItemList />
-          <AddItemForm />
+        <Header />
+        <ItemList />
+        <AddItemForm />
       </div>
     </GlobalProvider>
+
+
+    // <GlobalProvider >
+
+    //   {isMobileSize ?
+    //     <div onClick={() => {
+    //       toggleIsMobileSize()
+    //     }}>
+
+    //       <div className='container'>
+    //         <Header />
+    //         <ItemList />
+    //         <AddItemForm />
+    //       </div>
+
+    //     </div>
+    //     :
+    //     <div className='container'>
+    //       <Header />
+    //       <ItemList />
+    //       <AddItemForm />
+    //     </div>}
+    // </GlobalProvider>
   );
 }
 
