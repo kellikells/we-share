@@ -8,16 +8,22 @@ import useToggle from '../hooks/useToggle';
 
 export const Item = ({ item }) => {
 
+
+    // const { deleteItem, useOne, useAll, getItems, toggleShowButtons, showButtons } = useContext(GlobalContext);
     const { deleteItem, useOne, useAll, getItems } = useContext(GlobalContext);
 
+    console.log(showButtons);
     // ternary operator to determine item color (have or don't have)
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
 
-    // this is to toggle buttons when mobile screen 
-    const [showButtons, toggleShowButtons] = useToggle(false);
-    // const [showButtons, toggleShowButtons] = useToggle(false)
 
-    // if the buttons are visible, the next click will close the button list 
+
+
+    // this is to toggle buttons when mobile screen 
+    // const [showButtons, toggleShowButtons] = useToggle(false);
+    const [showButtons, toggleShowButtons] = useToggle(false)
+
+
  
 
     return (
@@ -84,6 +90,14 @@ export const Item = ({ item }) => {
                     <button onClick={toggleShowButtons} className='mobile-menu-button'>
                         <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
                     </button>
+
+                    {/* <button onClick={() => {
+                        toggleShowButtons(item._id);
+                        getItems();
+                    }}
+                        className='mobile-menu-button'>
+                        <img className='w-6 h-6' src='/mobile-menu-btn.svg' alt='mobile-menu-button' />
+                    </button> */}
 
                 </div>
 

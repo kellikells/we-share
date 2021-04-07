@@ -7,7 +7,7 @@ import { AddItemForm } from '../components/AddItemForm';
 import useToggle from '../hooks/useToggle';
 
 const Index = ({ items }) => {
-  const [isMobileSize, toggleIsMobileSize] = useToggle(false);
+  const [isMobileSize, toggleIsMobileSize] = useToggle();
 
   return (
     <GlobalProvider >

@@ -5,6 +5,7 @@ export default (state, action) => {
 
     switch (action.type) {
         
+        
         case 'GET_ITEMS':
             return {
                 ...state,
@@ -21,7 +22,6 @@ export default (state, action) => {
         case 'ADD_ITEM':
             return {
                 ...state,
-                // items: [...state.items, action.payload]
             }
 
         case 'USE_ONE':
@@ -45,7 +45,21 @@ export default (state, action) => {
                 message: 'item error'
             }
 
+        
+        // case 'TOGGLE_BUTTONS':
+        //     return {
+        //         ...state,
+        //         items: state.items.map(item => (item._id == action.payload ? {
+        //             id: item._id, itemName: item.itemName, itemQuantity: item.itemQuantity,
+        //             showButtons: !state.showButtons
+        //         }
+        //             : item))
+        //     }
+        
+        
         default:
             return state;
     }
 }
+
+// items: state.items.filter(item => item._id !== action.payload)

@@ -2,7 +2,6 @@ import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
 
-
 // --------------------------------
 // initial state
 // >>any "initial state" would go inside this object, in this case only "items"
@@ -10,6 +9,7 @@ const initialState = {
     items: [],
     error: null,
     loading: true,
+    // showButtons: false
     
 }
 // const initialState = {
@@ -32,6 +32,8 @@ export const GlobalContext = createContext(initialState);
 // --------------------------------
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
+
+  
 
 
     // Actions
@@ -168,6 +170,17 @@ export const GlobalProvider = ({ children }) => {
 
 
 
+    // async function toggleShowButtons(id) {
+    //     dispatch({
+    //         type: 'TOGGLE_BUTTONS',
+    //         payload:id
+    //     });
+
+    // }
+
+
+
+
     return (
 
         // provider component, with a <value> prop of <state.items>   ** so we can access it from context
@@ -177,6 +190,11 @@ export const GlobalProvider = ({ children }) => {
             items: state.items,
             error: state.error,
             loading: state.loading,
+
+            // showButtons: state.showButtons,
+            // toggleShowButtons,
+
+
             getItems,
             useOne,
             useAll,
