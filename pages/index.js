@@ -12,10 +12,11 @@ const Index = ({ items }) => {
     <GlobalProvider >
       <div className='container'>
         <Header />
-        <LoginButton />
-        <RegisterButton/>
 
-
+        <div className='space-x-2 text-center space-y-20'>
+          <LoginButton />
+          <RegisterButton />
+        </div>
   
       </div>
     </GlobalProvider>

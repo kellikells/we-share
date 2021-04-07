@@ -23,7 +23,8 @@ export const LoginForm = () => {
 
     return (
 
-        <div className='min-h-screen flex items-center justify-center bg-blue-400'>
+        <div className='min-h-screen flex items-center justify-center 
+        '>
 
             <div className='bg-white p-16 rounded shadow-2xl w-2/3'>
 
