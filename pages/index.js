@@ -2,19 +2,21 @@ import React from 'react';
 import fetch from 'isomorphic-unfetch';
 import { GlobalProvider } from '../context/GlobalState';
 import { Header } from '../components/Header';
-import { ItemList } from '../components/ItemList';
-import { AddItemForm } from '../components/AddItemForm';
-import useToggle from '../hooks/useToggle';
+
+import { LoginButton } from '../components/LoginButton';
+import { RegisterButton } from '../components/RegisterButton';
 
 const Index = ({ items }) => {
-  const [isMobileSize, toggleIsMobileSize] = useToggle();
 
   return (
     <GlobalProvider >
       <div className='container'>
         <Header />
-        <ItemList />
-        <AddItemForm />
+        <LoginButton />
+        <RegisterButton/>
+
+
+  
       </div>
     </GlobalProvider>
 

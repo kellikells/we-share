@@ -15,6 +15,8 @@ export const AddItemForm = () => {
             itemQuantity: +itemQuantity
         }
         addItem(newItem);
+
+        // clear the form inputs
         setItemName('');
         setItemQuantity(0);
         getItems();
