@@ -36,12 +36,24 @@ export const LoginForm = () => {
 
                     <div>
                         <label className='block mb-1 font-bold text-gray-500'>Email</label>
-                        <input type='email' className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
+
+                        <input
+                            id='email-input'
+                            onChange={(e) => setUserEmail(e.target.value)}
+                            value={userEmail}
+                            type='email'
+                            className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
                     </div>
 
                     <div>
                         <label className='block mb-1 font-bold text-gray-500'>Password</label>
-                        <input type='password' className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
+
+                        <input
+                            id='password-input'
+                            onChange={(e) => setUserPassword(e.target.value)}
+                            value={userPassword}
+                            type='password'
+                            className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
                     </div>
 
                     {/* <div className='flex items-center'>
