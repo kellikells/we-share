@@ -9,7 +9,7 @@ import { RegisterButton } from '../components/RegisterButton';
 const Index = ({ items }) => {
 
   return (
-    <GlobalProvider >
+    <GlobalProvider  >
       <div className='fontSansPro w-full max-h-screen mx-auto
                 p-6 border-solid border-gray-200 border-2 mt-8
                 md:w-2/5'>

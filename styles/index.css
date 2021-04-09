@@ -32,10 +32,10 @@ input:focus::placeholder {
 /* ------------------------------------------------- */
 
 @layer components {
-     /* .container {
-          @apply fontSansPro p-5 w-full max-h-screen mx-auto 
+     .container {
+          @apply fontSansPro p-5 w-full max-h-screen mx-auto mt-8
                md:max-w-4xl;
-     } */
+     }
 
      .app-title {
           @apply fontPacifico text-5xl tracking-wider text-center;
