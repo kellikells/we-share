@@ -10,10 +10,13 @@ const Index = ({ items }) => {
 
   return (
     <GlobalProvider >
-      <div className='container'>
-        <Header />
+      <div className='fontSansPro w-full max-h-screen mx-auto
+                p-6 border-solid border-gray-200 border-2 mt-8
+                md:w-2/5'>
 
-        <div className='space-x-2 text-center space-y-20'>
+        <Header />
+        <div className='text-center mt-20 space-y-2'>
+        {/* <div className='space-x-2 text-center space-y-20'> */}
           <LoginButton />
           <RegisterButton />
         </div>
