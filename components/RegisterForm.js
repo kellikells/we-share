@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
+import Link from 'next/link';
 import { GlobalContext } from '../context/GlobalState';
 
 export const RegisterForm = () => {
@@ -76,6 +77,10 @@ export const RegisterForm = () => {
                     <button className='block w-full bg-yellow-400 hover:bg-yellow-300 p-4 rounded text-yellow-900 hover:text-yellow-800 transition duration-300'>Sign Up</button>
 
                 </form>
+
+                <div className='mt-4'>
+                    Already have an account? <span className='text-red-700'><Link href='/login'><a>Login</a></Link></span>
+                </div>
 
             </div>
         </div>
