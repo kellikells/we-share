@@ -2,11 +2,12 @@ import React, { useState, useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 
 export const AddItemForm = () => {
+    const { addItem, getItems } = useContext(GlobalContext);
 
     const [itemName, setItemName] = useState('');
     const [itemQuantity, setItemQuantity] = useState(0);
-
-    const { addItem, getItems } = useContext(GlobalContext);
+    // const [errors, setErrors] = useState();
+  
 
     const onSubmit = e => {
         e.preventDefault();
@@ -14,6 +15,7 @@ export const AddItemForm = () => {
             itemName,
             itemQuantity: +itemQuantity
         }
+        // setErrors()
         addItem(newItem);
 
         // clear the form inputs
@@ -24,6 +26,7 @@ export const AddItemForm = () => {
 
     return (
         <div>
+           
 
             <form onSubmit={onSubmit}>
                 <div className="grid grid-cols-3">
@@ -37,7 +40,7 @@ export const AddItemForm = () => {
                             className=' w-full border-gray-400 border-solid border-2 p-2.5 text-lg'
                             type='text'
                             placeholder='enter item name'
-                        // error={errors.itemName ? { content: 'Please enter an item name' } : null}
+                        // errors={errors.itemName ? { content: 'Please enter an item name' } : null}
                         />
                     </div>
 
@@ -50,8 +53,8 @@ export const AddItemForm = () => {
                             className=' w-full border-gray-400 border-solid border-2 p-2.5 text-lg'
                             type='number'
                             placeholder='enter quantity'
-                        // error={errors.itemQuantity ? { content: 'Please put a number' } : null}
                         />
+                        {/* {errors.itemQuantity ? { content: 'Please put a number' } : null } */}
                     </div>
 
                     <div className="col-span-3 ...">

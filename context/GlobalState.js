@@ -6,11 +6,16 @@ import axios from 'axios';
 // initial state
 // >>any "initial state" would go inside this object, in this case only "items"
 const initialState = {
+    
     items: [],
     error: null,
     loading: true,
-    // showButtons: false
+    creatingUser: false,
+    loggedIn: false,
+    currentUser: []
     
+    // showButtons: false
+
 }
 // const initialState = {
 //     items: [],
@@ -33,14 +38,96 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  
+
 
 
     // Actions
     // >>Make calls to reducer
     // >>payload: any data we want to send to it, in this case 'id'
     // --------------------------------------------------------------
+    //                   .find() user by email 
     // --------------------------------------------------------------
+    async function getUsers(email) {
+        try {
+            const res = await axios.get('http://localhost:3000/api/users')
+
+            const resArray = res.data.data;
+
+            resArray.map((user => {
+                if (user.email == email) {
+                    console.log(`ERROR: email already exists`);
+                    dispatch({
+                        type: 'USER_ERROR',
+                        payload: err.response.data.error
+                    });
+                }
+                else {
+                    console.log(`SUCCESS: ${email} does not exist in database`);
+                    dispatch({
+                        type: 'INITIALIZE_CREATE_USER',
+                        payload: true
+                    })
+                }
+            }))
+
+        } catch (err) {
+            dispatch({
+                type: 'USER_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
+
+
+    // --------------------------------------------------------------
+    //                        add NEW USER  
+    // --------------------------------------------------------------
+
+    async function addUser(newUser) {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+            const res = await axios.post('http://localhost:3000/api/users', newUser, config);
+
+            dispatch({
+                type: 'ADD_USER',
+                payload: res.data.data
+            });
+        } catch (err) {
+            dispatch({
+                type: 'USER_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
+
+
+
+
+
+
+    // --------------------------------------------------------------
+    //                     USER LOGIN verification
+    // --------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------
+    //                          
+    // --------------------------------------------------------------
+
+
+
+
+    // --------------------------------------------------------------
+    //                          get all items
+    // --------------------------------------------------------------
+
 
     async function getItems() {
         try {
@@ -59,11 +146,9 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    // --------------------------------------------------------------
-    // --------------------------------------------------------------
-
 
     // --------------------------------------------------------------
+    //                          add new item
     // --------------------------------------------------------------
 
     async function addItem(item) {
@@ -89,6 +174,7 @@ export const GlobalProvider = ({ children }) => {
         }
     }
     // --------------------------------------------------------------
+    //                           use 1 item
     // --------------------------------------------------------------
 
     async function useOne(id, itemName, itemQuantity) {
@@ -119,6 +205,7 @@ export const GlobalProvider = ({ children }) => {
     }
 
     // --------------------------------------------------------------
+    //                          use ALL item
     // --------------------------------------------------------------
 
 
@@ -148,7 +235,9 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
-
+    // --------------------------------------------------------------
+    //                         DELETE item
+    // --------------------------------------------------------------
 
 
     async function deleteItem(id) {
@@ -190,10 +279,15 @@ export const GlobalProvider = ({ children }) => {
             items: state.items,
             error: state.error,
             loading: state.loading,
+            creatingUser: state.creatingUser,
+            loggedIn: state.loggedIn,
+            currentUser: state.currentUser,
 
             // showButtons: state.showButtons,
             // toggleShowButtons,
-
+            // findUserEmail,
+            getUsers,
+            addUser,
 
             getItems,
             useOne,

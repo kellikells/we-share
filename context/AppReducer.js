@@ -1,24 +1,46 @@
 
-
-
 export default (state, action) => {
 
     switch (action.type) {
+
+        case 'INITIALIZE_CREATE_USER':
+            return {
+                ...state,
+                creatingUser: action.payload
+            }
         
-        
+        case 'ADD_USER':
+            return {
+                ...state,
+                loggedIn: true,
+                currentUser: action.payload,
+                creatingUser: false
+            }
+
+
+        case 'USER_ERROR':
+            return {
+                ...state,
+                error: action.payload,
+                message: 'user error '
+            }
+
+        // -------------------------------------------
+        //                ITEM CASES 
+        // -------------------------------------------
         case 'GET_ITEMS':
             return {
                 ...state,
                 loading: false,
                 items: action.payload
             }
-        
+
         case 'DELETE_ITEM':
             return {
                 ...state,
                 items: state.items.filter(item => item._id !== action.payload)
             }
-        
+
         case 'ADD_ITEM':
             return {
                 ...state,
@@ -30,7 +52,7 @@ export default (state, action) => {
                 items: state.items.map(item => (item._id == action.payload ? { id: item._id, itemName: item.itemName, itemQuantity: item.itemQuantity -= 1 }
                     : item))
             }
-        
+
         case 'USE_ALL':
             return {
                 ...state,
@@ -45,7 +67,7 @@ export default (state, action) => {
                 message: 'item error'
             }
 
-        
+
         // case 'TOGGLE_BUTTONS':
         //     return {
         //         ...state,
@@ -55,8 +77,8 @@ export default (state, action) => {
         //         }
         //             : item))
         //     }
-        
-        
+
+
         default:
             return state;
     }

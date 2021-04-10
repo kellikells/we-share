@@ -1,29 +1,68 @@
 import React, { useState, useContext } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
+import cookie from 'js-cookie';
 import { GlobalContext } from '../context/GlobalState';
 
 export const RegisterForm = () => {
-    const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
+    // const [signupError, setSignupError] = useState('');
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const { addUser, getUsers, creatingUser } = useContext(GlobalContext);
 
 
-    const { addUser } = useContext(GlobalContext);
+    // const { addUser } = useContext(GlobalContext);
 
     const onSubmit = e => {
         e.preventDefault();
         const newUser = {
-            userName,
-            userEmail,
-            userPassword
+            name,
+            email,
+            password
         }
-        console.log(`new user: ${userName}, ${userEmail}, ${userPassword}`);
+        
+        getUsers(newUser.email);
+        
+        if (creatingUser) {
+            addUser(newUser);
+            
+        }
         // addUser(newUser);
+        console.log(`new user: ${name}, ${email}, ${password}`);
+        console.log(newUser.email);
+
+        // fetch('/api/users', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         name,
+        //         email,
+        //         password,
+        //     }),
+        // })
+        //     .then((r) => r.json())
+        //     .then((data) => {
+        //         if (data && data.error) {
+        //             setSignupError(data.message);
+        //             console.log(`!!!!!!!!!!!!!!!!! ERROR`);
+        //         }
+        //         if (data && data.token) {
+        //             //set cookie
+        //             cookie.set('token', data.token, { expires: 2 });
+        //             console.log(`SUCCESS::::::::::::`);
+        //             Router.push('/');
+        //         }
+        //     });
 
         // clear the form inputs
-        setUserName('');
-        setUserEmail('');
-        setUserPassword('');
+        setName('');
+        setEmail('');
+        setPassword('');
     }
 
     return (
@@ -41,8 +80,8 @@ export const RegisterForm = () => {
 
                         <input
                             id='user-name'
-                            onChange={(e) => setUserName(e.target.value)}
-                            value={userName}
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
                             type='text'
                             className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
                     </div>
@@ -52,8 +91,8 @@ export const RegisterForm = () => {
 
                         <input
                             id='email-input'
-                            onChange={(e) => setUserEmail(e.target.value)}
-                            value={userEmail}
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
                             type='email'
                             className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
                     </div>
@@ -63,8 +102,8 @@ export const RegisterForm = () => {
 
                         <input
                             id='password-input'
-                            onChange={(e) => setUserPassword(e.target.value)}
-                            value={userPassword}
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
                             type='password'
                             className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500' />
                     </div>
@@ -74,7 +113,16 @@ export const RegisterForm = () => {
                         <label for='agree' className='ml-2 text-gray-700 text-sm'>I agree to the terms and privacy.</label>
                     </div> */}
 
-                    <button className='block w-full bg-yellow-400 hover:bg-yellow-300 p-4 rounded text-yellow-900 hover:text-yellow-800 transition duration-300'>Sign Up</button>
+                    <button type='submit'
+                        className='block w-full p-4 rounded
+                        bg-yellow-400 hover:bg-yellow-300
+                        text-yellow-900 hover:text-yellow-800 
+                        transition duration-300'>Sign Up</button>
+
+
+                    {/* any errors:  */}
+                    {/* {signupError && <p style={{ color: 'red' }}>{signupError}</p>} */}
+
 
                 </form>
 

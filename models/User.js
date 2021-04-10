@@ -2,20 +2,24 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-    userName: {
+    name: {
         type: String,
         required: [true, 'Please add an item name'],
         maxlength: [40, 'Item name cannot be more than 40 characters']
     },
-    userEmail: {
+    email: {
         type: String,
         required: [true, 'Please enter a valid email'],
         maxlength: [125, 'Email cannot be longer than 125 characters'],
     },
-    hashedPassword: {
+    password: {
         type: String,
         required: true,
         maxlength: [40, 'Limit password to 40 characters']
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
