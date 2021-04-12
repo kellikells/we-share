@@ -1,16 +1,20 @@
 import React, { createContext, useReducer } from 'react';
+import { useRouter } from 'next/router';
 import AppReducer from './AppReducer';
 import axios from 'axios';
-
 
 // --------------------------------
 // initial state
 // >>any "initial state" would go inside this object, in this case only "items"
 const initialState = {
     items: [],
-    error: null,
-    loading: true
+    currentUser: {},
+    loading: true,
+    creatingUser: false,
+    loggedIn: false,
+    error: null
 }
+
 
 // --------------------------------
 // creating context
@@ -25,18 +29,71 @@ export const GlobalContext = createContext(initialState);
 // >>useReducer: takes in: wherever our reducer is, and initial state
 // --------------------------------
 export const GlobalProvider = ({ children }) => {
+    const router = useRouter();
     const [state, dispatch] = useReducer(AppReducer, initialState);
-
 
     // Actions
     // >>Make calls to reducer
     // >>payload: any data we want to send to it, in this case 'id'
+
+
     // --------------------------------------------------------------
+    //                        add NEW USER  
     // --------------------------------------------------------------
+
+    async function addUser(user) {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+            const res = await axios.post('/api/users', user, config);
+
+            dispatch({
+                type: 'ADD_USER',
+                payload: res.data.data
+            });
+            router.push('/');
+
+        }
+        catch (err) {
+            console.log(`line 62: global state: user error: ${err.response.data.error}`);
+            dispatch({
+                type: 'USER_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
+
+
+
+
+
+
+    // --------------------------------------------------------------
+    //                     USER LOGIN verification
+    // --------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------
+    //                          
+    // --------------------------------------------------------------
+
+
+
+
+    // --------------------------------------------------------------
+    //                          get all items
+    // --------------------------------------------------------------
+
 
     async function getItems() {
         try {
-            const res = await axios.get('http://localhost:3000/api/items');
+            const res = await axios.get('/api/items');
 
             dispatch({
                 type: 'GET_ITEMS',
@@ -51,11 +108,9 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    // --------------------------------------------------------------
-    // --------------------------------------------------------------
-
 
     // --------------------------------------------------------------
+    //                          add new item
     // --------------------------------------------------------------
 
     async function addItem(item) {
@@ -67,7 +122,7 @@ export const GlobalProvider = ({ children }) => {
         }
 
         try {
-            const res = await axios.post('http://localhost:3000/api/items', item, config);
+            const res = await axios.post('/api/items', item, config);
 
             dispatch({
                 type: 'ADD_ITEM',
@@ -81,6 +136,7 @@ export const GlobalProvider = ({ children }) => {
         }
     }
     // --------------------------------------------------------------
+    //                           use 1 item
     // --------------------------------------------------------------
 
     async function useOne(id, itemName, itemQuantity) {
@@ -96,7 +152,7 @@ export const GlobalProvider = ({ children }) => {
         }
 
         try {
-            await axios.put(`http://localhost:3000/api/items/${id}`, item, config);
+            await axios.put(`/api/items/${id}`, item, config);
             dispatch({
                 type: 'USE_ONE',
                 payload: id
@@ -111,8 +167,8 @@ export const GlobalProvider = ({ children }) => {
     }
 
     // --------------------------------------------------------------
+    //                          use ALL item
     // --------------------------------------------------------------
-
 
     async function useAll(id, itemName) {
         const config = {
@@ -126,7 +182,7 @@ export const GlobalProvider = ({ children }) => {
             itemQuantity: 0
         }
         try {
-            await axios.put(`http://localhost:3000/api/items/${id}`, item, config);
+            await axios.put(`/api/items/${id}`, item, config);
 
             dispatch({
                 type: 'USE_ONE',
@@ -140,12 +196,13 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
-
-
+    // --------------------------------------------------------------
+    //                         DELETE item
+    // --------------------------------------------------------------
 
     async function deleteItem(id) {
         try {
-            await axios.delete(`http://localhost:3000/api/items/${id}`);
+            await axios.delete(`/api/items/${id}`);
 
             dispatch({
                 type: 'DELETE_ITEM',
@@ -158,34 +215,28 @@ export const GlobalProvider = ({ children }) => {
             });
         }
     }
-    //     function deleteItem(id) {
-    //     dispatch({
-    //         type: 'DELETE_ITEM',
-    //         payload: id
-
-    //     });
-    // }
-
 
 
     return (
-
         // provider component, with a <value> prop of <state.items>   ** so we can access it from context
         // >>provider provides: state, and actions to whatever it is wrapped around
         // >>whatever gets wrapped = children, and in this case it's the compoents in App.js
         <GlobalContext.Provider value={{
             items: state.items,
-            error: state.error,
+            currentUser: state.currentUser,
             loading: state.loading,
+            loggedIn: state.loggedIn,
+            error: state.error,
+
+            addUser,
+
             getItems,
             useOne,
             useAll,
             deleteItem,
             addItem
         }}>
-
             {children}
-
         </GlobalContext.Provider>);
 }
 

@@ -19,15 +19,16 @@ export const ItemList = () => {
 
     useEffect(() => {
         getItems();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
 
     return (
         <>
-            <div className='list'>
+            <div className='list-none p-0 mt-11 mb-10 w-full mx-auto'>
                 {/* MAPPING through items: */}
-                {items.map(item => (
-                    <Item key={item._id} item={item} />
+                {items.map((item, index) => (
+                    <Item key={index} item={item} />
                 ))}
 
             </div>

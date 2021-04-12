@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const ItemSchema = new mongoose.Schema({
     itemName: {
         type: String,
-        required: [true, 'Please add an item name'],
-        maxlength: [40, 'Item name cannot be more than 40 characters']
+        required: [true, 'Item name cannot be more than 40 characters'],
+        maxLength: 40,
     },
     itemQuantity: {
         type: Number,
-        required: true,
-        maxlength: [10, 'Limit quantity to 10 characters']
+        required: [true, 'quantity must be greater than 0'],
+        min: 1, 
     }
 });
 
