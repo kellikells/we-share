@@ -12,7 +12,6 @@ export const Item = ({ item }) => {
     // const { deleteItem, useOne, useAll, getItems, toggleShowButtons, showButtons } = useContext(GlobalContext);
     const { deleteItem, useOne, useAll, getItems } = useContext(GlobalContext);
 
-    console.log(showButtons);
     // ternary operator to determine item color (have or don't have)
     const sign = item.itemQuantity <= 0 ? 'negative' : 'positive';
 

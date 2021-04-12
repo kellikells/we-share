@@ -44,6 +44,7 @@ export default (state, action) => {
         case 'ADD_ITEM':
             return {
                 ...state,
+                items: [...state.items, action.payload]
             }
 
         case 'USE_ONE':

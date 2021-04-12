@@ -34,6 +34,7 @@ export const AddItemForm = () => {
                     <div className="col-span-2 ...">
                         <label htmlFor='itemName'>Item Name</label>
                         <input
+                            name='name' 
                             id='name-input'
                             onChange={(e) => setItemName(e.target.value)}
                             value={itemName}
@@ -47,6 +48,7 @@ export const AddItemForm = () => {
                     <div className="...">
                         <label htmlFor='itemQuantity'>Qty</label>
                         <input
+                            name='quantity' 
                             id='quantity-input'
                             onChange={(e) => setItemQuantity(e.target.value)}
                             value={itemQuantity}

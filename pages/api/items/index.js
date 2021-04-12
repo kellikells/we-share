@@ -49,7 +49,7 @@ export default async (req, res) => {
                 } else {
                     res.status(500).json({
                         success: false,
-                        error: 'Server Error1111'
+                        error: 'Server Error'
                     });
                 }
             }
