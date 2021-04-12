@@ -24,46 +24,27 @@ export default async (req, res) => {
 
         case 'POST':
             try {
-                console.log(`index: line27 - email: ${req.body.email}`);
+                const userEmail = await User.findOne({ email: req.body.email });
 
-                const user = await User.create(req.body);
+                console.log(`userEmail: ${userEmail}`);
 
-
-
-                // if ((await req.db.collection('users').countDocuments({ email })) > 0) {
-                //     res.status(403).send('The email has already been used.');
-                // }
-
-
-                res.status(201).json({
-                    success: true,
-                    data: user
-                });
-
-
-
-                //     if ((await req.db.collection('users').countDocuments({ email })) > 0) {
-                //         res.status(403).send('The email has already been used.');
-                //     }
-                //     const hashedPassword = await bcrypt.hash(password, 10);
-                //     const user = await req.db
-                //         .collection('users')
-                //         .insertOne({ email, password: hashedPassword, name })
-                //         .then(({ ops }) => ops[0]);
-                //     req.logIn(user, (err) => {
-                //         if (err) throw err;
-                //         // when we finally log in, return the (filtered) user object
-                //         res.status(201).json({
-                //             user: extractUser(req),
-                //         });
-                //     });
-                // });
+                // if the email is not already in the database 
+                if (userEmail == null) {
+                    const newUser = await User.create(req.body);
+                    res.status(201).json({
+                        success: true,
+                        data: newUser
+                    });
+                }
+                else {
+                    res.status(400).json({
+                        success: false,
+                        error: 'GET YOUR OWN EMAIL!!!!'
+                    })
+                }
 
 
-                // res.status(201).json({
-                //     success: true,
-                //     data: newUser
-                // });
+         
 
             } catch (err) {
 

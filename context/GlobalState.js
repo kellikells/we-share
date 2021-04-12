@@ -52,13 +52,14 @@ export const GlobalProvider = ({ children }) => {
         try {
             const res = await axios.post('/api/users', user, config);
 
-            console.log(`line 56:global state: res.data.data: ${res.data.data.name}`);
             dispatch({
                 type: 'ADD_USER',
-                payload: res.data.data.name
+                payload: res.data.data
             });
-            // router.push('/');
-        } catch (err) {
+            router.push('/');
+
+        }
+        catch (err) {
             console.log(`line 62: global state: user error: ${err.response.data.error}`);
             dispatch({
                 type: 'USER_ERROR',
