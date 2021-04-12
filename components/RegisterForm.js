@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 // import { Errors } from './Errors';
-// import Router from 'next/router';
+import Router from 'next/router';
 // import cookie from 'js-cookie';
 import { GlobalContext } from '../context/GlobalState';
+import router from 'next/router';
 
 export const RegisterForm = () => {
 
@@ -14,10 +15,11 @@ export const RegisterForm = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { addUser, getUsers, creatingUser, error } = useContext(GlobalContext);
+    const { addUser } = useContext(GlobalContext);
 
     // Regex 
     const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    // const emailFormat = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
     // function to clear form input fields 
     const resetForm = () => {
@@ -29,22 +31,27 @@ export const RegisterForm = () => {
 
     useEffect(() => {
         if (isSubmitting) {
-
+        
             // if there are no errors, add the new user
-            if (Object.keys(errors).length === 0) {
-                console.log(`no errors`);
+            if (Object.keys(errors).length == 0) {
+            
+                console.log('registerForm: line 37: no errors');
+
+
 
                 const newUser = {
                     name,
                     email,
-                    password,
-                    passwordConfirm
-                }
+                    password
+                }                
                 addUser(newUser);
-                resetForm()
+   
+     
+                setIsSubmitting(false);
+                router.push('/');
             }
             else {
-                console.log(`WARNING : ERRORS`);
+                console.log(`registerForm: line 52: ERRORS`);
                 setIsSubmitting(false);
             }
         }
@@ -59,14 +66,14 @@ export const RegisterForm = () => {
         setIsSubmitting(true);
     }
 
-    // 2- validation for form inputs 
+    // 2- validation form inputs 
     const validateForm = () => {
         let err = {};
 
         if (!name || name.length <= 2) {
             err.name = 'Please enter a name with at least 3 characters';
         }
-        if (!email || !email.value.match(emailFormat)) {
+        if (!email || !emailFormat.test(email)) {
             err.email = 'Please enter a valid email address';
         }
         if (!password || password < 8) {
@@ -90,11 +97,12 @@ export const RegisterForm = () => {
                         : <form onSubmit={handleSubmit} className='space-y-5'>
 
                             <div>
-                                <label className='block mb-1 font-bold text-gray-500'>
+                                <label className='invisible' htmlFor='user-name'>
                                     User Name
                                 </label>
 
                                 <input
+                                    placeholder='Username'
                                     name='name'
                                     id='user-name'
                                     onChange={(e) => setName(e.target.value)}
@@ -103,15 +111,20 @@ export const RegisterForm = () => {
                                     className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500'
                                 />
 
-                                {errors.name ? errors.name : null}
+                                {errors.name
+                                    ? <div className='text-red-600 font-thin'>
+                                        {errors.name}
+                                    </div>
+                                    : null}
                             </div>
 
                             <div>
-                                <label className='block mb-1 font-bold text-gray-500'>
+                                <label className='invisible' htmlFor='email-input'>
                                     Email
                                 </label>
 
                                 <input
+                                    placeholder='Email'
                                     name='email'
                                     id='email-input'
                                     onChange={(e) => setEmail(e.target.value)}
@@ -120,15 +133,20 @@ export const RegisterForm = () => {
                                     className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500'
                                 />
 
-                                {errors.email ? errors.email : null}
+                                {errors.email
+                                    ? <div className='text-red-600 font-thin'>
+                                        {errors.email}
+                                    </div>
+                                    : null}
                             </div>
 
                             <div>
-                                <label className='block mb-1 font-bold text-gray-500'>
+                                <label className='invisible' htmlFor='password-input'>
                                     Password
                                 </label>
 
                                 <input
+                                    placeholder='password, at least 8 characters'
                                     name='password'
                                     id='password-input'
                                     onChange={(e) => setPassword(e.target.value)}
@@ -137,16 +155,21 @@ export const RegisterForm = () => {
                                     className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500'
                                 />
 
-                                {errors.password ? errors.password : null}
+                                {errors.password
+                                    ? <div className='text-red-600 font-thin'>
+                                        {errors.password}
+                                    </div>
+                                    : null}
                             </div>
 
 
                             <div>
-                                <label className='block mb-1 font-bold text-gray-500'>
+                                <label className='invisible' htmlFor='password-confirm-input'>
                                     Password Confirmation
                                 </label>
 
                                 <input
+                                    placeholder='Confirm Password'
                                     name='passwordConfirm'
                                     id='password-confirm-input'
                                     onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -155,7 +178,11 @@ export const RegisterForm = () => {
                                     className='w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-purple-500'
                                 />
 
-                                {errors.passwordConfirm ? errors.passwordConfirm : null}
+                                {errors.passwordConfirm
+                                    ? <div className='text-red-600 font-thin'>
+                                        {errors.passwordConfirm}
+                                    </div>
+                                    : null}
                             </div>
 
 

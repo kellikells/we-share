@@ -14,6 +14,10 @@ input:focus::placeholder {
      color: transparent;
 }
 
+label {
+     display:none;
+}
+
 /* ------------------------------------------------- */
 /* -------------------- FONTS -------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500&family=Julius+Sans+One&family=Pacifico&family=Quicksand:wght@500&family=Source+Sans+Pro:wght@700&display=swap");

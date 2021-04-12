@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import { useRouter } from 'next/router';
 import AppReducer from './AppReducer';
 import axios from 'axios';
 
@@ -7,7 +8,7 @@ import axios from 'axios';
 // >>any "initial state" would go inside this object, in this case only "items"
 const initialState = {
     items: [],
-    currentUser: [],
+    currentUser: {},
     loading: true,
     creatingUser: false,
     loggedIn: false,
@@ -28,6 +29,7 @@ export const GlobalContext = createContext(initialState);
 // >>useReducer: takes in: wherever our reducer is, and initial state
 // --------------------------------
 export const GlobalProvider = ({ children }) => {
+    const router = useRouter();
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
     // Actions
@@ -36,58 +38,10 @@ export const GlobalProvider = ({ children }) => {
 
 
     // --------------------------------------------------------------
-    //                     error messages 
-    // --------------------------------------------------------------
-
-
-
-
-    // --------------------------------------------------------------
-    //                   .find() user by email 
-    // --------------------------------------------------------------
-    async function getUsers(email) {
-
-        const res = await axios.get('/api/users');
-
-
-        console.log(res.data.data.length);
-        // console.log(res[0])
-        // res.map((user) => {
-        //     if (user.email == email) {
-
-        //         console.log(`ERROR: email already exists`);
-
-        //         // dispatch({
-        //         //     type: 'USER_ERROR',
-        //         //     payload: err.response.data.error
-        //         // });
-        //     }
-        //     else {
-
-        //         console.log(`SUCCESS: ${email} does not exist in database`);
-
-        //         dispatch({
-        //             type: 'INITIALIZE_CREATE_USER',
-        //             payload: true
-        //         })
-        //     }
-        // })
-    }
-
-    //     } catch (err) {
-    //         dispatch({
-    //             type: 'USER_ERROR',
-    //             payload: err.response.data.error
-    //         });
-    //     }
-    // }
-
-
-    // --------------------------------------------------------------
     //                        add NEW USER  
     // --------------------------------------------------------------
 
-    async function addUser(newUser) {
+    async function addUser(user) {
 
         const config = {
             headers: {
@@ -96,14 +50,16 @@ export const GlobalProvider = ({ children }) => {
         }
 
         try {
-            const res = await axios.post('/api/users', newUser, config);
+            const res = await axios.post('/api/users', user, config);
 
-            console.log(`global state: res.data.data: ${res.data.data}`);
+            console.log(`line 56:global state: res.data.data: ${res.data.data.name}`);
             dispatch({
                 type: 'ADD_USER',
-                payload: res.data.data
+                payload: res.data.data.name
             });
+            // router.push('/');
         } catch (err) {
+            console.log(`line 62: global state: user error: ${err.response.data.error}`);
             dispatch({
                 type: 'USER_ERROR',
                 payload: err.response.data.error
@@ -213,7 +169,6 @@ export const GlobalProvider = ({ children }) => {
     //                          use ALL item
     // --------------------------------------------------------------
 
-
     async function useAll(id, itemName) {
         const config = {
             headers: {
@@ -244,7 +199,6 @@ export const GlobalProvider = ({ children }) => {
     //                         DELETE item
     // --------------------------------------------------------------
 
-
     async function deleteItem(id) {
         try {
             await axios.delete(`/api/items/${id}`);
@@ -263,7 +217,6 @@ export const GlobalProvider = ({ children }) => {
 
 
     return (
-
         // provider component, with a <value> prop of <state.items>   ** so we can access it from context
         // >>provider provides: state, and actions to whatever it is wrapped around
         // >>whatever gets wrapped = children, and in this case it's the compoents in App.js
@@ -271,11 +224,9 @@ export const GlobalProvider = ({ children }) => {
             items: state.items,
             currentUser: state.currentUser,
             loading: state.loading,
-            creatingUser: state.creatingUser,
             loggedIn: state.loggedIn,
             error: state.error,
 
-            getUsers,
             addUser,
 
             getItems,
@@ -284,9 +235,7 @@ export const GlobalProvider = ({ children }) => {
             deleteItem,
             addItem
         }}>
-
             {children}
-
         </GlobalContext.Provider>);
 }
 

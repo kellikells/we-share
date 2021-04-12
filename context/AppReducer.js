@@ -1,20 +1,14 @@
 
-export default (state, action) => {
+// export default (state, action) => {
+const AppReducer = (state, action) => {
 
     switch (action.type) {
 
-        case 'INITIALIZE_CREATE_USER':
-            return {
-                ...state,
-                creatingUser: action.payload
-            }
         
         case 'ADD_USER':
             return {
                 ...state,
-                loggedIn: true,
-                currentUser: action.payload,
-                creatingUser: false
+                currentUser: action.payload
             }
 
 
@@ -86,3 +80,6 @@ export default (state, action) => {
 }
 
 // items: state.items.filter(item => item._id !== action.payload)
+
+
+export default AppReducer;
