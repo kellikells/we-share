@@ -41,7 +41,7 @@ export const GlobalProvider = ({ children }) => {
     //                        add NEW USER  
     // --------------------------------------------------------------
 
-    async function addUser(user) {
+    async function addUser(newUser) {
 
         const config = {
             headers: {
@@ -50,17 +50,18 @@ export const GlobalProvider = ({ children }) => {
         }
 
         try {
-            const res = await axios.post('/api/users', user, config);
+            const res = await axios.post('/api/users', newUser, config);
 
             dispatch({
                 type: 'ADD_USER',
                 payload: res.data.data
             });
-            router.push('/');
+            router.push('/login');
 
         }
         catch (err) {
             console.log(`line 62: global state: user error: ${err.response.data.error}`);
+
             dispatch({
                 type: 'USER_ERROR',
                 payload: err.response.data.error
@@ -68,15 +69,37 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-
-
-
-
-
     // --------------------------------------------------------------
     //                     USER LOGIN verification
     // --------------------------------------------------------------
+    async function getUser(email, password) {
+        // async function getUser(user) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        const returningUser = {
+            email: email,
+            password: password
+        }
 
+        try {
+            await axios.put(`/api/users/`, returningUser, config);
+
+            dispatch({
+                type: 'GET_USER',
+                payload: returningUser
+            });
+
+        } catch (err) {
+            dispatch({
+                type: 'USER_ERROR',
+                payload: err.response.data.error
+            });
+        }
+    }
 
 
     // --------------------------------------------------------------
@@ -229,6 +252,7 @@ export const GlobalProvider = ({ children }) => {
             error: state.error,
 
             addUser,
+            getUser,
 
             getItems,
             useOne,

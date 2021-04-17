@@ -4,17 +4,27 @@ const AppReducer = (state, action) => {
 
     switch (action.type) {
 
+        // -------------------------------------------
+        //                USER CASES 
+        // -------------------------------------------
         
         case 'ADD_USER':
             return {
                 ...state,
                 currentUser: action.payload
             }
-
+        
+        case 'GET_USER':
+            return {
+                ...state,
+                loading: false,
+                currentUser: action.payload
+            }
 
         case 'USER_ERROR':
             return {
                 ...state,
+                loadng: true,
                 error: action.payload,
                 message: 'user error '
             }

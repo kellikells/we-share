@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-// import { Errors } from './Errors';
-import Router from 'next/router';
-// import cookie from 'js-cookie';
+
 import { GlobalContext } from '../context/GlobalState';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 
 export const RegisterForm = () => {
 
@@ -15,7 +13,9 @@ export const RegisterForm = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { addUser } = useContext(GlobalContext);
+    const router = useRouter();
+
+    const { addUser, error } = useContext(GlobalContext);
 
     // Regex 
     const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -29,32 +29,49 @@ export const RegisterForm = () => {
         setPasswordConfirm('');
     }
 
+    const newUser = {
+        name,
+        email,
+        password
+    }
+
     useEffect(() => {
         if (isSubmitting) {
-        
+            const abortController = new AbortController();
+            const signal = abortController.signal;
+
+
             // if there are no errors, add the new user
-            if (Object.keys(errors).length == 0) {
-            
-                console.log('registerForm: line 37: no errors');
+            if (Object.keys(errors).length == 0, { signal: signal }) {
 
-
-
-                const newUser = {
-                    name,
-                    email,
-                    password
-                }                
+                // const newUser = {
+                //     name,
+                //     email,
+                //     password
+                // }
                 addUser(newUser);
-   
-     
                 setIsSubmitting(false);
+
+                console.log(`registrationForm: SUCCESSFUL`);
+                return function cleanup() {
+                    abortController.abort();
+
+                };
                 router.push('/');
             }
             else {
-                console.log(`registerForm: line 52: ERRORS`);
+
+                console.log(`registrationForm: FAILED`);
+
                 setIsSubmitting(false);
+
+                return function cleanup() {
+                    abortController.abort();
+
+                };
             }
-        }
+            router.push('/');
+        };
     }, [errors]);
 
 
@@ -192,17 +209,22 @@ export const RegisterForm = () => {
                         text-yellow-900 hover:text-yellow-800 
                         transition duration-300'>Sign Up</button>
 
-
                         </form>
                 }
 
                 <div className='mt-4'>
-                    Already have an account? <span className='text-red-700'><Link href='/login'><a>Login</a></Link></span>
+                    Already have an account?
+                    <span className='text-red-700'>
+                        <Link href='/login'>
+                            <a>Login</a>
+                        </Link>
+                    </span>
                 </div>
+
+                {/* errors from global state  */}
+                {error ? <div>{error} </div> : null}
 
             </div>
         </div>
-
-
     );
 }

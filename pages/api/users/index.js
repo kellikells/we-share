@@ -25,34 +25,29 @@ export default async (req, res) => {
         case 'POST':
             try {
                 const userEmail = await User.findOne({ email: req.body.email });
-                
+
+                var newUser;
+
                 // proceed to create new user
                 if (userEmail == null) {
-             
 
-                    const hashedpw = await bcrypt.genSalt(10, (err, salt) => {
+                    const hashedpw = await bcrypt.genSalt(saltRounds, (err, salt) => {
                         bcrypt.hash(req.body.password, salt, (err, hash) => {
                             if (err) throw err;
                             req.body.password = hash;
-                   
-                            const newUser = User.create(req.body);
 
-                        })
+                            newUser = User.create(req.body);
+
+                        });
                     });
 
 
-                    // CHECK THIS !!!!!!!!!!! 
-                    // console.log(`hashedPW: ${req.body.password}`);
-
-
-
-                    // const newUser = await User.create(req.body);
-                    // res.status(201).json({
-                    //     success: true,
-                    //     data: newUser
-                    // });
+                    res.status(201).json({
+                        success: true,
+                        data: newUser
+                    });
                 }
-                // WARNING: EMAIL ALREADY IN DATABASE
+                // client error
                 else {
                     res.status(400).json({
                         success: false,
@@ -63,7 +58,7 @@ export default async (req, res) => {
             } catch (err) {
                 if (err.name === 'ValidationError') {
                     const messages = Object.values(err.errors).map(val => val.message);
-               
+
                     res.status(400).json({     // 400: client error, 
                         success: false,
                         error: messages
@@ -73,44 +68,96 @@ export default async (req, res) => {
 
                     res.status(500).json({
                         success: false,
-                        error: 'Server Error'
+                        error: `Server Error: ${err}`
                     });
                 }
             }
             break;
 
+        // ---------------USER LOGIN------------------ 
 
 
 
-
-
-
-
-        // --------------------------------- 
-
-
-        case 'DELETE':
+        case 'PUT':
             try {
-                const deletedUser = await User.deleteOne({ _id: id });
 
-                if (!deletedUser) {
+                const { email, password } = req.body;
+                const user = await User.findOne({ email: email });
+
+                console.log(`api/users/index line 84:  ${user}`);
+
+                // no matching email found in db
+                if (!user) {
+
+                    console.log(`index line 89 : no matching email`);
                     return res.status(404).json({
                         success: false,
-                        error: 'No user found'
+                        error: 'User does not exist'
                     });
                 }
 
-                res.status(200).json({
-                    success: true,
-                    data: {}
-                });
+                // checking password 
+                const isMatch = await bcrypt.compare(password, user.password);
+
+                if (!isMatch) {
+                    return res.status(400).json({
+                        success: false,
+                        error: 'Incorrect Password!'
+                    });
+                }
+
+                const payload = {
+                    user: {
+                        id: user._id,
+                        email: user.email
+                    }
+                };
+
+                const token = await jwt.sign(
+                    payload,
+                    jwtSecret,
+                    {
+                        expiresIn: 3600
+                    },
+                    (err, token) => {
+                        if (err) throw err;
+                        res.status(200).json({
+                            success: true,
+                            data: token
+                        });
+                    }
+                );
+
+                // const token = await jwt.sign(
+                //     payload,
+                //     jwtSecret,
+                //     {
+                //         expiresIn: 3600
+                //     },
+                //     (err, token) => {
+                //         if (err) throw err;
+                //         res.status(200).json({
+                //             token
+                //         });
+                //     }
+                // );
+
+                    
+
+
+
+
             } catch (error) {
+                console.error(error);
                 res.status(500).json({
-                    success: false,
-                    error: 'Server Error'
+                    message: "Server Error"
                 });
             }
+
+
+
             break;
+
 
         default:
             res.status(400).json({
@@ -119,3 +166,80 @@ export default async (req, res) => {
             break;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//         case 'GET':
+
+//             try {
+//                 const userEmail = await User.findOne({ email: req.body.email });
+
+//                 console.log(`api/users/index line 84: userEmail: ${userEmail}`);
+
+//                 // no matching email found in db
+//                 if (!userEmail) {
+
+//                     console.log(`index line 89 : no matching email`);
+
+//                     return res.status(404).json({
+//                         success: false,
+//                         message: 'Error finding User'
+//                     });
+//                 }
+
+//                 // found matching email in db
+//                 if (userEmail == !null) {
+//                     bcrypt.compare(req.body.passwod, user.password, function (err, match) {
+//                         if (err) {
+//                             res.status(500).json({ error: true, message: 'Auth Failed' });
+//                         }
+
+//                         // matching email and no errors 
+//                         if (match) {
+//                             // const token = jwt.sign(
+//                             //     {
+//                             //         userId: user._id,
+//                             //         email: user.email
+//                             //     },
+//                             //     jwtSecret,
+//                             //     {
+//                             //         expiresIn: 3000, // 50 minutes
+//                             //     },
+//                             // );
+//                             res.status(200).json({ token });
+
+//                         }
+//                     });
+//                 }
+//             }
+//             catch (err) {
+//                 res.status(401).json({
+//                     error: true,
+//                     message: 'Auth Failed'
+//                 });
+
+//             }
+
+//             break;
+
+
+//         default:
+//             res.status(400).json({
+//                 success: false
+//             });
+//             break;
+//     }
+// }
