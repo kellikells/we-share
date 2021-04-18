@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-import cookie from 'js-cookie';
+// import cookie from 'js-cookie';
 
 import { GlobalContext } from '../context/GlobalState';
 import { useRouter } from 'next/router';
@@ -15,7 +15,8 @@ export const LoginForm = () => {
 
     const router = useRouter();
 
-    const { getUser } = useContext(GlobalContext);
+    const { getUser, error } = useContext(GlobalContext);
+
 
     // Regex 
     const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -147,6 +148,9 @@ export const LoginForm = () => {
                         </Link>
                     </span>
                 </div>
+
+                {/* errors from global state  */}
+                {error ? <div>{error} </div> : null}
 
             </div>
         </div>

@@ -11,7 +11,7 @@ const AppReducer = (state, action) => {
         case 'ADD_USER':
             return {
                 ...state,
-                currentUser: action.payload
+                userRegisterSuccess: true
             }
         
         case 'GET_USER':

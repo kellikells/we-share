@@ -7,12 +7,13 @@ import axios from 'axios';
 // initial state
 // >>any "initial state" would go inside this object, in this case only "items"
 const initialState = {
-    items: [],
-    currentUser: {},
     loading: true,
-    creatingUser: false,
+    error: null,
+
+    userRegisterSuccess: false,
     loggedIn: false,
-    error: null
+    currentUser: {},
+    items: [],
 }
 
 
@@ -52,12 +53,13 @@ export const GlobalProvider = ({ children }) => {
 
         try {
             const res = await axios.post('/api/users', newUser, config);
+            console.log(`res.data.data: ${res.data.data}`);
 
             dispatch({
                 type: 'ADD_USER',
                 payload: res.data.data
             });
-            router.push('/login');
+            // router.push('/login');
 
         }
         catch (err) {
@@ -248,11 +250,15 @@ export const GlobalProvider = ({ children }) => {
         // >>provider provides: state, and actions to whatever it is wrapped around
         // >>whatever gets wrapped = children, and in this case it's the compoents in App.js
         <GlobalContext.Provider value={{
-            items: state.items,
-            currentUser: state.currentUser,
             loading: state.loading,
-            loggedIn: state.loggedIn,
             error: state.error,
+         
+            userRegisterSuccess: state.userRegisterSuccess,
+            loggedIn: state.loggedIn,
+            currentUser: state.currentUser,
+            items: state.items,
+            
+            
 
             addUser,
             getUser,

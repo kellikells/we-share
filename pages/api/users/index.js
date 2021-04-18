@@ -1,23 +1,18 @@
-import dbConnect from '../../../utils/dbConnect';   // database connection
-import User from '../../../models/User';            // User schema
+import dbConnect from '../../../utils/dbConnect';  
+import User from '../../../models/User';           
 
-import bcrypt from 'bcryptjs';                  // hashing and verifying password
-import v4 from 'uuid';                        // create random user id
-import jwt from 'jsonwebtoken';               // allows creating a secure frontend session, and verified backend
-import assert from 'assert';                  // validator for the request body & required data on endpoints
+import bcrypt from 'bcryptjs';                  
+import jwt from 'jsonwebtoken';
+    
 const jwtSecret = process.env.JWT_SECRET;
-const saltRounds = process.env.SALT_ROUNDS;  // how many times to hash the password
 
 dbConnect();
-
 
 // --------------------------------------------------------------
 
 
-
 export default async (req, res) => {
     const { method } = req;
-
 
     switch (method) {
 
@@ -103,7 +98,7 @@ export default async (req, res) => {
                 // checking password 
                 const isMatch = await bcrypt.compare(password, user.password);
 
-                var userToken;
+                // var userToken;
 
                 if (isMatch) {
 
@@ -113,12 +108,7 @@ export default async (req, res) => {
                         email: user.email,
                         createdAt: user.createdAt,
                     };
-                    // const payload = {
-                    //     user: {
-                    //         id: user._id,
-                    //         email: user.email
-                    //     }
-                    // };
+             
                     const newToken = await jwt.sign(
                         payload,
                         jwtSecret,
@@ -128,23 +118,12 @@ export default async (req, res) => {
                         (err, token) => {
                             if (err) throw err;
 
-                            // userToken = json({ token });
                             res.status(200).json({
                                 success: true,
                                 token: 'Bearer ' + token,
                             });
-
-                            // headers: {
-                            //     "Authorization": "Bearer ${JWT_TOKEN}"
-                            // }
-
                         },
                     );
-
-                    // res.status(200).json({
-                    //     success: true
-                    // })
-
                 }
                 // if (!isMatch) {
                 else {

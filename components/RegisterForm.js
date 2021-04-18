@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 
 import { GlobalContext } from '../context/GlobalState';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 export const RegisterForm = () => {
 
@@ -13,13 +13,13 @@ export const RegisterForm = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const router = useRouter();
+    // const router = useRouter();
 
-    const { addUser, error } = useContext(GlobalContext);
+    const { addUser, error, userRegisterSuccess } = useContext(GlobalContext);
 
     // Regex 
     const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    // const emailFormat = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+
 
     // function to clear form input fields 
     const resetForm = () => {
@@ -40,7 +40,6 @@ export const RegisterForm = () => {
             const abortController = new AbortController();
             const signal = abortController.signal;
 
-
             // if there are no errors, add the new user
             if (Object.keys(errors).length == 0, { signal: signal }) {
 
@@ -50,9 +49,7 @@ export const RegisterForm = () => {
                 console.log(`registrationForm: SUCCESSFUL`);
                 return function cleanup() {
                     abortController.abort();
-
                 };
-            
             }
             else {
 
@@ -62,10 +59,8 @@ export const RegisterForm = () => {
 
                 return function cleanup() {
                     abortController.abort();
-
                 };
             }
-         
         };
     }, [errors]);
 
@@ -100,6 +95,15 @@ export const RegisterForm = () => {
     return (
 
         <div className=' flex mt-16 justify-center'>
+
+
+            {/* change this to a modal later that will have a link to the login page  */}
+            {
+                userRegisterSuccess
+                    ? <p>Congratulations you can now login with the same email and password you setup</p>
+                    : null
+            }
+
             <div className='bg-white p-16 rounded shadow-2xl w-2/3'>
                 <h2 className='text-3xl font-bold mb-10 text-gray-800'>Create Your Account</h2>
                 {
