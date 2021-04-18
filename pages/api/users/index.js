@@ -6,11 +6,36 @@ import v4 from 'uuid';                        // create random user id
 import jwt from 'jsonwebtoken';               // allows creating a secure frontend session, and verified backend
 import assert from 'assert';                  // validator for the request body & required data on endpoints
 const jwtSecret = process.env.JWT_SECRET;
-const saltRounds = 10;  // how many times to hash the password
+const saltRounds = process.env.SALT_ROUNDS;  // how many times to hash the password
 
 dbConnect();
 
+const client = dbConnect();
+
+const db = process.env.MONGODB_DB;
 // --------------------------------------------------------------
+function findUser(db, email, callback) {
+    const collection = db.collection('users');
+    // const collection = (process.env.MONGODB_DB).collection('users');
+    collection.findOne({ email }, callback);
+}
+
+function createUser(db, email, password, callback) {
+    const collection = db.collection('users');
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+        // Store hash in your password DB.
+        collection.insertOne(
+            {
+                email,
+                password: hash,
+            },
+            function (err, userCreated) {
+                if (err) throw err;
+                callback(userCreated);
+            },
+        );
+    });
+}
 
 
 
@@ -23,55 +48,85 @@ export default async (req, res) => {
         // --------------------------------- 
 
         case 'POST':
-            try {
-                const userEmail = await User.findOne({ email: req.body.email });
+            const db = process.env.MONGODB_DB;
+            const email = req.body.email;
+            const password = req.body.password;
 
-                var newUser;
-
-                // proceed to create new user
-                if (userEmail == null) {
-
-                    const hashedpw = await bcrypt.genSalt(saltRounds, (err, salt) => {
-                        bcrypt.hash(req.body.password, salt, (err, hash) => {
-                            if (err) throw err;
-                            req.body.password = hash;
-
-                            newUser = User.create(req.body);
-
-                        });
-                    });
-
-
-                    res.status(201).json({
-                        success: true,
-                        data: newUser
-                    });
+            findUser(db, email, function (err, user) {
+                if (err) {
+                    res.status(500).json({ error: true, message: 'Error finding User' });
+                    return;
                 }
-                // client error
-                else {
-                    res.status(400).json({
-                        success: false,
-                        error: 'GET YOUR OWN EMAIL!!!!'
+                if (!user) {
+                    createUser(db, email, password, function (creationResult) {
+                        if (creationResult.ops.length === 1) {
+                            const user = creationResult.ops[0];
+                            const token = jwt.sign(
+                                { userId: user._id, email: user.email },
+                                jwtSecret,
+                                { expiresIn: 3000, },
+                            );
+                            res.status(200).json({ token });
+                            return;
+                        }
                     })
-                }
-
-            } catch (err) {
-                if (err.name === 'ValidationError') {
-                    const messages = Object.values(err.errors).map(val => val.message);
-
-                    res.status(400).json({     // 400: client error, 
-                        success: false,
-                        error: messages
-                    });
                 } else {
-                    console.log('index: line 87- hit the ELSE');
-
-                    res.status(500).json({
-                        success: false,
-                        error: `Server Error: ${err}`
+                    res.status(403).json({
+                        error: true,
+                        message: 'email exists'
                     });
+                    return;
                 }
-            }
+            })
+            // try {
+            //     const userEmail = await User.findOne({ email: req.body.email });
+
+            //     var newUser;
+
+            //     // proceed to create new user
+            //     if (userEmail == null) {
+
+            //         const hashedpw = await bcrypt.genSalt(saltRounds, (err, salt) => {
+            //             bcrypt.hash(req.body.password, salt, (err, hash) => {
+            //                 if (err) throw err;
+            //                 req.body.password = hash;
+
+            //                 newUser = User.create(req.body);
+
+            //             });
+            //         });
+
+
+            //         res.status(201).json({
+            //             success: true,
+            //             data: newUser
+            //         });
+            //     }
+            //     // client error
+            //     else {
+            //         res.status(400).json({
+            //             success: false,
+            //             error: 'GET YOUR OWN EMAIL!!!!'
+            //         })
+            //     }
+
+            // } catch (err) {
+            //     if (err.name === 'ValidationError') {
+            //         const messages = Object.values(err.errors).map(val => val.message);
+
+            //         res.status(400).json({     // 400: client error, 
+            //             success: false,
+            //             error: messages
+            //         });
+            //     } else {
+            //         console.log('index: line 87- hit the ELSE');
+
+            //         res.status(500).json({
+            //             success: false,
+            //             error: `Server Error: ${err}`
+            //         });
+            //     }
+            // }
             break;
 
         // ---------------USER LOGIN------------------ 
@@ -99,51 +154,49 @@ export default async (req, res) => {
                 // checking password 
                 const isMatch = await bcrypt.compare(password, user.password);
 
-                if (!isMatch) {
+                var userToken;
+
+                if (isMatch) {
+
+                    const payload = {
+                        user: {
+                            id: user._id,
+                            email: user.email
+                        }
+                    };
+                    const newToken = await jwt.sign(
+                        payload,
+                        jwtSecret,
+                        {
+                            expiresIn: 3600
+                        },
+                        (err, token) => {
+                            if (err) throw err;
+                            
+                            // userToken = json({ token });
+                            res.status(200).json({
+                                token
+                            });
+
+                            // headers: {
+                            //     "Authorization": "Bearer ${JWT_TOKEN}"
+                            // }
+
+                        }
+                    );
+
+                    // res.status(200).json({
+                    //     success: true
+                    // })
+
+                }
+                // if (!isMatch) {
+                else {
                     return res.status(400).json({
                         success: false,
                         error: 'Incorrect Password!'
                     });
                 }
-
-                const payload = {
-                    user: {
-                        id: user._id,
-                        email: user.email
-                    }
-                };
-
-                const token = await jwt.sign(
-                    payload,
-                    jwtSecret,
-                    {
-                        expiresIn: 3600
-                    },
-                    (err, token) => {
-                        if (err) throw err;
-                        res.status(200).json({
-                            success: true,
-                            data: token
-                        });
-                    }
-                );
-
-                // const token = await jwt.sign(
-                //     payload,
-                //     jwtSecret,
-                //     {
-                //         expiresIn: 3600
-                //     },
-                //     (err, token) => {
-                //         if (err) throw err;
-                //         res.status(200).json({
-                //             token
-                //         });
-                //     }
-                // );
-
-                    
-
 
 
 
