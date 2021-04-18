@@ -10,32 +10,8 @@ const saltRounds = process.env.SALT_ROUNDS;  // how many times to hash the passw
 
 dbConnect();
 
-const client = dbConnect();
 
-const db = process.env.MONGODB_DB;
 // --------------------------------------------------------------
-function findUser(db, email, callback) {
-    const collection = db.collection('users');
-    // const collection = (process.env.MONGODB_DB).collection('users');
-    collection.findOne({ email }, callback);
-}
-
-function createUser(db, email, password, callback) {
-    const collection = db.collection('users');
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-        // Store hash in your password DB.
-        collection.insertOne(
-            {
-                email,
-                password: hash,
-            },
-            function (err, userCreated) {
-                if (err) throw err;
-                callback(userCreated);
-            },
-        );
-    });
-}
 
 
 
@@ -45,101 +21,74 @@ export default async (req, res) => {
 
     switch (method) {
 
-        // --------------------------------- 
+        // ----------- user register --------------- 
 
         case 'POST':
-            const db = process.env.MONGODB_DB;
-            const email = req.body.email;
-            const password = req.body.password;
 
-            findUser(db, email, function (err, user) {
-                if (err) {
-                    res.status(500).json({ error: true, message: 'Error finding User' });
-                    return;
-                }
-                if (!user) {
-                    createUser(db, email, password, function (creationResult) {
-                        if (creationResult.ops.length === 1) {
-                            const user = creationResult.ops[0];
-                            const token = jwt.sign(
-                                { userId: user._id, email: user.email },
-                                jwtSecret,
-                                { expiresIn: 3000, },
-                            );
-                            res.status(200).json({ token });
-                            return;
-                        }
-                    })
-                } else {
-                    res.status(403).json({
-                        error: true,
-                        message: 'email exists'
+            try {
+                const { name, email, password } = req.body;
+                const user = await User.findOne({ email: email });
+                console.log(`user: ${user}`);
+                var newUser;
+
+                // proceed to create new user
+                if (user == null) {
+
+                    const hashedpw = await bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(req.body.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            req.body.password = hash;
+
+                            newUser = User.create(req.body);
+
+                            console.log(`newUser: ${newUser}`);
+                        });
                     });
-                    return;
+
+                    res.status(201).json({
+                        success: true,
+                        data: newUser
+                    });
                 }
-            })
-            // try {
-            //     const userEmail = await User.findOne({ email: req.body.email });
+                // client error
+                else {
+                    res.status(400).json({
+                        success: false,
+                        error: 'GET YOUR OWN EMAIL!!!!'
+                    })
+                }
 
-            //     var newUser;
+            } catch (err) {
+                if (err.name === 'ValidationError') {
 
-            //     // proceed to create new user
-            //     if (userEmail == null) {
+                    console.log(`index error: line 81`);
 
-            //         const hashedpw = await bcrypt.genSalt(saltRounds, (err, salt) => {
-            //             bcrypt.hash(req.body.password, salt, (err, hash) => {
-            //                 if (err) throw err;
-            //                 req.body.password = hash;
+                    const messages = Object.values(err.errors).map(val => val.message);
 
-            //                 newUser = User.create(req.body);
+                    res.status(400).json({
+                        success: false,
+                        error: messages
+                    });
+                } else {
 
-            //             });
-            //         });
+                    console.log(`index error line 92`);
 
-
-            //         res.status(201).json({
-            //             success: true,
-            //             data: newUser
-            //         });
-            //     }
-            //     // client error
-            //     else {
-            //         res.status(400).json({
-            //             success: false,
-            //             error: 'GET YOUR OWN EMAIL!!!!'
-            //         })
-            //     }
-
-            // } catch (err) {
-            //     if (err.name === 'ValidationError') {
-            //         const messages = Object.values(err.errors).map(val => val.message);
-
-            //         res.status(400).json({     // 400: client error, 
-            //             success: false,
-            //             error: messages
-            //         });
-            //     } else {
-            //         console.log('index: line 87- hit the ELSE');
-
-            //         res.status(500).json({
-            //             success: false,
-            //             error: `Server Error: ${err}`
-            //         });
-            //     }
-            // }
+                    res.status(500).json({
+                        success: false,
+                        error: `Server Error: ${err}`
+                    });
+                }
+            }
             break;
 
         // ---------------USER LOGIN------------------ 
 
-
-
         case 'PUT':
             try {
-
                 const { email, password } = req.body;
                 const user = await User.findOne({ email: email });
 
-                console.log(`api/users/index line 84:  ${user}`);
+                console.log(`api/users/index line 104:  ${user}`);
 
                 // no matching email found in db
                 if (!user) {
@@ -158,31 +107,38 @@ export default async (req, res) => {
 
                 if (isMatch) {
 
+                    // JWT Payload 
                     const payload = {
-                        user: {
-                            id: user._id,
-                            email: user.email
-                        }
+                        id: user._id,
+                        email: user.email,
+                        createdAt: user.createdAt,
                     };
+                    // const payload = {
+                    //     user: {
+                    //         id: user._id,
+                    //         email: user.email
+                    //     }
+                    // };
                     const newToken = await jwt.sign(
                         payload,
                         jwtSecret,
                         {
-                            expiresIn: 3600
+                            expiresIn: 3600,
                         },
                         (err, token) => {
                             if (err) throw err;
-                            
+
                             // userToken = json({ token });
                             res.status(200).json({
-                                token
+                                success: true,
+                                token: 'Bearer ' + token,
                             });
 
                             // headers: {
                             //     "Authorization": "Bearer ${JWT_TOKEN}"
                             // }
 
-                        }
+                        },
                     );
 
                     // res.status(200).json({
@@ -198,8 +154,6 @@ export default async (req, res) => {
                     });
                 }
 
-
-
             } catch (error) {
                 console.error(error);
                 res.status(500).json({
@@ -207,10 +161,9 @@ export default async (req, res) => {
                 });
             }
 
-
-
             break;
 
+        // -------------------------- 
 
         default:
             res.status(400).json({

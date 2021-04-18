@@ -11,6 +11,10 @@ const ItemSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'quantity must be greater than 0'],
         min: 1, 
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
     }
 });
 

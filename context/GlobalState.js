@@ -93,6 +93,8 @@ export const GlobalProvider = ({ children }) => {
                 type: 'GET_USER',
                 payload: returningUser
             });
+            
+            router.push('/inventory');
 
         } catch (err) {
             dispatch({

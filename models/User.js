@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Username must be between 3-40 characters'],
         minLength: 3,
-        maxLength: 40 ,
+        maxLength: 40,
     },
     email: {
         type: String,
@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'password must be at least 8 characters'],
         minLength: 8,
     },
-    date: {
+    createdAt: {
         type: Date,
         default: Date.now,
     }

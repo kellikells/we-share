@@ -44,11 +44,6 @@ export const RegisterForm = () => {
             // if there are no errors, add the new user
             if (Object.keys(errors).length == 0, { signal: signal }) {
 
-                // const newUser = {
-                //     name,
-                //     email,
-                //     password
-                // }
                 addUser(newUser);
                 setIsSubmitting(false);
 
@@ -57,7 +52,7 @@ export const RegisterForm = () => {
                     abortController.abort();
 
                 };
-                router.push('/');
+            
             }
             else {
 
@@ -70,7 +65,7 @@ export const RegisterForm = () => {
 
                 };
             }
-            router.push('/');
+         
         };
     }, [errors]);
 
