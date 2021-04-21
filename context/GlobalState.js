@@ -43,17 +43,30 @@ export const GlobalProvider = ({ children }) => {
     //                        add NEW USER  
     // --------------------------------------------------------------
 
-    async function addUser(newUser) {
+    async function addUser(name, email, password) {
+    // async function addUser(newUser) {
+
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         }
+        const newUser = {
+            name: name,
+            email: email,
+            password: password
+        }
+
 
         try {
+            console.log(`globalState- newUser: ${newUser}`);
             const res = await axios.post('/api/users', newUser, config);
             console.log(`res.data.data: ${res.data.data}`);
+            // const res = await axios.post('/api/users', newUser, config);
+            // console.log(`res.data.data: ${res.data.data}`);
+            
 
             dispatch({
                 type: 'ADD_USER',
@@ -63,7 +76,7 @@ export const GlobalProvider = ({ children }) => {
 
         }
         catch (err) {
-            console.log(`line 62: global state: user error: ${err.response.data.error}`);
+            console.log(`line 79: global state: user error: ${err.response.data.error}`);
 
             dispatch({
                 type: 'USER_ERROR',

@@ -22,18 +22,22 @@ export default async (req, res) => {
 
             try {
                 const { name, email, password } = req.body;
-                const user = await User.findOne({ email: email });
-                console.log(`user: ${user}`);
+                // const user = await User.findOne({ email: email });
+                const emailCheck = await User.findOne({ email: email });
+
+                console.log(`emailCheck: ${emailCheck}`);
                 var newUser;
 
                 // proceed to create new user
-                if (user == null) {
+                // if (user == null) {
+                if (emailCheck == null) {
 
                     const hashedpw = await bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(req.body.password, salt, (err, hash) => {
                             if (err) throw err;
                             req.body.password = hash;
 
+                            console.log(`40- hashedpw: ${req.body.password}`);
                             newUser = User.create(req.body);
 
                             console.log(`newUser: ${newUser}`);
@@ -66,7 +70,7 @@ export default async (req, res) => {
                     });
                 } else {
 
-                    console.log(`index error line 92`);
+                    console.log(`index error line 73`);
 
                     res.status(500).json({
                         success: false,

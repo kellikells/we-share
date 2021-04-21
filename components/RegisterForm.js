@@ -29,21 +29,31 @@ export const RegisterForm = () => {
         setPasswordConfirm('');
     }
 
-    const newUser = {
-        name,
-        email,
-        password
-    }
+    // const newUser = {
+    //     name,
+    //     email,
+    //     password
+    // }
 
     useEffect(() => {
         if (isSubmitting) {
             const abortController = new AbortController();
             const signal = abortController.signal;
 
-            // if there are no errors, add the new user
-            if (Object.keys(errors).length == 0, { signal: signal }) {
+            const numOfErrors = Object.entries(errors).length;
+            console.log(`regform 43: length= ${numOfErrors}`);
 
-                addUser(newUser);
+            if (numOfErrors == 0, { signal: signal }) {
+            // if (Object.keys(errors).length == 0, { signal: signal }) {
+
+                const newUser = {
+                    name,
+                    email,
+                    password
+                }
+
+                addUser(name, email, password);
+                // addUser(newUser);
                 setIsSubmitting(false);
 
                 console.log(`registrationForm: SUCCESSFUL`);
@@ -70,7 +80,9 @@ export const RegisterForm = () => {
         e.preventDefault();
         let errs = validateForm();
         setErrors(errs);
-        setIsSubmitting(true);
+        console.log(`errs: ${errs}`);
+        console.log(`errors: ${errors}`)
+        // setIsSubmitting(true);
     }
 
     // 2- validation form inputs 
