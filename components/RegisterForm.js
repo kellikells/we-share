@@ -41,9 +41,12 @@ export const RegisterForm = () => {
             const signal = abortController.signal;
 
             const numOfErrors = Object.entries(errors).length;
-            console.log(`regform 43: length= ${numOfErrors}`);
+            console.log(`regform 43: numOfErrors= ${numOfErrors}`);
 
-            if (numOfErrors == 0, { signal: signal }) {
+            // if (numOfErrors == 0, { signal: signal }) {
+            if (numOfErrors == 0) {
+                console.log(`regForm 48-numOfErrors: ${numOfErrors}`);
+                console.log(`regForm 49-passed partial test`);
             // if (Object.keys(errors).length == 0, { signal: signal }) {
 
                 const newUser = {
@@ -56,7 +59,6 @@ export const RegisterForm = () => {
                 // addUser(newUser);
                 setIsSubmitting(false);
 
-                console.log(`registrationForm: SUCCESSFUL`);
                 return function cleanup() {
                     abortController.abort();
                 };
@@ -82,7 +84,7 @@ export const RegisterForm = () => {
         setErrors(errs);
         console.log(`errs: ${errs}`);
         console.log(`errors: ${errors}`)
-        // setIsSubmitting(true);
+        setIsSubmitting(true);
     }
 
     // 2- validation form inputs 

@@ -25,7 +25,7 @@ export default async (req, res) => {
                 // const user = await User.findOne({ email: email });
                 const emailCheck = await User.findOne({ email: email });
 
-                console.log(`emailCheck: ${emailCheck}`);
+                console.log(`index 28-emailCheck: ${emailCheck}`);
                 var newUser;
 
                 // proceed to create new user
@@ -37,11 +37,13 @@ export default async (req, res) => {
                             if (err) throw err;
                             req.body.password = hash;
 
-                            console.log(`40- hashedpw: ${req.body.password}`);
+                            console.log(`index 40- hashedpw: ${req.body.password}`);
+
                             newUser = User.create(req.body);
 
-                            console.log(`newUser: ${newUser}`);
+                            // console.log(`index 44-newUser: ${newUser.email}`);
                         });
+                        // console.log(` INDEX 46-newUser EMAIL: ${newUser.email}`);
                     });
 
                     res.status(201).json({

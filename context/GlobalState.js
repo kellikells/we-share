@@ -62,17 +62,21 @@ export const GlobalProvider = ({ children }) => {
 
         try {
             console.log(`globalState- newUser: ${newUser}`);
+
             const res = await axios.post('/api/users', newUser, config);
-            console.log(`res.data.data: ${res.data.data}`);
+            
+            console.log(`GLOBALSTATE 68-res.data.data: ${res.data.data}`);
             // const res = await axios.post('/api/users', newUser, config);
             // console.log(`res.data.data: ${res.data.data}`);
+            const checkResponse = await console.log(`USING AWAIT  GLOBALSTATE 71::: ${res.data.data}`);
+            console.log(`GLOBAL 72-checkResponse: ${checkResponse}`);
             
 
             dispatch({
                 type: 'ADD_USER',
                 payload: res.data.data
             });
-            // router.push('/login');
+            router.push('/login');
 
         }
         catch (err) {

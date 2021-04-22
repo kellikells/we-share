@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Username must be between 3-40 characters'],
@@ -22,10 +22,13 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    token: {
+        type: String,
     }
 });
 
 
 // if  the Item model aready exist, export that
-// if it doesn't,  create Item model with ItemSchema definition
-module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
+// if it doesn't,  create Item model with itemSchema definition
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);

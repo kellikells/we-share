@@ -4,16 +4,18 @@ import { GlobalProvider } from '../context/GlobalState';
 import { Header } from '../components/Header';
 import { LoginForm } from '../components/LoginForm';
 
+// --------------------------------------------------------------
+
 const Register = () => {
 
 
     return (
-        <GlobalProvider >
+        // <GlobalProvider >
             <div className='container'>
                 <Header />
                 <LoginForm />
             </div>
-        </GlobalProvider>
+        // </GlobalProvider>
     );
 }
 

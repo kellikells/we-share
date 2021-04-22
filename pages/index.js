@@ -1,16 +1,17 @@
 import React from 'react';
-// import fetch from 'isomorphic-unfetch';
-import { GlobalProvider } from '../context/GlobalState';
-import { Header } from '../components/Header';
 
+// import { GlobalProvider } from '../context/GlobalState';
+
+import { Header } from '../components/Header';
 import { LoginButton } from '../components/LoginButton';
 import { RegisterButton } from '../components/RegisterButton';
 
+// --------------------------------------------------------------
 
 const Index = () => {
 
   return (
-    <GlobalProvider  >
+    // <GlobalProvider  >
       <div className='fontSansPro w-full max-h-screen mx-auto
                 p-6 border-solid border-gray-200 border-2 mt-8
                 md:w-2/5'>
@@ -23,7 +24,7 @@ const Index = () => {
         </div>
   
       </div>
-    </GlobalProvider>
+    // </GlobalProvider>
 
 
   );

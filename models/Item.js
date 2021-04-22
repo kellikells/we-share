@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 
-const ItemSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
     itemName: {
         type: String,
         required: [true, 'Item name cannot be more than 40 characters'],
@@ -20,5 +20,5 @@ const ItemSchema = new mongoose.Schema({
 
 
 // if  the Item model aready exist, export that
-// if it doesn't,  create Item model with ItemSchema definition
-module.exports = mongoose.models.Item || mongoose.model('Item', ItemSchema);
+// if it doesn't,  create Item model with itemSchema definition
+module.exports = mongoose.models.Item || mongoose.model('Item', itemSchema);

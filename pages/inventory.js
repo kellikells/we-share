@@ -6,6 +6,8 @@ import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';
 import useToggle from '../hooks/useToggle';
 
+// --------------------------------------------------------------
+
 const Index = ({ items }) => {
     const [isMobileSize, toggleIsMobileSize] = useToggle();
 
