@@ -10,7 +10,6 @@ dbConnect();
 
 // --------------------------------------------------------------
 
-
 export default async (req, res) => {
     const { method } = req;
 
@@ -22,16 +21,22 @@ export default async (req, res) => {
 
             try {
                 const { name, email, password } = req.body;
-                // const user = await User.findOne({ email: email });
+    
                 const emailCheck = await User.findOne({ email: email });
 
                 console.log(`index 28-emailCheck: ${emailCheck}`);
+
                 var newUser;
 
-                // proceed to create new user
-                // if (user == null) {
-                if (emailCheck == null) {
+                // throw error if email already exists 
+                if (emailCheck) {
+                    return res.status(400).json({
+                        success: false,
+                        error: 'Email already exists'
+                    });
+                }
 
+                // success: register user
                     const hashedpw = await bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(req.body.password, salt, (err, hash) => {
                             if (err) throw err;
@@ -47,15 +52,7 @@ export default async (req, res) => {
                         success: true,
                         data: newUser
                     });
-                }
-                // client error
-                else {
-                    res.status(400).json({
-                        success: false,
-                        error: 'GET YOUR OWN EMAIL!!!!'
-                    })
-                }
-
+      
             } catch (err) {
                 if (err.name === 'ValidationError') {
 
