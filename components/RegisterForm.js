@@ -29,25 +29,20 @@ export const RegisterForm = () => {
         setPasswordConfirm('');
     }
 
-    // const newUser = {
-    //     name,
-    //     email,
-    //     password
-    // }
-
     useEffect(() => {
         if (isSubmitting) {
+            
             const abortController = new AbortController();
             const signal = abortController.signal;
 
             const numOfErrors = Object.entries(errors).length;
-            console.log(`regform 43: numOfErrors= ${numOfErrors}`);
+            console.log(`regform 38: numOfErrors= ${numOfErrors}`);
 
             // if (numOfErrors == 0, { signal: signal }) {
             if (numOfErrors == 0) {
-                console.log(`regForm 48-numOfErrors: ${numOfErrors}`);
-                console.log(`regForm 49-passed partial test`);
-            // if (Object.keys(errors).length == 0, { signal: signal }) {
+                console.log(`regForm 42-numOfErrors: ${numOfErrors}`);
+                console.log(`regForm 43-passed partial test`);
+                // if (Object.keys(errors).length == 0, { signal: signal }) {
 
                 const newUser = {
                     name,

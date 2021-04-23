@@ -1,9 +1,9 @@
-import dbConnect from '../../../utils/dbConnect';  
-import User from '../../../models/User';           
+import dbConnect from '../../../utils/dbConnect';
+import User from '../../../models/User';
 
-import bcrypt from 'bcryptjs';                  
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-    
+
 const jwtSecret = process.env.JWT_SECRET;
 
 dbConnect();
@@ -40,10 +40,7 @@ export default async (req, res) => {
                             console.log(`index 40- hashedpw: ${req.body.password}`);
 
                             newUser = User.create(req.body);
-
-                            // console.log(`index 44-newUser: ${newUser.email}`);
                         });
-                        // console.log(` INDEX 46-newUser EMAIL: ${newUser.email}`);
                     });
 
                     res.status(201).json({
@@ -114,7 +111,7 @@ export default async (req, res) => {
                         email: user.email,
                         createdAt: user.createdAt,
                     };
-             
+
                     const newToken = await jwt.sign(
                         payload,
                         jwtSecret,

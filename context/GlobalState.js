@@ -44,8 +44,6 @@ export const GlobalProvider = ({ children }) => {
     // --------------------------------------------------------------
 
     async function addUser(name, email, password) {
-    // async function addUser(newUser) {
-
 
         const config = {
             headers: {
@@ -59,25 +57,15 @@ export const GlobalProvider = ({ children }) => {
             password: password
         }
 
-
         try {
-            console.log(`globalState- newUser: ${newUser}`);
-
-            const res = await axios.post('/api/users', newUser, config);
-            
-            console.log(`GLOBALSTATE 68-res.data.data: ${res.data.data}`);
+            const res = await axios.post('/api/users/register', newUser, config);
             // const res = await axios.post('/api/users', newUser, config);
-            // console.log(`res.data.data: ${res.data.data}`);
-            const checkResponse = await console.log(`USING AWAIT  GLOBALSTATE 71::: ${res.data.data}`);
-            console.log(`GLOBAL 72-checkResponse: ${checkResponse}`);
-            
 
             dispatch({
                 type: 'ADD_USER',
                 payload: res.data.data
             });
             router.push('/login');
-
         }
         catch (err) {
             console.log(`line 79: global state: user error: ${err.response.data.error}`);
@@ -106,7 +94,7 @@ export const GlobalProvider = ({ children }) => {
         }
 
         try {
-            await axios.put(`/api/users/`, returningUser, config);
+            await axios.put('/api/users/login', returningUser, config);
 
             dispatch({
                 type: 'GET_USER',
@@ -274,8 +262,6 @@ export const GlobalProvider = ({ children }) => {
             loggedIn: state.loggedIn,
             currentUser: state.currentUser,
             items: state.items,
-            
-            
 
             addUser,
             getUser,

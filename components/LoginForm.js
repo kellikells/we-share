@@ -3,7 +3,6 @@ import Link from 'next/link';
 // import cookie from 'js-cookie';
 
 import { GlobalContext } from '../context/GlobalState';
-import { useRouter } from 'next/router';
 
 
 export const LoginForm = () => {
@@ -13,10 +12,7 @@ export const LoginForm = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const router = useRouter();
-
     const { getUser, error } = useContext(GlobalContext);
-
 
     // Regex 
     const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -30,22 +26,26 @@ export const LoginForm = () => {
     useEffect(() => {
         if (isSubmitting) {
 
-            if (Object.keys(errors).length == 0) {
+  
+
+            const numOfErrors = Object.entries(errors).length;
+            console.log(`loginForm 32: numOfErrors= ${numOfErrors}`);
+            // if (Object.keys(errors).length == 0) {
+            if (numOfErrors == 0) {
 
                 const returningUser = {
                     email,
                     password
                 }
-                // getUser(returningUser);
+
                 getUser(email, password);
-                setIsSubmitting(false);
+                // getUser(returningUser);
 
                 console.log(`LoginForm: SUCCESSFUL`)
 
-                router.push('/login');
+                setIsSubmitting(false);
             }
             else {
-
                 console.log(`LoginForm: FAILED`);
 
                 setIsSubmitting(false);
