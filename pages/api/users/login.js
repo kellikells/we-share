@@ -16,7 +16,7 @@ export default async (req, res) => {
 
     switch (method) {
 
- 
+
         // ---------------USER LOGIN------------------ 
 
         case 'PUT':
@@ -24,12 +24,9 @@ export default async (req, res) => {
                 const { email, password } = req.body;
                 const user = await User.findOne({ email: email });
 
-                console.log(`api/users/index line 104:  ${user}`);
-
-                // no matching email found in db
+                // error: no matching email found in db
                 if (!user) {
 
-                    console.log(`index line 89 : no matching email`);
                     return res.status(404).json({
                         success: false,
                         error: 'User does not exist'
@@ -37,42 +34,39 @@ export default async (req, res) => {
                 }
 
                 // checking password 
-                const isMatch = await bcrypt.compare(password, user.password);
+                const passwordCheck = await bcrypt.compare(password, user.password);
 
-                // var userToken;
-
-                if (isMatch) {
-
-                    // JWT Payload 
-                    const payload = {
-                        id: user._id,
-                        email: user.email,
-                        createdAt: user.createdAt,
-                    };
-
-                    const newToken = await jwt.sign(
-                        payload,
-                        jwtSecret,
-                        {
-                            expiresIn: 3600,
-                        },
-                        (err, token) => {
-                            if (err) throw err;
-
-                            res.status(200).json({
-                                success: true,
-                                token: 'Bearer ' + token,
-                            });
-                        },
-                    );
-                }
-                // if (!isMatch) {
-                else {
+                // error: incorrect password 
+                if (!passwordCheck) {
                     return res.status(400).json({
                         success: false,
-                        error: 'Incorrect Password!'
+                        error: 'incorrect password!'
                     });
                 }
+
+
+                // JWT Payload 
+                const payload = {
+                    id: user._id,
+                    email: user.email,
+                    createdAt: user.createdAt,
+                };
+
+                const token = await jwt.sign(
+                    payload,
+                    jwtSecret,
+                    {
+                        expiresIn: 3600,
+                    },
+                    (err, token) => {
+                        if (err) throw err;
+
+                        res.status(200).json({
+                            success: true,
+                            token: 'Bearer ' + token,
+                        });
+                    },
+                );
 
             } catch (error) {
                 console.error(error);
