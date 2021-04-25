@@ -22,6 +22,12 @@ const AppReducer = (state, action) => {
                 currentUser: action.payload
             }
 
+        case 'LOGOUT':
+            return {
+                ...state,
+                loggedIn: action.payload
+            }
+        
         case 'USER_ERROR':
             return {
                 ...state,
@@ -37,7 +43,8 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 loading: false,
-                items: action.payload
+                items: action.payload,
+                loggedIn: true
             }
 
         case 'DELETE_ITEM':

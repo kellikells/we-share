@@ -1,5 +1,7 @@
-
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -27,6 +29,16 @@ const userSchema = new mongoose.Schema({
         type: String,
     }
 });
+
+userSchema.methods.generateToken = function(cb) {
+    var user = this;
+    var token = jwt.sign(user._id.toHexString(), jwtSecret);
+    user.token = token;
+    user.save(function (err, user) {
+        if (err) return cb(err);
+        cb(null, user);
+    });
+};
 
 
 // if  the Item model aready exist, export that

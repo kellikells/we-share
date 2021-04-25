@@ -94,11 +94,13 @@ export const GlobalProvider = ({ children }) => {
         }
 
         try {
-            await axios.put('/api/users/login', returningUser, config);
+            const userData = await axios.put('/api/users/login', returningUser, config);
+            // await axios.put('/api/users/login', returningUser, config);
+            console.log(`globalState 99- userData: ${userData}`);
 
             dispatch({
                 type: 'GET_USER',
-                payload: returningUser
+                payload: returningUser,
             });
             
             router.push('/inventory');
@@ -113,9 +115,41 @@ export const GlobalProvider = ({ children }) => {
 
 
     // --------------------------------------------------------------
-    //                          
+    //                           USER LOGOUT              
     // --------------------------------------------------------------
 
+    async function logout( id, email ) {
+        // async function getUser(user) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+
+        const logoutUser = {
+            id: id,
+            email: email
+        }
+
+        try {
+            await axios.put('/api/users/logout', logoutUser, config);
+
+            dispatch({
+                type: 'LOGOUT',
+                payload: false
+            });
+
+            router.push('/');
+
+        } catch (err) {
+            if (err) throw err;
+            // dispatch({
+            //     type: 'USER_ERROR',
+            //     payload: err.response.data.error
+            // });
+        }
+    }
 
 
 
@@ -265,6 +299,7 @@ export const GlobalProvider = ({ children }) => {
 
             addUser,
             getUser,
+            logout,
 
             getItems,
             useOne,
