@@ -30,7 +30,7 @@ export const GlobalContext = createContext(initialState);
 // >>dispatch: used to call (useReducer)
 // >>useReducer: takes in: wherever our reducer is, and initial state
 // --------------------------------
-export const GlobalProvider = ({ children }) => {
+const GlobalProvider = ({ children }) => {
     const router = useRouter();
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
@@ -96,19 +96,30 @@ export const GlobalProvider = ({ children }) => {
         try {
             const userData = await axios.put('/api/users/login', returningUser, config);
             // await axios.put('/api/users/login', returningUser, config);
+
+
             console.log(`globalState 99- userData: ${userData}`);
 
             dispatch({
                 type: 'GET_USER',
-                payload: returningUser,
+                payload: email,
+                // payload: returningUser,
+                loggedIn: true
             });
-            
+
             router.push('/inventory');
 
-        } catch (err) {
+        } catch (error) {
+
+            console.log(`ERROR!!!!!!!!!! globalState 114`);
+            console.log(`-------------------`);
+            console.log(error);
+            console.log(`----------------------`);
+
             dispatch({
                 type: 'USER_ERROR',
-                payload: err.response.data.error
+                // payload: err.response.data.error
+                payload: 'fucking error',
             });
         }
     }
@@ -118,7 +129,7 @@ export const GlobalProvider = ({ children }) => {
     //                           USER LOGOUT              
     // --------------------------------------------------------------
 
-    async function logout( id, email ) {
+    async function logout(id, email) {
         // async function getUser(user) {
         const config = {
             headers: {
@@ -291,7 +302,7 @@ export const GlobalProvider = ({ children }) => {
         <GlobalContext.Provider value={{
             loading: state.loading,
             error: state.error,
-         
+
             userRegisterSuccess: state.userRegisterSuccess,
             loggedIn: state.loggedIn,
             currentUser: state.currentUser,
@@ -308,6 +319,8 @@ export const GlobalProvider = ({ children }) => {
             addItem
         }}>
             {children}
-        </GlobalContext.Provider>);
+        </GlobalContext.Provider>
+    );
 }
 
+export default GlobalProvider;

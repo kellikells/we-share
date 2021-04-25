@@ -1,6 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch';
-import { GlobalProvider } from '../context/GlobalState';
+import GlobalProvider, { GlobalContext } from '../context/GlobalState';
 import { Header } from '../components/Header';
 import { ItemList } from '../components/ItemList';
 import { AddItemForm } from '../components/AddItemForm';

@@ -19,7 +19,8 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 loading: false,
-                currentUser: action.payload
+                currentUser: action.payload,
+                loggedIn: action.loggedIn
             }
 
         case 'LOGOUT':

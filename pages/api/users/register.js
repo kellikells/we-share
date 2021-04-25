@@ -37,9 +37,9 @@ export default async (req, res) => {
                 }
 
                 // success: register user
-                    const hashedpw = await bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(req.body.password, salt, (err, hash) => {
-                            if (err) throw err;
+                    const hashedpw = await bcrypt.genSalt(10, (error, salt) => {
+                        bcrypt.hash(req.body.password, salt, (error, hash) => {
+                            if (error) throw error;
                             req.body.password = hash;
 
                             console.log(`index 40- hashedpw: ${req.body.password}`);
@@ -53,16 +53,16 @@ export default async (req, res) => {
                         data: newUser
                     });
       
-            } catch (err) {
-                if (err.name === 'ValidationError') {
+            } catch (error) {
+                if (error.name === 'ValidationError') {
 
                     console.log(`index error: line 81`);
 
-                    const messages = Object.values(err.errors).map(val => val.message);
+                    const messages = Object.values(error.errors).map(val => val.message);
 
                     res.status(400).json({
                         success: false,
-                        error: messages
+                        error: messages 
                     });
                 } else {
 
@@ -70,7 +70,7 @@ export default async (req, res) => {
 
                     res.status(500).json({
                         success: false,
-                        error: `Server Error: ${err}`
+                        error: `Server Error: ${error}`
                     });
                 }
             }
@@ -115,7 +115,7 @@ export default async (req, res) => {
                         {
                             expiresIn: 3600,
                         },
-                        (err, token) => {
+                        (error, token) => {
                             if (err) throw err;
 
                             res.status(200).json({

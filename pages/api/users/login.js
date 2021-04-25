@@ -84,9 +84,9 @@ export default async (req, res) => {
                 );
 
             } catch (error) {
-                console.error(error);
                 res.status(500).json({
-                    message: "Server Error"
+                    success: false,
+                    error: 'Server Error'
                 });
             }
 
