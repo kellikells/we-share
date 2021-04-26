@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import { useState, useEffect, useReducer, createContext } from "react";
 import { useRouter } from 'next/router';
 import AppReducer from './AppReducer';
 import axios from 'axios';
@@ -12,8 +12,8 @@ const initialState = {
 
     userRegisterSuccess: false,
     loggedIn: false,
-    currentUser: {},
-    items: [],
+    user: {},
+    items: []
 }
 
 
@@ -21,7 +21,8 @@ const initialState = {
 // --------------------------------
 // creating context
 // >>it is exported for use in other components, that's the whole purpose
-export const GlobalContext = createContext(initialState);
+export const GlobalContext = createContext({});
+// export const GlobalContext = createContext(initialState);
 
 // --------------------------------
 // provider component
@@ -30,7 +31,7 @@ export const GlobalContext = createContext(initialState);
 // >>dispatch: used to call (useReducer)
 // >>useReducer: takes in: wherever our reducer is, and initial state
 // --------------------------------
-const GlobalProvider = ({ children }) => {
+export const GlobalProvider = ({ children }) => {
     const router = useRouter();
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
@@ -38,6 +39,13 @@ const GlobalProvider = ({ children }) => {
     // >>Make calls to reducer
     // >>payload: any data we want to send to it, in this case 'id'
 
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [userRegisterSuccess, setUserRegisterSuccess] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
+    const [globalItems, setGlobalItems] = useState([]);
 
     // --------------------------------------------------------------
     //                        add NEW USER  
@@ -96,15 +104,14 @@ const GlobalProvider = ({ children }) => {
         try {
             const userData = await axios.put('/api/users/login', returningUser, config);
             // await axios.put('/api/users/login', returningUser, config);
-
-
-            console.log(`globalState 99- userData: ${userData}`);
+            console.log(`globalState 99- userData: ${userData.data.name}`);
 
             dispatch({
                 type: 'GET_USER',
-                payload: email,
+                payload: userData.data.email,
                 // payload: returningUser,
-                loggedIn: true
+                loggedIn: true,
+                problems: userData
             });
 
             router.push('/inventory');
@@ -302,10 +309,9 @@ const GlobalProvider = ({ children }) => {
         <GlobalContext.Provider value={{
             loading: state.loading,
             error: state.error,
-
             userRegisterSuccess: state.userRegisterSuccess,
             loggedIn: state.loggedIn,
-            currentUser: state.currentUser,
+            user: state.currentUser,
             items: state.items,
 
             addUser,
@@ -316,11 +322,27 @@ const GlobalProvider = ({ children }) => {
             useOne,
             useAll,
             deleteItem,
-            addItem
+            addItem,
+
+
+
+
+            loading,
+            setLoading,
+            error,
+            setError,
+            userRegisterSuccess,
+            setUserRegisterSuccess,
+            loggedIn,
+            setLoggedIn,
+            user,
+            setUser,
+            globalItems,
+            setGlobalItems
         }}>
             {children}
         </GlobalContext.Provider>
     );
 }
 
-export default GlobalProvider;
+

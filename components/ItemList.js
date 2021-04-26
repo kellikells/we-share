@@ -13,9 +13,10 @@ export const ItemList = () => {
     // so we need to MAP through it, and output each item as a separate component
 
 
+    // const { globalItems, setGlobalItems} = useContext(GlobalContext);
+
+
     const { items, getItems } = useContext(GlobalContext);
-
-
 
     useEffect(() => {
         getItems();

@@ -12,14 +12,14 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 userRegisterSuccess: true,
-                currentUser: action.payload
+                user: action.payload
             }
-        
+
         case 'GET_USER':
             return {
                 ...state,
                 loading: false,
-                currentUser: action.payload,
+                user: action.payload,
                 loggedIn: action.loggedIn
             }
 
@@ -28,7 +28,7 @@ const AppReducer = (state, action) => {
                 ...state,
                 loggedIn: action.payload
             }
-        
+
         case 'USER_ERROR':
             return {
                 ...state,

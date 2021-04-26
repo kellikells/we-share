@@ -67,7 +67,7 @@ export default async (req, res) => {
                     createdAt: user.createdAt,
                 };
 
-                const token = await jwt.sign(
+                const token = jwt.sign(
                     payload,
                     jwtSecret,
                     {
@@ -75,7 +75,7 @@ export default async (req, res) => {
                     },
                     (err, token) => {
                         if (err) throw err;
-                        res.status(200).json({
+                        return res.status(200).json({
                             success: true,
                             token: 'Bearer ' + token,
                             user: user
@@ -84,7 +84,7 @@ export default async (req, res) => {
                 );
 
             } catch (error) {
-                res.status(500).json({
+                return res.status(500).json({
                     success: false,
                     error: 'Server Error'
                 });
