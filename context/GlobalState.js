@@ -6,14 +6,17 @@ import axios from 'axios';
 // --------------------------------
 // initial state
 // >>any "initial state" would go inside this object, in this case only "items"
-const initialState = {
-    loading: true,
-    error: null,
 
+
+// const initialState = {};
+const initialState = {
+    loading: false,
+    error: null,
     userRegisterSuccess: false,
     loggedIn: false,
     user: {},
-    items: []
+    items: [],
+    globalItems: []
 }
 
 
@@ -40,12 +43,12 @@ export const GlobalProvider = ({ children }) => {
     // >>payload: any data we want to send to it, in this case 'id'
 
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [userRegisterSuccess, setUserRegisterSuccess] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState({});
-    const [globalItems, setGlobalItems] = useState([]);
+    const [globalItems, setGlobalItems] = useState([{ num: 1 }, { num: 2 }, { num: 3 }]);
 
     // --------------------------------------------------------------
     //                        add NEW USER  
@@ -118,14 +121,8 @@ export const GlobalProvider = ({ children }) => {
 
         } catch (error) {
 
-            console.log(`ERROR!!!!!!!!!! globalState 114`);
-            console.log(`-------------------`);
-            console.log(error);
-            console.log(`----------------------`);
-
             dispatch({
                 type: 'USER_ERROR',
-                // payload: err.response.data.error
                 payload: 'fucking error',
             });
         }
@@ -144,7 +141,6 @@ export const GlobalProvider = ({ children }) => {
                 'Accept': 'application/json'
             }
         }
-
         const logoutUser = {
             id: id,
             email: email
@@ -169,12 +165,9 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-
-
     // --------------------------------------------------------------
     //                          get all items
     // --------------------------------------------------------------
-
 
     async function getItems() {
         try {
@@ -184,7 +177,6 @@ export const GlobalProvider = ({ children }) => {
                 type: 'GET_ITEMS',
                 payload: res.data.data
             });
-
         } catch (err) {
             dispatch({
                 type: 'ITEM_ERROR',
@@ -193,19 +185,16 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-
     // --------------------------------------------------------------
     //                          add new item
     // --------------------------------------------------------------
 
     async function addItem(item) {
-
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-
         try {
             const res = await axios.post('/api/items', item, config);
 
@@ -242,7 +231,6 @@ export const GlobalProvider = ({ children }) => {
                 type: 'USE_ONE',
                 payload: id
             });
-
         } catch (err) {
             dispatch({
                 type: 'ITEM_ERROR',
@@ -301,18 +289,18 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-
     return (
         // provider component, with a <value> prop of <state.items>   ** so we can access it from context
         // >>provider provides: state, and actions to whatever it is wrapped around
         // >>whatever gets wrapped = children, and in this case it's the compoents in App.js
         <GlobalContext.Provider value={{
-            loading: state.loading,
-            error: state.error,
-            userRegisterSuccess: state.userRegisterSuccess,
-            loggedIn: state.loggedIn,
-            user: state.currentUser,
+            // loading: state.loading,
+            // error: state.error,
+            // userRegisterSuccess: state.userRegisterSuccess,
+            // loggedIn: state.loggedIn,
+            // user: state.currentUser,
             items: state.items,
+            // globalItems: state.globalItems,
 
             addUser,
             getUser,
@@ -324,19 +312,21 @@ export const GlobalProvider = ({ children }) => {
             deleteItem,
             addItem,
 
-
-
-
             loading,
             setLoading,
+
             error,
             setError,
+
             userRegisterSuccess,
             setUserRegisterSuccess,
+
             loggedIn,
             setLoggedIn,
+
             user,
             setUser,
+
             globalItems,
             setGlobalItems
         }}>

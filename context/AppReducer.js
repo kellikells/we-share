@@ -12,7 +12,8 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 userRegisterSuccess: true,
-                user: action.payload
+                user: action.payload,
+                items: 'ADD USER APP REDUCER-items...........................'
             }
 
         case 'GET_USER':

@@ -11,12 +11,12 @@ const Register = () => {
 
 
     return (
-        <GlobalProvider >
+        // <GlobalProvider >
             <div className='container'>
                 <Header />
                 <RegisterForm/>
             </div>
-        </GlobalProvider>
+        // </GlobalProvider>
     );
 }
 
